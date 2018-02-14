@@ -22,6 +22,8 @@
         <include>src/main/**</include>
         <include>src/test/**</include>
         <include>src/assembly/**</include>
+        <include>docs/**</include>
+        <include>etc/**</include>
       </includes>
     </fileSet>
   </fileSets>
