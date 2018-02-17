@@ -9,7 +9,7 @@
     <h1>Web Checkers</h1>
     
     <div class="navigation">
-      <a href="/">home</a>
+      <a href="/">home</a> |
       <a href="/signin">sign in</a>
     </div>
     
