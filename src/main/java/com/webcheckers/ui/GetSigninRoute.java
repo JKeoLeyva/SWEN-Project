@@ -1,0 +1,37 @@
+package com.webcheckers.ui;
+
+import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
+
+public class GetSigninRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+
+    private final TemplateEngine templateEngine;
+
+    /**
+     * Create the Spark Route (UI controller) for the
+     * {@code GET /signin} HTTP request.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
+    public GetSigninRoute(final TemplateEngine templateEngine) {
+        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        this.templateEngine = templateEngine;
+
+        LOG.config("GetHomeRoute is initialized.");
+    }
+
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.finer("GetHomeRoute is invoked.");
+
+        Map<String, Object> vm = new HashMap<>();
+        vm.put("title", "Sign in");
+        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+    }
+}
