@@ -24,9 +24,9 @@
         <p>Welcome to the world of online Checkers.</p>
         <ol>
           <#if currentPlayer??>
-            <#list playerLobby.getPlayerNames() as name>
-                <#if name != currentPlayer.getName()>
-                    <li>${name}</li>
+            <#list playerLobby.getPlayers() as player>
+                <#if player.getName() != currentPlayer.getName()>
+                    <li>${player.getName()}</li>
                 </#if>
             </#list>
           <#else>
