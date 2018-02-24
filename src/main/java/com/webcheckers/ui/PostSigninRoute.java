@@ -50,9 +50,8 @@ public class PostSigninRoute implements Route {
         if(playerLobby.isNameAvailable(playerName)) {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
-            Map<String, Object> vm = new HashMap<>();
-            vm.put("title", "Home - " + playerName);
-            return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+            response.redirect(WebServer.HOME_URL);
+            return null;
         }
         else{
             Map<String, Object> vm = new HashMap<>();
