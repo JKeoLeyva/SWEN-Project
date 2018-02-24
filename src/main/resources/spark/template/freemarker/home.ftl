@@ -15,7 +15,7 @@
         <a href="/signin">sign in</a>
 
         <#if currentPlayer??>
-            ${currentPlayer.getName()}
+            | ${currentPlayer.getName()}
         </#if>
 
     </div>
