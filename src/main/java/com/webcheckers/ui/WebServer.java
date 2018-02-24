@@ -2,12 +2,16 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.sun.javafx.collections.MappingChange;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.BoardView;
 import spark.TemplateEngine;
 
 
@@ -57,6 +61,8 @@ public class WebServer {
 
     public static final String SIGNIN_URL = "/signin";
 
+    public static final String GAME_URL = "/game";
+
     //
     // Attributes
     //
@@ -64,6 +70,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
+    private final Map<String, Board> games;
 
     //
     // Constructor
@@ -76,7 +83,8 @@ public class WebServer {
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final TemplateEngine templateEngine, final Gson gson, final PlayerLobby playerLobby) {
+    public WebServer(final TemplateEngine templateEngine, final Gson gson,
+                     final PlayerLobby playerLobby, final Map<String, Board> games) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
@@ -84,6 +92,7 @@ public class WebServer {
         this.templateEngine = templateEngine;
         this.gson = gson;
         this.playerLobby = playerLobby;
+        this.games = games;
     }
 
     //
@@ -141,6 +150,7 @@ public class WebServer {
         get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
         get(SIGNIN_URL, new GetSigninRoute(templateEngine, playerLobby));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
+        post(GAME_URL, new PostGameRoute(templateEngine, games));
 
         //
         LOG.config("WebServer is initialized.");

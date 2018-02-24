@@ -1,12 +1,16 @@
 package com.webcheckers;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.BoardView;
 import com.webcheckers.ui.WebServer;
 
 import spark.TemplateEngine;
@@ -59,8 +63,11 @@ public final class Application {
 
         final PlayerLobby playerLobby = new PlayerLobby();
 
+        // inject game map
+        final Map<String, Board> games = new HashMap<>();
+
         // inject the game center and freemarker engine into web server
-        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby);
+        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, games);
 
         // inject web server into application
         final Application app = new Application(webServer);
