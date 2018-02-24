@@ -15,14 +15,23 @@
         <a href="/signin">sign in</a>
 
         <#if currentPlayer??>
-        ${currentPlayer.name}
+          ${currentPlayer.name}
         </#if>
 
     </div>
 
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+      <ol>
+        <#list playerLobby.getPlayerNames() as name>
+          <#if name != currentPlayer.name>
+            <li>${name}</li>
+          </#if>
+        </#list>
+      </ol>
     </div>
+
+
     
   </div>
 </body>
