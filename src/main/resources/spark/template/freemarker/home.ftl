@@ -13,8 +13,13 @@
     <div class="navigation">
         <a href="/">my home</a> |
         <a href="/signin">sign in</a>
+
+        <#if currentPlayer??>
+        ${currentPlayer.name}
+        </#if>
+
     </div>
-    
+
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
     </div>
