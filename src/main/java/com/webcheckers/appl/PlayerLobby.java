@@ -13,7 +13,7 @@ public class PlayerLobby {
     }
 
     public boolean isNameAvailable(String name) {
-        return players.contains(name);
+        return !players.contains(name);
     }
 
     public Player signInPlayer(String name) {
