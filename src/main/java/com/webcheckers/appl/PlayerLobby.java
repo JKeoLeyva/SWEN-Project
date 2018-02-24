@@ -6,25 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerLobby {
-    private List<String> players;
+    private List<Player> players;
 
     public PlayerLobby() {
         players = new ArrayList<>();
     }
 
     public boolean isNameAvailable(String name) {
-        return !players.contains(name);
+        return !players.contains(new Player(name));
     }
 
     public Player signInPlayer(String name) {
         if(!isNameAvailable(name))
             return null;
 
-        players.add(name);
-        return new Player(name);
+        Player player = new Player(name);
+        players.add(player);
+        return player;
     }
 
-    public List<String> getPlayerNames() {
+    public List<Player> getPlayers() {
         return players;
     }
 }

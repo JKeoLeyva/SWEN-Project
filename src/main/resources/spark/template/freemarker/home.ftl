@@ -25,12 +25,12 @@
         <ol>
           <#if currentPlayer??>
             <#list playerLobby.getPlayers() as player>
-                <#if player.getName() != currentPlayer.getName()>
+                <#if player != currentPlayer>
                     <li>${player.getName()}</li>
                 </#if>
             </#list>
           <#else>
-              <p>${playerLobby.getPlayerNames()?size} players currently signed in.</p>
+              <p>${playerLobby.getPlayers()?size} players currently signed in.</p>
           </#if>
         </ol>
     </div>
