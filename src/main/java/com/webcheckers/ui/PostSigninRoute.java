@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * @author sam davis sjd8078
  */
@@ -48,6 +50,7 @@ public class PostSigninRoute implements Route {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
         else{

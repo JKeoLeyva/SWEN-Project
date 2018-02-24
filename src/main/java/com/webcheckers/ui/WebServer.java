@@ -8,10 +8,8 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
-import com.sun.javafx.collections.MappingChange;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.BoardView;
 import spark.TemplateEngine;
 
 

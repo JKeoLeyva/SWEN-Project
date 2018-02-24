@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.BoardView;
 import com.webcheckers.ui.WebServer;
 
 import spark.TemplateEngine;
