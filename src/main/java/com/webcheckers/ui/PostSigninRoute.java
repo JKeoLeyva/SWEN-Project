@@ -44,9 +44,6 @@ public class PostSigninRoute implements Route {
 
         final String playerName = request.queryParams("name");
 
-        System.out.println(playerName);
-        System.out.println(playerLobby.isNameAvailable(playerName));
-
         if(playerLobby.isNameAvailable(playerName)) {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
