@@ -29,6 +29,8 @@
                     <li>${name}</li>
                 </#if>
             </#list>
+          <#else>
+              <p>${playerLobby.getPlayerNames()?size} players currently signed in.</p>
           </#if>
         </ol>
     </div>
