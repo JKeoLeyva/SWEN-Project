@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
+    private final Map<String, Board> games;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -23,12 +25,13 @@ public class GetGameRoute implements Route {
      *
      * @param templateEngine the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    public GetGameRoute(final TemplateEngine templateEngine,
+                        final Map<String, Board> games) {
 
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
+        this.games = games;
 
         LOG.config("GetGameRoute is initialized.");
     }
@@ -43,11 +46,19 @@ public class GetGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
-
-        // still need KEEGs postgameroute
+        Session session = request.session();
+        Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
+        Board board = games.get(currPlayer.getName());
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");
+        vm.put("currentPlayer", currPlayer);
+        vm.put("viewMode", "VIEWING");
+        vm.put("redPlayer", board.getRedPlayer());
+        vm.put("whitePlayer", board.getWhitePlayer());
+        vm.put("activeColor", board.activeColor());
+        vm.put("board", board);
+
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
 }

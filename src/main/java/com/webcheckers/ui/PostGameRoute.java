@@ -32,7 +32,7 @@ public class PostGameRoute implements Route{
         LOG.finer("PostGameRoute is invoked.");
         final Session session = request.session();
         final Player player1 = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        final Player player2 = new Player(request.params("name"));
+        final Player player2 = new Player(request.queryParams("opponent"));
         final Board newBoard = new Board(player1, player2);
 
         games.put(player1.getName(), newBoard);

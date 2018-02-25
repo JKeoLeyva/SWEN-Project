@@ -24,11 +24,14 @@
         <p>Welcome to the world of online Checkers.</p>
         <ol>
           <#if currentPlayer??>
+              <form action="/game" method="POST">
+                  Request game with <input name="opponent" />
+                  <br/>
+                  <button type="submit">Ok</button>
+              </form>
             <#list playerLobby.getPlayers() as player>
                 <#if player != currentPlayer>
-                    <li>
-                        <a href="/game">${player.getName()}</a>
-                    </li>
+                    <li>${player.getName()}</li>
                 </#if>
             </#list>
           <#else>
