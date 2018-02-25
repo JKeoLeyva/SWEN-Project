@@ -26,7 +26,9 @@
           <#if currentPlayer??>
             <#list playerLobby.getPlayers() as player>
                 <#if player != currentPlayer>
-                    <li>${player.getName()}</li>
+                    <li>
+                        <a href="/game">${player.getName()}</a>
+                    </li>
                 </#if>
             </#list>
           <#else>

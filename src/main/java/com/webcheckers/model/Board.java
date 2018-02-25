@@ -1,16 +1,17 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author sam davis sjd8078
  */
 public class Board {
 
-    private Player redPlayer;
-    private Player whitePlayer;
-    private Player currPlayer;
-    private ArrayList<ArrayList<String>> board;
+    private final Player redPlayer;
+    private final Player whitePlayer;
+    private final Player currPlayer;
+    private List<List<String>> board;
     private final int BOARD_SIZE = 8;
 
     public static enum Piece{
@@ -27,18 +28,18 @@ public class Board {
             board.add(new ArrayList<>());
         }
 
-        for(int i = 0; i < BOARD_SIZE; i++){
-            for(int j = 0; j < BOARD_SIZE; j++){
-                //red half of board
-                if(i < BOARD_SIZE/2){
-
-                }
-                //white half of the board
-                else{
-
-                }
-            }
-        }
+//        for(int i = 0; i < BOARD_SIZE; i++){
+//            for(int j = 0; j < BOARD_SIZE; j++){
+//                //red half of board
+//                if(i < BOARD_SIZE/2){
+//
+//                }
+//                //white half of the board
+//                else{
+//
+//                }
+//            }
+//        }
     }
 
     public Player getRedPlayer(){
@@ -53,4 +54,7 @@ public class Board {
         return currPlayer;
     }
 
+    public String activeColor(){
+        return currPlayer.equals(redPlayer) ? "red" : "white";
+    }
 }
