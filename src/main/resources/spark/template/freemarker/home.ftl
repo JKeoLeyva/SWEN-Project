@@ -25,7 +25,7 @@
         <ol>
           <#if currentPlayer??>
               <form action="/game" method="POST">
-                  Request game with <input name="opponent" />
+                  Request game with <input name="opponent"/>
                   <br/>
                   <button type="submit">Ok</button>
               </form>

@@ -14,17 +14,17 @@ public class Board {
     private List<List<String>> board;
     private final int BOARD_SIZE = 8;
 
-    public static enum Piece{
+    public static enum Piece {
         RED, WHITE, RED_KING, WHITE_KING, EMPTY
     }
 
-    public Board(Player redPlayer, Player whitePlayer){
+    public Board(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.currPlayer = redPlayer;
 
         this.board = new ArrayList<>();
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 8; i++) {
             board.add(new ArrayList<>());
         }
 
@@ -42,19 +42,19 @@ public class Board {
 //        }
     }
 
-    public Player getRedPlayer(){
+    public Player getRedPlayer() {
         return redPlayer;
     }
 
-    public Player getWhitePlayer(){
+    public Player getWhitePlayer() {
         return whitePlayer;
     }
 
-    public Player getCurrPlayer(){
+    public Player getCurrPlayer() {
         return currPlayer;
     }
 
-    public String activeColor(){
+    public String activeColor() {
         return currPlayer.equals(redPlayer) ? "red" : "white";
     }
 }

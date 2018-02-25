@@ -5,28 +5,28 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-  <div class="page">
+<div class="page">
     <h1>Web Checkers</h1>
-    
+
     <div class="navigation">
-      <a href="/">home</a> |
-      <a href="/signin">sign in</a>
+        <a href="/">home</a> |
+        <a href="/signin">sign in</a>
     </div>
-    
+
     <div class="body">
-      <h2>Sign in:</h2>
+        <h2>Sign in:</h2>
       
       <#if message??>
       <div class="error">${message}</div>
       </#if>
-      
-      <form action="/signin" method="POST">
-        Your name: <input name="name" />
-        <br/>
-        <button type="submit">Ok</button>
-      </form>
+
+        <form action="/signin" method="POST">
+            Your name: <input name="name"/>
+            <br/>
+            <button type="submit">Ok</button>
+        </form>
     </div>
-    
-  </div>
+
+</div>
 </body>
 </html>

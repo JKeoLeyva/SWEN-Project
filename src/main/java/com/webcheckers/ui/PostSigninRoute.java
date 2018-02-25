@@ -27,8 +27,7 @@ public class PostSigninRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code GET /signin} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public PostSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -53,10 +52,10 @@ public class PostSigninRoute implements Route {
             halt();
             return null;
         }
-        else{
+        else {
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Sign in");
-            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
     }
 }

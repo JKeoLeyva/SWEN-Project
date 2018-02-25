@@ -14,13 +14,13 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
-public class PostGameRoute implements Route{
+public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private final TemplateEngine templateEngine;
     private final Map<String, Board> games;
 
     public PostGameRoute(final TemplateEngine templateEngine,
-                         final Map<String, Board> games){
+                         final Map<String, Board> games) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
         this.games = games;
