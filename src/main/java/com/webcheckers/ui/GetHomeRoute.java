@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import javafx.geometry.Pos;
 import spark.*;
 
 /**
