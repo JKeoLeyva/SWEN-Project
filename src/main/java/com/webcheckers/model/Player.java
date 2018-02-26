@@ -3,7 +3,7 @@ package com.webcheckers.model;
 import java.util.Objects;
 
 public class Player {
-    private final String name;
+    private String name;
 
     public Player(String name) {
         this.name = name;
