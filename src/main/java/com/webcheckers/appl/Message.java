@@ -5,7 +5,7 @@ package com.webcheckers.appl;
 
 public class Message {
     //An application-specific enum for messages.
-    protected enum messageType{
+    public enum messageType{
         info, error
     }
 
