@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;

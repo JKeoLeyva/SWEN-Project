@@ -5,7 +5,6 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.Map;
