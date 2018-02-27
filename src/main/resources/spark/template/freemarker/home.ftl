@@ -24,11 +24,6 @@
         <p>Welcome to the world of online Checkers.</p>
         <ol>
           <#if currentPlayer??>
-              <form action="/game" method="POST">
-                  Request game with <input name="opponent"/>
-                  <br/>
-                  <button type="submit">Ok</button>
-              </form>
             <#if (playerLobby.getPlayerCount() > 1)>
                 <p>
                     Currently online players are:
@@ -36,7 +31,11 @@
             </#if>
             <#list playerLobby.getPlayers() as player>
                 <#if player != currentPlayer>
-                    <li>${player.getName()}</li>
+                    <li>
+                        <form action="/game" method="POST">
+                            <input type="submit" name="opponent" value="${player.getName()}">
+                        </form>
+                    </li>
                 </#if>
             </#list>
           <#else>
