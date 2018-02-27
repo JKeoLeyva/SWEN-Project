@@ -8,21 +8,21 @@ public class BoardView implements Iterable<Row> {
 
     private List<Row> rows;
 
-    public BoardView(){
+    public BoardView() {
         rows = new ArrayList<>();
         for(int i = 0; i < 8; i++) {
             rows.add(new Row(i));
         }
     }
 
-    public void populateBoard(){
+    public void populateBoard() {
         for(int row = 0; row < 8; row++) {
             for(int col = 0; col < 8; col++) {
                 if(row % 2 == col % 2) {
                     if(row < 3) {
                         rows.get(row).getSpace(col).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
                     }
-                    else if(row > 4){
+                    else if(row > 4) {
                         rows.get(row).getSpace(col).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
                     }
                 }
@@ -30,7 +30,7 @@ public class BoardView implements Iterable<Row> {
         }
     }
 
-    public Space getSpace(int row, int cellIdx){
+    public Space getSpace(int row, int cellIdx) {
         return rows.get(row).getSpace(cellIdx);
     }
 

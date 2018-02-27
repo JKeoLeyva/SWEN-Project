@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Row implements Iterable<Space>{
+public class Row implements Iterable<Space> {
 
     private List<Space> spaces;
     private int index;
 
-    public Row(int index){
-        if (index < 0 || index > 7) {
+    public Row(int index) {
+        if(index < 0 || index > 7) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
 
@@ -22,7 +22,7 @@ public class Row implements Iterable<Space>{
         }
     }
 
-    public boolean spaceIsValid(int cellIdx){
+    public boolean spaceIsValid(int cellIdx) {
         return spaces.get(cellIdx).isValid(index);
     }
 
@@ -30,7 +30,7 @@ public class Row implements Iterable<Space>{
         return index;
     }
 
-    public Space getSpace(int cellIdx){
+    public Space getSpace(int cellIdx) {
         return spaces.get(cellIdx);
     }
 
@@ -42,7 +42,7 @@ public class Row implements Iterable<Space>{
     @Override
     public String toString() {
         String all = "";
-        for(Space s : spaces){
+        for(Space s : spaces) {
             all += s;
         }
         return all;

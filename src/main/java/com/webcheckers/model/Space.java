@@ -7,12 +7,12 @@ public class Space {
     private boolean isBlack;
 
     public Space(int row, int cellIdx, Piece piece) {
-        if (cellIdx < 0 || cellIdx > 7) {
+        if(cellIdx < 0 || cellIdx > 7) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
         this.cellIdx = cellIdx;
         this.piece = piece;
-        this.isBlack = (row%2 != cellIdx%2);
+        this.isBlack = (row % 2 != cellIdx % 2);
     }
 
     public Space(int row, int cellIdx) {
