@@ -4,6 +4,7 @@ import com.webcheckers.model.Board;
 import com.webcheckers.ui.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ public class GameManager {
     private Map<String, Board> games;
 
     public GameManager() {
+        games = new HashMap<>();
     }
 
     public void createBoard(String name, Board board) {
@@ -25,7 +27,8 @@ public class GameManager {
     }
 
     public Board getBoard(Player player) {
-        if(!games.containsValue(player.getName())) return null;
+        if (player == null)
+            return null;
         return games.get(player.getName());
     }
 }
