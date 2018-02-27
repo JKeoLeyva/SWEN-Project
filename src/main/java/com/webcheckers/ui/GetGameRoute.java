@@ -47,7 +47,7 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute is invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        Board board = gameManager.getBoard(currPlayer.getName());
+        Board board = gameManager.getBoard(currPlayer);
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");

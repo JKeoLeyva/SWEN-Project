@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Board;
+import com.webcheckers.ui.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ public class GameManager {
         return games;
     }
 
-    public Board getBoard(String name) {
-        return games.get(name);
+    public Board getBoard(Player player) {
+        if(!games.containsValue(player.getName())) return null;
+        return games.get(player.getName());
     }
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import spark.*;
 
@@ -18,6 +19,7 @@ public class GetHomeRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
+    private final GameManager gameManager;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -25,12 +27,14 @@ public class GetHomeRoute implements Route {
      *
      * @param templateEngine the HTML template rendering engine
      */
-    public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
+                        final GameManager gameManager) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         //
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
+        this.gameManager = gameManager;
         //
         LOG.config("GetHomeRoute is initialized.");
     }
@@ -50,6 +54,10 @@ public class GetHomeRoute implements Route {
         final Session httpSession = request.session();
         if(httpSession.attribute(PostSigninRoute.PLAYER_ATTR) != null) {
             currentPlayer = httpSession.attribute(PostSigninRoute.PLAYER_ATTR);
+        }
+
+        if(gameManager.getBoard(currentPlayer) != null) {
+            response.redirect(WebServer.GAME_URL);
         }
 
         Map<String, Object> vm = new HashMap<>();

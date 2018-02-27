@@ -69,7 +69,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private final PlayerLobby playerLobby;
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     //
     // Constructor
@@ -146,7 +146,7 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
+        get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameManager));
         get(SIGNIN_URL, new GetSigninRoute(templateEngine, playerLobby));
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
