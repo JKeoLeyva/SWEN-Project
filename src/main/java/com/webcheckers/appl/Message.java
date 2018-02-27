@@ -5,14 +5,14 @@ package com.webcheckers.appl;
 
 public class Message {
     //An application-specific enum for messages.
-    public enum messageType{
+    public enum type{
         info, error
     }
 
-    private messageType type;
+    private type type;
     private String text;
 
-    public Message(String text, messageType type) {
+    public Message(String text, type type) {
         this.text = text;
         this.type = type;
     }
@@ -29,7 +29,7 @@ public class Message {
      * Getter for message type.
      * @return message type
      */
-    public messageType getType() {
+    public type getType() {
         return type;
     }
 

@@ -2,10 +2,11 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Row implements Iterable<Space>{
 
-    private ArrayList<Space> spaces;
+    private List<Space> spaces;
     private int index;
 
     public Row(int index){
@@ -17,7 +18,7 @@ public class Row implements Iterable<Space>{
 
         this.spaces = new ArrayList<>();
         for(int i = 0; i < 8; i++) {
-            spaces.add(new Space(i));
+            spaces.add(new Space(index, i));
         }
     }
 

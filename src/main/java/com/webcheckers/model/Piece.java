@@ -2,9 +2,6 @@ package com.webcheckers.model;
 
 public class Piece {
 
-    private Type t;
-    private Color color;
-
     public enum Type{
         SINGLE, KING
     }
@@ -13,13 +10,16 @@ public class Piece {
         RED, WHITE
     }
 
+    private Type type;
+    private Color color;
+
     public Piece(Type t, Color c){
-        this.t = t;
+        this.type = t;
         this.color = c;
     }
 
-    public Type getT() {
-        return t;
+    public Type getType() {
+        return type;
     }
 
     public Color getColor() {
@@ -28,7 +28,7 @@ public class Piece {
 
     @Override
     public String toString() {
-        String t_string = this.t == Type.SINGLE ? "Single" : "King";
+        String t_string = this.type == Type.SINGLE ? "Single" : "King";
         String color_string = this.color == Color.RED ? "Red" : "White";
 
         return color_string + " " + t_string;

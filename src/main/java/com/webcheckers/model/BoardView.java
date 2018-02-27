@@ -2,10 +2,11 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class BoardView implements Iterable<Row> {
 
-    private ArrayList<Row> rows;
+    private List<Row> rows;
 
     public BoardView(){
         rows = new ArrayList<>();
@@ -48,13 +49,13 @@ public class BoardView implements Iterable<Row> {
         return allRows;
     }
 
-    public static void main(String[] args) {
-        BoardView b = new BoardView();
-        b.populateBoard();
-        System.out.println(b);
-
-        Space s = new Space(1);
-        s.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-        System.out.println(b.getSpace(0,0));
-    }
+//    public static void main(String[] args) {
+//        BoardView b = new BoardView();
+//        b.populateBoard();
+//        System.out.println(b);
+//
+//        Space s = new Space(1);
+//        s.setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+//        System.out.println(b.getSpace(0,0));
+//    }
 }
