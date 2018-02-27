@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import com.webcheckers.ui.Piece;
+import com.webcheckers.ui.Player;
 
 /**
  * @author Jacob Keegan
@@ -8,9 +9,12 @@ import com.webcheckers.ui.Piece;
  */
 public class Board {
     public final static int BOARD_SIZE = 8;
+    private final Piece.Color activeColor = Piece.Color.RED;
     private Piece[][] board;
+    private final Player redPlayer;
+    private final Player whitePlayer;
 
-    public Board(){
+    public Board(final Player player1, final Player player2){
         board = new Piece[BOARD_SIZE][BOARD_SIZE];
         setUpPlayer(Piece.Color.WHITE);
         for(int row = 3; row < 5; row++){
@@ -19,6 +23,8 @@ public class Board {
             }
         }
         setUpPlayer(Piece.Color.RED);
+        redPlayer = player1;
+        whitePlayer = player2;
     }
 
     // Sets up either player.
@@ -45,4 +51,15 @@ public class Board {
         board[row][col] = piece;
     }
 
+    public Player getRedPlayer() {
+        return redPlayer;
+    }
+
+    public Player getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    public Piece.Color getActiveColor() {
+        return activeColor;
+    }
 }

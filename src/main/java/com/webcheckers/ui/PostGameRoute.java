@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
-/*
-@author: Jacob Keegan
+/**
+ * @author Jacob Keegan
  */
 
 import com.webcheckers.model.Board;

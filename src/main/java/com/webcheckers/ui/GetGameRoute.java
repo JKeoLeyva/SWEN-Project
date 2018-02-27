@@ -51,11 +51,11 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");
         vm.put("currentPlayer", currPlayer);
-        vm.put("viewMode", "VIEWING");
+        vm.put("viewMode", ViewMode.PLAY);
         vm.put("redPlayer", board.getRedPlayer());
         vm.put("whitePlayer", board.getWhitePlayer());
-        vm.put("activeColor", board.activeColor());
-        vm.put("board", board);
+        vm.put("activeColor", board.getActiveColor());
+        vm.put("board", new BoardView(board));
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }

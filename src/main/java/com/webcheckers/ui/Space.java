@@ -17,19 +17,11 @@ public class Space {
         this.isBlack = (row % 2 != cellIdx % 2);
     }
 
-    public Space(int row, int cellIdx) {
-        this(row, cellIdx, null);
-    }
-
-    public void setPiece(Piece piece) {
-        this.piece = piece;
-    }
-
     public int getCellIdx() {
         return cellIdx;
     }
 
-    public boolean isValid(int row) {
+    public boolean isValid() {
         return isBlack && (piece == null);
     }
 

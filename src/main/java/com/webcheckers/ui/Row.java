@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import com.webcheckers.model.Board;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,16 +19,8 @@ public class Row implements Iterable<Space> {
         this.spaces = spaces;
     }
 
-    public boolean spaceIsValid(int cellIdx) {
-        return spaces.get(cellIdx).isValid(index);
-    }
-
     public int getIndex() {
         return index;
-    }
-
-    public Space getSpace(int cellIdx) {
-        return spaces.get(cellIdx);
     }
 
     @Override
