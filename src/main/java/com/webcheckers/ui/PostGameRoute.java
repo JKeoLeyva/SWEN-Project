@@ -5,6 +5,7 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -17,6 +18,9 @@ public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private final TemplateEngine templateEngine;
     private GameManager gameManager;
+
+    public static final String MESSAGE_ATTR = "message";
+    private static final String ALREADY_IN_GAME_ERROR = "Player is already in a game.";
 
     public PostGameRoute(final TemplateEngine templateEngine,
                          final GameManager gameManager) {
@@ -35,8 +39,10 @@ public class PostGameRoute implements Route {
 
         String redirect = WebServer.GAME_URL;
 
-        if(!gameManager.addBoard(player1, player2))
+        if(!gameManager.addBoard(player1, player2)) {
             redirect = WebServer.HOME_URL;
+            session.attribute(MESSAGE_ATTR, new Message(ALREADY_IN_GAME_ERROR, Message.Type.error));
+        }
 
         response.redirect(redirect);
         halt();

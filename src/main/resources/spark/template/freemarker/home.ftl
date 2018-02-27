@@ -20,6 +20,10 @@
 
     </div>
 
+    <#if message??>
+        <div class="error">${message}</div>
+    </#if>
+
     <div class="body">
         <p>Welcome to the world of online Checkers.</p>
         <ol>

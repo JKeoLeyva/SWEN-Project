@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -61,10 +62,15 @@ public class GetHomeRoute implements Route {
             response.redirect(WebServer.GAME_URL);
         }
 
+        Message message = httpSession.attribute(PostGameRoute.MESSAGE_ATTR);
+
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
         vm.put("currentPlayer", currentPlayer);
         vm.put("playerLobby", playerLobby);
+
+        if(message != null)
+            vm.put("message", message.getText());
 
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
