@@ -27,11 +27,7 @@ public class GameManager {
     }
 
     public Board getBoard(Player player) {
-        if(player == null) {
-            //player is null?
-            return null;
-        }
-        if(!games.containsValue(player.getName())) return null;
+        if(player == null) return null;
         return games.get(player.getName());
     }
 }
