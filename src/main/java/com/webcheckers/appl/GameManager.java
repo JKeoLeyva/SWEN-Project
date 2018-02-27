@@ -5,6 +5,9 @@ import com.webcheckers.model.Board;
 import java.util.ArrayList;
 import java.util.List;
 
+// @author Karl Coelho
+// An application service for managing the multiple games ongoing.
+
 public class GameManager {
     private List<Board> boards;
 
