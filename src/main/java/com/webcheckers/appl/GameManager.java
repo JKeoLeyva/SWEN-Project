@@ -18,8 +18,10 @@ public class GameManager {
         games = new HashMap<>();
     }
 
-    public void createBoard(String name, Board board) {
-        this.games.put(name, board);
+    public synchronized boolean createBoard(String name, Board board) {
+        if(games.containsKey(name)) return false;
+        games.put(name, board);
+        return true;
     }
 
     public Map<String, Board> getBoards() {
