@@ -5,10 +5,9 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.model.Board;
+import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -34,9 +33,12 @@ public class PostGameRoute implements Route {
         final Player player1 = session.attribute(PostSigninRoute.PLAYER_ATTR);
         final Player player2 = new Player(request.queryParams("opponent"));
 
+        String redirect = WebServer.GAME_URL;
+
         if(!gameManager.addBoard(player1, player2))
-            // TODO: send a message, redirect to home
-        response.redirect(WebServer.GAME_URL);
+            redirect = WebServer.HOME_URL;
+
+        response.redirect(redirect);
         halt();
         return null;
     }
