@@ -69,8 +69,10 @@ public class GetHomeRoute implements Route {
         vm.put("currentPlayer", currentPlayer);
         vm.put("playerLobby", playerLobby);
 
-        if(message != null)
+        if(message != null) {
             vm.put("message", message.getText());
+            httpSession.removeAttribute(PostGameRoute.MESSAGE_ATTR);
+        }
 
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
