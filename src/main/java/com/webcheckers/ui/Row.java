@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Board;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,17 +11,13 @@ public class Row implements Iterable<Space> {
     private List<Space> spaces;
     private int index;
 
-    public Row(int index) {
-        if(index < 0 || index > 7) {
+    public Row(int index, List<Space> spaces) {
+        if(spaces.size() != Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
 
         this.index = index;
-
-        this.spaces = new ArrayList<>();
-        for(int i = 0; i < 8; i++) {
-            spaces.add(new Space(index, i));
-        }
+        this.spaces = spaces;
     }
 
     public boolean spaceIsValid(int cellIdx) {

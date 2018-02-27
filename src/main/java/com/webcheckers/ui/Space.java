@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Board;
+
 public class Space {
 
     private int cellIdx;
@@ -7,7 +9,7 @@ public class Space {
     private boolean isBlack;
 
     public Space(int row, int cellIdx, Piece piece) {
-        if(cellIdx < 0 || cellIdx > 7) {
+        if(cellIdx < 0 || cellIdx >= Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
         this.cellIdx = cellIdx;

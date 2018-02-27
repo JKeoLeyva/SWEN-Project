@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Board;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,30 +10,17 @@ public class BoardView implements Iterable<Row> {
 
     private List<Row> rows;
 
-    public BoardView() {
-        rows = new ArrayList<>();
-        for(int i = 0; i < 8; i++) {
-            rows.add(new Row(i));
-        }
-    }
-
-    public void populateBoard() {
-        for(int row = 0; row < 8; row++) {
-            for(int col = 0; col < 8; col++) {
-                if(row % 2 == col % 2) {
-                    if(row < 3) {
-                        rows.get(row).getSpace(col).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-                    }
-                    else if(row > 4) {
-                        rows.get(row).getSpace(col).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-                    }
-                }
+    public BoardView(Board gameBoard) {
+        rows = new ArrayList<>(Board.BOARD_SIZE);
+        for(int row = 0; row < Board.BOARD_SIZE; row++){
+            List<Space> spaces = new ArrayList<>(Board.BOARD_SIZE);
+            // Creates an array of 8 spaces, containing their proper pieces.
+            for(int col = 0; col < Board.BOARD_SIZE; col++){
+                spaces.add(new Space(row, col, gameBoard.getPiece(row, col)));
             }
+            //Assigns these spaces to a single row.
+            rows.add(new Row(row, spaces));
         }
-    }
-
-    public Space getSpace(int row, int cellIdx) {
-        return rows.get(row).getSpace(cellIdx);
     }
 
     @Override
