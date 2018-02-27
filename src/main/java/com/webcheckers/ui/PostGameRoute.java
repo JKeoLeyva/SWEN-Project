@@ -35,8 +35,8 @@ public class PostGameRoute implements Route {
         final Player player2 = new Player(request.queryParams("opponent"));
         final Board newBoard = new Board(player1, player2);
 
-        this.gameManager.createBoard(player1.getName(), newBoard);
-        this.gameManager.createBoard(player2.getName(), newBoard);
+        this.gameManager.createBoard(player1, newBoard);
+        this.gameManager.createBoard(player2, newBoard);
         response.redirect(WebServer.GAME_URL);
         halt();
         return null;
