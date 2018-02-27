@@ -12,10 +12,10 @@
 
     <div class="navigation">
         <a href="/">my home</a> |
-        <a href="/signin">sign in</a>
-
         <#if currentPlayer??>
-            | ${currentPlayer.getName()}
+            <a href="/signout">sign out [${currentPlayer.name}]</a>
+        <#else>
+            <a href="/signin">sign in</a>
         </#if>
 
     </div>

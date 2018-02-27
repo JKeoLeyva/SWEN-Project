@@ -1,11 +1,9 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Board;
-import com.webcheckers.ui.Player;
+import com.webcheckers.model.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 // @author Karl Coelho
@@ -27,6 +25,10 @@ public class GameManager {
         games.put(player1, board);
         games.put(player2, board);
         return true;
+    }
+
+    public synchronized boolean canCreateBoard(Player p1, Player p2) {
+        return !games.containsKey(p1) && !games.containsKey(p2);
     }
 
     public Map<Player, Board> getBoards() {

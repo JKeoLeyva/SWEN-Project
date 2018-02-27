@@ -1,13 +1,14 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
-import spark.*;
 
 /**
  * The UI Controller to GET the Home page.
