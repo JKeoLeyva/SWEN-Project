@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import spark.*;
 
@@ -15,7 +16,7 @@ public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final Map<String, Board> games;
+    private final GameManager gameManager;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -24,12 +25,12 @@ public class GetGameRoute implements Route {
      * @param templateEngine the HTML template rendering engine
      */
     public GetGameRoute(final TemplateEngine templateEngine,
-                        final Map<String, Board> games) {
+                        final GameManager gameManager) {
 
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
-        this.games = games;
+        this.gameManager = gameManager;
 
         LOG.config("GetGameRoute is initialized.");
     }
@@ -46,7 +47,7 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute is invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        Board board = games.get(currPlayer.getName());
+        Board board = gameManager.getBoard(currPlayer.getName());
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");

@@ -8,6 +8,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.ui.WebServer;
@@ -62,11 +63,11 @@ public final class Application {
 
         final PlayerLobby playerLobby = new PlayerLobby();
 
-        // inject game map
-        final Map<String, Board> games = new HashMap<>();
+        // inject game manager
+        final GameManager gameManager = new GameManager();
 
         // inject the game center and freemarker engine into web server
-        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, games);
+        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, gameManager);
 
         // inject web server into application
         final Application app = new Application(webServer);

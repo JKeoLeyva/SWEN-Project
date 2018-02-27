@@ -4,6 +4,7 @@ package com.webcheckers.ui;
  * @author Jacob Keegan
  */
 
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import spark.*;
 
@@ -16,13 +17,13 @@ import static spark.Spark.halt;
 public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private final TemplateEngine templateEngine;
-    private final Map<String, Board> games;
+    private GameManager gameManager;
 
     public PostGameRoute(final TemplateEngine templateEngine,
-                         final Map<String, Board> games) {
+                         final GameManager gameManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
-        this.games = games;
+        this.gameManager = gameManager;
         LOG.config("PostGameRoute is initialized.");
     }
 
@@ -34,8 +35,8 @@ public class PostGameRoute implements Route {
         final Player player2 = new Player(request.queryParams("opponent"));
         final Board newBoard = new Board(player1, player2);
 
-        games.put(player1.getName(), newBoard);
-        games.put(player2.getName(), newBoard);
+        this.gameManager.createBoard(player1.getName(), newBoard);
+        this.gameManager.createBoard(player2.getName(), newBoard);
         response.redirect(WebServer.GAME_URL);
         halt();
         return null;

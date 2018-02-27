@@ -4,22 +4,26 @@ import com.webcheckers.model.Board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // @author Karl Coelho
 // An application service for managing the multiple games ongoing.
 
 public class GameManager {
-    private List<Board> boards;
+    private Map<String, Board> games;
 
     public GameManager() {
-        this.boards = new ArrayList<>();
     }
 
-    public void createBoard(Board board) {
-        this.boards.add(board);
+    public void createBoard(String name, Board board) {
+        this.games.put(name, board);
     }
 
-    public List<Board> getBoards() {
-        return boards;
+    public Map<String, Board> getBoards() {
+        return games;
+    }
+
+    public Board getBoard(String name) {
+        return games.get(name);
     }
 }
