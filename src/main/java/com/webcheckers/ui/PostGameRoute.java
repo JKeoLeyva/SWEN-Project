@@ -8,7 +8,6 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import spark.*;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -17,7 +16,7 @@ import static spark.Spark.halt;
 public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private final TemplateEngine templateEngine;
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     public PostGameRoute(final TemplateEngine templateEngine,
                          final GameManager gameManager) {
@@ -33,10 +32,20 @@ public class PostGameRoute implements Route {
         final Session session = request.session();
         final Player player1 = session.attribute(PostSigninRoute.PLAYER_ATTR);
         final Player player2 = new Player(request.queryParams("opponent"));
-        final Board newBoard = new Board(player1, player2);
 
-        this.gameManager.createBoard(player1, newBoard);
-        this.gameManager.createBoard(player2, newBoard);
+        synchronized(gameManager) {
+            if(!gameManager.canCreateBoard(player1, player2)) {
+                response.redirect(WebServer.HOME_URL);
+                halt();
+                return null;
+            }
+
+            final Board newBoard = new Board(player1, player2);
+
+            this.gameManager.createBoard(player1, newBoard);
+            this.gameManager.createBoard(player2, newBoard);
+        }
+
         response.redirect(WebServer.GAME_URL);
         halt();
         return null;
