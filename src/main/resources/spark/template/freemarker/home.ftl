@@ -29,13 +29,18 @@
                   <br/>
                   <button type="submit">Ok</button>
               </form>
+            <#if (playerLobby.getPlayerCount() > 1)>
+                <p>
+                    Currently online players are:
+                </p>
+            </#if>
             <#list playerLobby.getPlayers() as player>
                 <#if player != currentPlayer>
                     <li>${player.getName()}</li>
                 </#if>
             </#list>
           <#else>
-              <p>${playerLobby.getPlayers()?size} players currently signed in.</p>
+              <p>${playerLobby.getPlayerCount()} players currently signed in.</p>
           </#if>
         </ol>
     </div>

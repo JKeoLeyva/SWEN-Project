@@ -28,4 +28,8 @@ public class PlayerLobby {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public int getPlayerCount() {
+        return players.size();
+    }
 }
