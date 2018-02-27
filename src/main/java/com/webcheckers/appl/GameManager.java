@@ -18,9 +18,14 @@ public class GameManager {
         games = new HashMap<>();
     }
 
-    public synchronized boolean createBoard(Player player, Board board) {
-        if(games.containsKey(player)) return false;
-        games.put(player, board);
+    public synchronized boolean addBoard(Player player1, Player player2) {
+        // returns if both players are available
+        if(games.containsKey(player1) || games.containsKey(player2))
+            return false;
+        // creates and adds a board if both players are available
+        Board board = new Board(player1, player2);
+        games.put(player1, board);
+        games.put(player2, board);
         return true;
     }
 
