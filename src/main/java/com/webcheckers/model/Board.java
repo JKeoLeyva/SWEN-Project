@@ -1,8 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.ui.Piece;
-import com.webcheckers.ui.Player;
-
 /**
  * @author Jacob Keegan
  * Sets up and stores a checkers board.
