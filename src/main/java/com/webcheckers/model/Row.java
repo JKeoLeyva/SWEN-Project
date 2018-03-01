@@ -3,6 +3,9 @@ package com.webcheckers.model;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A class to represent a single checkers board row.
+ */
 public class Row implements Iterable<Space> {
 
     private List<Space> spaces;
@@ -26,6 +29,7 @@ public class Row implements Iterable<Space> {
         return spaces.iterator();
     }
 
+    // For potential testing purposes.
     @Override
     public String toString() {
         String all = "";

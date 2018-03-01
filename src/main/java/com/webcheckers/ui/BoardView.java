@@ -9,9 +9,17 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A class that displays a checkers board.
+ */
 public class BoardView implements Iterable<Row> {
     private List<Row> rows;
 
+    /**
+     * Generates a view of an input board.
+     * @param gameBoard the board to be viewed
+     * @param reversed if white should be on bottom, reversed is true
+     */
     public BoardView(Board gameBoard, boolean reversed) {
         rows = new ArrayList<>(Board.BOARD_SIZE);
         for(int row = 0; row < Board.BOARD_SIZE; row++){
@@ -38,6 +46,7 @@ public class BoardView implements Iterable<Row> {
         return rows.iterator();
     }
 
+    // For potential testing purposes.
     @Override
     public String toString() {
         String allRows = "";

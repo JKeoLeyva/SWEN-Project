@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * A Spark Route to display a sign-in page.
+ */
 public class GetSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -16,9 +19,9 @@ public class GetSigninRoute implements Route {
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /signin} HTTP request.
-     *
+     * {@code GET /signin} HTTP request
      * @param templateEngine the HTML template rendering engine
+     * @param playerLobby a list of all current players
      */
     public GetSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");

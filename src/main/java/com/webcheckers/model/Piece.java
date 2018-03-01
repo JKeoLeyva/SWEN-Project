@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * A class to represent a single checkers piece.
+ */
+
 public class Piece {
 
     public enum Type {
@@ -26,6 +30,7 @@ public class Piece {
         return color;
     }
 
+    // For potential testing purposes.
     @Override
     public String toString() {
         String t_string = this.type == Type.SINGLE ? "Single" : "King";

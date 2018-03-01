@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ViewMode;
 import spark.*;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
+ * Spark Route for a page displaying the current game.
  * @author sam davis sjd8078
  */
 public class GetGameRoute implements Route {
@@ -21,9 +23,9 @@ public class GetGameRoute implements Route {
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /} HTTP request.
-     *
+     * {@code GET /} HTTP request
      * @param templateEngine the HTML template rendering engine
+     * @param gameManager hold all current games
      */
     public GetGameRoute(final TemplateEngine templateEngine,
                         final GameManager gameManager) {
@@ -38,7 +40,6 @@ public class GetGameRoute implements Route {
 
     /**
      * Render the WebCheckers Game page.
-     *
      * @param request  the HTTP request
      * @param response the HTTP response
      * @return the rendered HTML for the Home page

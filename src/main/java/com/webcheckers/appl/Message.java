@@ -21,7 +21,6 @@ public class Message {
 
     /**
      * Getter for message text.
-     *
      * @return message text
      */
     public String getText() {
@@ -30,7 +29,6 @@ public class Message {
 
     /**
      * Getter for message type.
-     *
      * @return message type
      */
     public Type getType() {

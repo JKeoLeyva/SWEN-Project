@@ -5,6 +5,10 @@ import com.webcheckers.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for listing all logged-in players.
+ */
+
 public class PlayerLobby {
     private List<Player> players;
 
@@ -12,6 +16,10 @@ public class PlayerLobby {
         players = new ArrayList<>();
     }
 
+    /**
+     * @param name that a user wants to log in with
+     * @return true if the name is available
+     */
     public boolean isNameAvailable(String name) {
         return !players.contains(new Player(name));
     }

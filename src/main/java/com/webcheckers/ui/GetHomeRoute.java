@@ -25,9 +25,10 @@ public class GetHomeRoute implements Route {
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /} HTTP request.
-     *
+     * {@code GET /} HTTP request
      * @param templateEngine the HTML template rendering engine
+     * @param playerLobby a list of all current players
+     * @param gameManager a list of all current games
      */
     public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
                         final GameManager gameManager) {
@@ -43,7 +44,6 @@ public class GetHomeRoute implements Route {
 
     /**
      * Render the WebCheckers Home page.
-     *
      * @param request  the HTTP request
      * @param response the HTTP response
      * @return the rendered HTML for the Home page
@@ -59,6 +59,7 @@ public class GetHomeRoute implements Route {
         }
 
         if(gameManager.getBoard(currentPlayer) != null) {
+            // The current player is in a game, and sent to it.
             response.redirect(WebServer.GAME_URL);
         }
 
@@ -70,6 +71,7 @@ public class GetHomeRoute implements Route {
         vm.put("playerLobby", playerLobby);
 
         if(message != null) {
+            // Some message exists, and should be displayed.
             vm.put("message", message.getText());
             httpSession.removeAttribute(PostGameRoute.MESSAGE_ATTR);
         }

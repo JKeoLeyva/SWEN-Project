@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // @author Karl Coelho
-// An application service for managing the multiple games ongoing.
+// An application service for managing the multiple ongoing games.
 
 public class GameManager {
     private Map<Player, Board> games;
@@ -16,11 +16,17 @@ public class GameManager {
         games = new HashMap<>();
     }
 
+    /**
+     * Returns true if both input players are available.
+     * @param player1 to-be red player
+     * @param player2 to-be white player
+     * @return if board add was successful
+     */
     public synchronized boolean addBoard(Player player1, Player player2) {
         // returns if both players are available
         if(games.containsKey(player1) || games.containsKey(player2))
             return false;
-        // creates and adds a board if both players are available
+
         Board board = new Board(player1, player2);
         games.put(player1, board);
         games.put(player2, board);
@@ -35,6 +41,10 @@ public class GameManager {
         return games;
     }
 
+    /**
+     * @param player that may be in a game
+     * @return what game that player is in
+     */
     public Board getBoard(Player player) {
         if(player == null) return null;
         return games.get(player);

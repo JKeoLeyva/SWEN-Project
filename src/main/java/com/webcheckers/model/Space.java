@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+/**
+ * A class to represent a single checkers square.
+ */
 public class Space {
 
     private int cellIdx;
@@ -12,6 +15,7 @@ public class Space {
         }
         this.cellIdx = cellIdx;
         this.piece = piece;
+        // Encapsulates logic of board square coloring.
         this.isBlack = (row % 2 != cellIdx % 2);
     }
 
@@ -27,6 +31,7 @@ public class Space {
         return piece;
     }
 
+    // For potential testing purposes.
     @Override
     public String toString() {
         return "[" + (this.piece == null ? " " : this.piece) + "]";

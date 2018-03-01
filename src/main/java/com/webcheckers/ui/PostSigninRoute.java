@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
+ * Checks if an entered sign-in name is acceptable.
  * @author sam davis sjd8078
  */
 public class PostSigninRoute implements Route {
@@ -26,8 +27,8 @@ public class PostSigninRoute implements Route {
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /signin} HTTP request.
-     *
-     * @param templateEngine the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine.
+     * @param playerLobby a list of all currently logged-in players.
      */
     public PostSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -45,21 +46,27 @@ public class PostSigninRoute implements Route {
 
         final String playerName = request.queryParams("name");
 
+        // If the given player name has non-alphaNumeric characters.
         boolean hasNonAlpha = playerName.matches("^.*[^a-zA-Z0-9 ].*$");
 
         if(hasNonAlpha){
+            // Name is not valid.
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Sign in");
             return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
+
         if(playerLobby.isNameAvailable(playerName)) {
+            // Redirect to the homepage, now signed-in.
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
+
         else {
+            // Name already taken, reload this page.
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Sign in");
             return templateEngine.render(new ModelAndView(vm, "signin.ftl"));

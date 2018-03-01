@@ -1,8 +1,8 @@
 package com.webcheckers.model;
 
 /**
+ * Sets up and stores a single checkers board.
  * @author Jacob Keegan
- * Sets up and stores a checkers board.
  */
 public class Board {
     public final static int BOARD_SIZE = 8;
@@ -24,7 +24,10 @@ public class Board {
         whitePlayer = player2;
     }
 
-    // Sets up either player.
+    /**
+     * Sets up a player of either color.
+     * @param color of player to be set up
+     */
     private void setUpPlayer(Piece.Color color){
         // Determines where to start placing pieces depending on player.
         int initRow = (color == Piece.Color.WHITE ? 0 : 5);

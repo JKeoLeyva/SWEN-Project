@@ -1,9 +1,5 @@
 package com.webcheckers.ui;
 
-/**
- * @author Jacob Keegan
- */
-
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Player;
@@ -14,6 +10,9 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * A Spark Route for requesting a new checkers game.
+ */
 public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private final TemplateEngine templateEngine;
@@ -30,6 +29,11 @@ public class PostGameRoute implements Route {
         LOG.config("PostGameRoute is initialized.");
     }
 
+    /**
+     * @param request contains the names of bother players.
+     * @param response used to redirect to a generated checkers board.
+     * @return null after redirect
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostGameRoute is invoked.");
@@ -40,6 +44,7 @@ public class PostGameRoute implements Route {
         String redirect = WebServer.GAME_URL;
 
         if(!gameManager.addBoard(player1, player2)) {
+            // One of the players is already in a game: redirect to home page.
             redirect = WebServer.HOME_URL;
             session.attribute(MESSAGE_ATTR, new Message(ALREADY_IN_GAME_ERROR, Message.Type.error));
         }
