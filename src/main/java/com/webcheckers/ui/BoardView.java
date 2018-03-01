@@ -17,16 +17,17 @@ public class BoardView implements Iterable<Row> {
 
     /**
      * Generates a view of an input board.
+     *
      * @param gameBoard the board to be viewed
-     * @param reversed if white should be on bottom, reversed is true
+     * @param reversed  if white should be on bottom
      */
     public BoardView(Board gameBoard, boolean reversed) {
         rows = new ArrayList<>(Board.BOARD_SIZE);
-        for(int row = 0; row < Board.BOARD_SIZE; row++){
+        for(int row = 0; row < Board.BOARD_SIZE; row++) {
             List<Space> spaces = new ArrayList<>(Board.BOARD_SIZE);
 
             // Creates an array of 8 spaces, containing their proper pieces.
-            for(int col = 0; col < Board.BOARD_SIZE; col++){
+            for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 spaces.add(new Space(row, col, gameBoard.getPiece(row, col)));
             }
 

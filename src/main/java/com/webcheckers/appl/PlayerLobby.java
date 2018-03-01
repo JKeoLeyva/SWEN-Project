@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * A class for listing all logged-in players.
  */
-
 public class PlayerLobby {
     private List<Player> players;
 
@@ -24,6 +23,12 @@ public class PlayerLobby {
         return !players.contains(new Player(name));
     }
 
+    /**
+     * Attempt to sign in a new player
+     *
+     * @param name the player's name
+     * @return the new Player, if the name is available
+     */
     public Player signInPlayer(String name) {
         if(!isNameAvailable(name))
             return null;

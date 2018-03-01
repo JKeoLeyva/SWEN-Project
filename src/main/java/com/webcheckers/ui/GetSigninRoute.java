@@ -18,6 +18,7 @@ public class GetSigninRoute implements Route {
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /signin} HTTP request
+     *
      * @param templateEngine the HTML template rendering engine
      */
     public GetSigninRoute(final TemplateEngine templateEngine) {

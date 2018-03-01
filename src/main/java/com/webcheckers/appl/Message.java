@@ -3,7 +3,6 @@ package com.webcheckers.appl;
 /**
  * A class for text messages from the server.
  */
-
 public class Message {
     //An application-specific enum for messages.
     public enum Type {
@@ -20,6 +19,7 @@ public class Message {
 
     /**
      * Getter for message text.
+     *
      * @return message text
      */
     public String getText() {
@@ -28,6 +28,7 @@ public class Message {
 
     /**
      * Getter for message type.
+     *
      * @return message type
      */
     public Type getType() {

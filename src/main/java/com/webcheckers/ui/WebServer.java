@@ -1,17 +1,14 @@
 package com.webcheckers.ui;
 
-import static spark.Spark.*;
+import com.google.gson.Gson;
+import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerLobby;
+import spark.TemplateEngine;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-
-import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
-import spark.TemplateEngine;
+import static spark.Spark.*;
 
 
 /**
@@ -150,9 +147,8 @@ public class WebServer {
         get(SIGNIN_URL, new GetSigninRoute(templateEngine));
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
-        post(GAME_URL, new PostGameRoute(templateEngine, gameManager));
+        post(GAME_URL, new PostGameRoute(gameManager));
 
-        //
         LOG.config("WebServer is initialized.");
     }
 

@@ -23,12 +23,12 @@ public class GetGameRoute implements Route {
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request
+     *
      * @param templateEngine the HTML template rendering engine
-     * @param gameManager hold all current games
+     * @param gameManager    hold all current games
      */
     public GetGameRoute(final TemplateEngine templateEngine,
                         final GameManager gameManager) {
-
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
@@ -39,9 +39,10 @@ public class GetGameRoute implements Route {
 
     /**
      * Render the WebCheckers Game page.
+     *
      * @param request  the HTTP request
      * @param response the HTTP response
-     * @return the rendered HTML for the Home page
+     * @return the rendered HTML for the Game page
      */
     @Override
     public Object handle(Request request, Response response) {

@@ -2,6 +2,9 @@ package com.webcheckers.model;
 
 import java.util.Objects;
 
+/**
+ * Represents a Player (or user) of WebCheckers
+ */
 public class Player {
     private String name;
 

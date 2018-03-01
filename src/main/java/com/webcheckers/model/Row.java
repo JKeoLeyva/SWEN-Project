@@ -7,10 +7,16 @@ import java.util.List;
  * A class to represent a single checkers board row.
  */
 public class Row implements Iterable<Space> {
-
     private List<Space> spaces;
     private int index;
 
+    /**
+     * Create a Row from list of spaces
+     *
+     * @param index  the index of the row in the board
+     * @param spaces the cells of the board
+     * @throws IllegalArgumentException if the index is not in 0-7
+     */
     public Row(int index, List<Space> spaces) {
         if(spaces.size() != Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");

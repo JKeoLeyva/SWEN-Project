@@ -3,9 +3,7 @@ package com.webcheckers.model;
 /**
  * A class to represent a single checkers piece.
  */
-
 public class Piece {
-
     public enum Type {
         SINGLE, KING
     }
@@ -17,6 +15,12 @@ public class Piece {
     private Type type;
     private Color color;
 
+    /**
+     * Create a new Piece
+     *
+     * @param t the type of piece
+     * @param c the color of the piece
+     */
     public Piece(Type t, Color c) {
         this.type = t;
         this.color = c;

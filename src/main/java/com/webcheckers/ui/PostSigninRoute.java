@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
- * Checks if an entered sign-in name is acceptable.
+ * Checks if an entered sign-in name is acceptable and signs in the player
  */
 public class PostSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -22,12 +22,12 @@ public class PostSigninRoute implements Route {
 
     public static final String PLAYER_ATTR = "currPlayer";
 
-
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /signin} HTTP request.
+     *
      * @param templateEngine the HTML template rendering engine.
-     * @param playerLobby a list of all currently logged-in players.
+     * @param playerLobby    a list of all currently logged-in players.
      */
     public PostSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -48,7 +48,7 @@ public class PostSigninRoute implements Route {
         // If the given player name has non-alphaNumeric characters.
         boolean hasNonAlpha = playerName.matches("^.*[^a-zA-Z0-9 ].*$");
 
-        if(hasNonAlpha){
+        if(hasNonAlpha) {
             // Name is not valid.
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Sign in");
@@ -63,7 +63,6 @@ public class PostSigninRoute implements Route {
             halt();
             return null;
         }
-
         else {
             // Name already taken, reload this page.
             Map<String, Object> vm = new HashMap<>();

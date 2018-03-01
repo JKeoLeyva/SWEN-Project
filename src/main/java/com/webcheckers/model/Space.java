@@ -9,10 +9,19 @@ public class Space {
     private Piece piece;
     private boolean isBlack;
 
+    /**
+     * Create a new Space (or board cell)
+     *
+     * @param row     the row of the space
+     * @param cellIdx the cell index in the board (column)
+     * @param piece   the piece in the space
+     * @throws IllegalArgumentException if the index is not in 0-7
+     */
     public Space(int row, int cellIdx, Piece piece) {
         if(cellIdx < 0 || cellIdx >= Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
+
         this.cellIdx = cellIdx;
         this.piece = piece;
         // Encapsulates logic of board square coloring.
