@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
 import spark.*;
 
 import java.util.HashMap;
@@ -15,18 +14,15 @@ public class GetSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
 
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /signin} HTTP request
      * @param templateEngine the HTML template rendering engine
-     * @param playerLobby a list of all current players
      */
-    public GetSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    public GetSigninRoute(final TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
 
         LOG.config("GetHomeRoute is initialized.");
     }

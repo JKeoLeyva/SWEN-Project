@@ -1,8 +1,7 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -20,24 +19,21 @@ public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
-    private final GameManager gameManager;
+    private final PlayerManager playerManager;
 
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request
      * @param templateEngine the HTML template rendering engine
-     * @param playerLobby a list of all current players
-     * @param gameManager a list of all current games
+     * @param playerManager the data for all games and players
      */
-    public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
-                        final GameManager gameManager) {
+    public GetHomeRoute(final TemplateEngine templateEngine,
+                        final PlayerManager playerManager) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         //
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
-        this.gameManager = gameManager;
+        this.playerManager = playerManager;
         //
         LOG.config("GetHomeRoute is initialized.");
     }
@@ -58,7 +54,7 @@ public class GetHomeRoute implements Route {
             currentPlayer = httpSession.attribute(PostSigninRoute.PLAYER_ATTR);
         }
 
-        if(gameManager.getBoard(currentPlayer) != null) {
+        if(playerManager.getBoard(currentPlayer) != null) {
             // The current player is in a game, and sent to it.
             response.redirect(WebServer.GAME_URL);
         }
@@ -68,7 +64,7 @@ public class GetHomeRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
         vm.put("currentPlayer", currentPlayer);
-        vm.put("playerLobby", playerLobby);
+        vm.put("playerManager", playerManager);
 
         if(message != null) {
             // Some message exists, and should be displayed.

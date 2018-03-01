@@ -28,12 +28,12 @@
         <p>Welcome to the world of online Checkers.</p>
         <ol>
           <#if currentPlayer??>
-            <#if (playerLobby.getPlayerCount() > 1)>
+            <#if (playerManager.getPlayerCount() > 1)>
                 <p>
                     Currently online players are:
                 </p>
             </#if>
-            <#list playerLobby.getPlayers() as player>
+            <#list playerManager.getPlayers() as player>
                 <#if player != currentPlayer>
                     <li>
                         <form action="/game" method="POST">
@@ -43,7 +43,7 @@
                 </#if>
             </#list>
           <#else>
-              <p>${playerLobby.getPlayerCount()} players currently signed in.</p>
+              <p>${playerManager.getPlayerCount()} players currently signed in.</p>
           </#if>
         </ol>
     </div>

@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerManager;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -18,21 +18,21 @@ public class PostSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
+    private final PlayerManager playerManager;
 
     public static final String PLAYER_ATTR = "currPlayer";
 
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /signin} HTTP request.
-     * @param templateEngine the HTML template rendering engine.
-     * @param playerLobby a list of all currently logged-in players.
+     * {@code GET /signin} HTTP request
+     * @param templateEngine the HTML template rendering engine
+     * @param playerManager the data for all games and players
      */
-    public PostSigninRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    public PostSigninRoute(final TemplateEngine templateEngine, final PlayerManager playerManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
+        this.playerManager = playerManager;
 
         LOG.config("PostSigninRoute is initialized.");
     }
@@ -55,9 +55,9 @@ public class PostSigninRoute implements Route {
             return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
 
-        if(playerLobby.isNameAvailable(playerName)) {
+        if(playerManager.isNameAvailable(playerName)) {
             // Redirect to the homepage, now signed-in.
-            Player newPlayer = playerLobby.signInPlayer(playerName);
+            Player newPlayer = playerManager.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
             response.redirect(WebServer.HOME_URL);
             halt();
