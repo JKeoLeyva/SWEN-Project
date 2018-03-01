@@ -45,6 +45,13 @@ public class PostSigninRoute implements Route {
 
         final String playerName = request.queryParams("name");
 
+        boolean hasNonAlpha = playerName.matches("^.*[^a-zA-Z0-9 ].*$");
+
+        if(hasNonAlpha){
+            Map<String, Object> vm = new HashMap<>();
+            vm.put("title", "Sign in");
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+        }
         if(playerLobby.isNameAvailable(playerName)) {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(PLAYER_ATTR, newPlayer);
