@@ -3,19 +3,17 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * An application service for managing all ongoing games,
- * and all signed-in players.
+ * An application service for managing all ongoing games.
  */
 
-public class PlayerManager {
-    private Set<Player> players;
+public class GameManager {
     private Map<Player, Board> games;
 
-    public PlayerManager() {
-        players = new HashSet<>();
+    public GameManager() {
         games = new HashMap<>();
     }
 
@@ -36,29 +34,12 @@ public class PlayerManager {
         return true;
     }
 
-    /**
-     * @param name that a user wants to log in with
-     * @return true if the name is available
-     */
-    public synchronized boolean isNameAvailable(String name) {
-        return !players.contains(new Player(name));
+    public synchronized boolean canCreateBoard(Player p1, Player p2) {
+        return !games.containsKey(p1) && !games.containsKey(p2);
     }
 
-    public synchronized Player signInPlayer(String name) {
-        if(!isNameAvailable(name))
-            return null;
-
-        Player player = new Player(name);
-        players.add(player);
-        return player;
-    }
-
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
-
-    public int getPlayerCount() {
-        return players.size();
+    public Map<Player, Board> getBoards() {
+        return games;
     }
 
     /**
