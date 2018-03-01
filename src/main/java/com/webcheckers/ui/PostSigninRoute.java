@@ -13,7 +13,6 @@ import static spark.Spark.halt;
 
 /**
  * Checks if an entered sign-in name is acceptable.
- * @author sam davis sjd8078
  */
 public class PostSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());

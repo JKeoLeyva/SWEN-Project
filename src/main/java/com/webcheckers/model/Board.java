@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 /**
  * Sets up and stores a single checkers board.
- * @author Jacob Keegan
  */
 public class Board {
     public final static int BOARD_SIZE = 8;

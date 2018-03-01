@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 /**
- * @author Jacob Keegan
  * A class for text messages from the server.
  */
 

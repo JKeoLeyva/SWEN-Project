@@ -6,8 +6,9 @@ import com.webcheckers.model.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-// @author Karl Coelho
-// An application service for managing the multiple ongoing games.
+/**
+ * An application service for managing all ongoing games.
+ */
 
 public class GameManager {
     private Map<Player, Board> games;

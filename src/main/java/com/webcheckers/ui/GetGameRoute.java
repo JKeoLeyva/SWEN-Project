@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 /**
  * Spark Route for a page displaying the current game.
- * @author sam davis sjd8078
  */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
