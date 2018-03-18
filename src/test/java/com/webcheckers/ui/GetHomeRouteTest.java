@@ -17,6 +17,9 @@ public class GetHomeRouteTest {
     // Class under test
     private GetHomeRoute route;
 
+    // Template Engine test helper
+    private TemplateEngineTester engineTester;
+
     // Test strings
     private static final String MESSAGE_TEXT = "test_message";
 
@@ -51,6 +54,10 @@ public class GetHomeRouteTest {
         when(message.getText()).thenReturn(MESSAGE_TEXT);
 
         route = new GetHomeRoute(templateEngine, playerLobby, gameManager);
+
+        // Setup template tester
+        engineTester = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
     }
 
     /**
@@ -58,10 +65,6 @@ public class GetHomeRouteTest {
      */
     @Test
     public void noSession() {
-        // Setup template tester
-        TemplateEngineTester engineTester = new TemplateEngineTester();
-        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
-
         // Run code
         route.handle(request, response);
 
@@ -83,10 +86,6 @@ public class GetHomeRouteTest {
      */
     @Test
     public void waitingPlayer() {
-        // Setup template tester
-        TemplateEngineTester engineTester = new TemplateEngineTester();
-        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
-
         // Add current player
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
 
@@ -110,10 +109,6 @@ public class GetHomeRouteTest {
      */
     @Test
     public void inGame() {
-        // Setup template tester
-        TemplateEngineTester engineTester = new TemplateEngineTester();
-        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
-
         // Add current player (in a game)
         Board board = mock(Board.class);
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
