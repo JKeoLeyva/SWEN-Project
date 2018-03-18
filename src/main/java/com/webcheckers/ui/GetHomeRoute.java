@@ -23,6 +23,12 @@ public class GetHomeRoute implements Route {
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
 
+    public static final String VIEW = "home.ftl";
+    public static final String TITLE_ATTR = "title";
+    public static final String CURRENT_PLAYER_ATTR = "currentPlayer";
+    public static final String PLAYER_LOBBY_ATTR = "playerLobby";
+    public static final String MESSAGE_ATTR = "message";
+
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request
@@ -68,17 +74,17 @@ public class GetHomeRoute implements Route {
         Message message = httpSession.attribute(PostGameRoute.MESSAGE_ATTR);
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
-        vm.put("currentPlayer", currentPlayer);
-        vm.put("playerLobby", playerLobby);
+        vm.put(TITLE_ATTR, "Welcome!");
+        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
+        vm.put(PLAYER_LOBBY_ATTR, playerLobby);
 
         if(message != null) {
             // Some message exists, and should be displayed.
-            vm.put("message", message.getText());
+            vm.put(MESSAGE_ATTR, message.getText());
             httpSession.removeAttribute(PostGameRoute.MESSAGE_ATTR);
         }
 
-        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+        return templateEngine.render(new ModelAndView(vm, VIEW));
     }
 
 }
