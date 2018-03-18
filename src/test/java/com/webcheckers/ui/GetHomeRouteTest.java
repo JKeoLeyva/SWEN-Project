@@ -120,4 +120,27 @@ public class GetHomeRouteTest {
         // Verify HTTP behavior
         verify(response, times(1)).redirect(WebServer.GAME_URL);
     }
+
+    /**
+     * Test the message functionality
+     */
+    @Test
+    public void message() {
+        // Add message to session
+        when(session.attribute(PostGameRoute.MESSAGE_ATTR)).thenReturn(message);
+
+        // Run code
+        route.handle(request, response);
+
+        // Verify HTTP behavior
+        verify(response, never()).redirect(WebServer.GAME_URL);
+
+        // Verify data sent to template engine
+        engineTester.assertViewModelExists();
+        engineTester.assertViewModelIsaMap();
+        engineTester.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
+        engineTester.assertViewModelAttribute(GetHomeRoute.CURRENT_PLAYER_ATTR, null);
+        engineTester.assertViewModelAttribute(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
+        engineTester.assertViewModelAttribute(GetHomeRoute.MESSAGE_ATTR, MESSAGE_TEXT);
+    }
 }
