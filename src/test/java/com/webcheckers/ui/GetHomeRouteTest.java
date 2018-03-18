@@ -30,6 +30,9 @@ public class GetHomeRouteTest {
     private Message message;
     private GameManager gameManager;
 
+    /**
+     * Set up the mocked objects and some method calls
+     */
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -50,6 +53,9 @@ public class GetHomeRouteTest {
         route = new GetHomeRoute(templateEngine, playerLobby, gameManager);
     }
 
+    /**
+     * Test the no session scenario
+     */
     @Test
     public void noSession() {
         // Setup template tester
@@ -72,6 +78,9 @@ public class GetHomeRouteTest {
         engineTester.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
     }
 
+    /**
+     * Test the signed in (but waiting) player home
+     */
     @Test
     public void waitingPlayer() {
         // Setup template tester
@@ -96,6 +105,9 @@ public class GetHomeRouteTest {
         engineTester.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
     }
 
+    /**
+     * Test the redirect from home to game when the player is in a game
+     */
     @Test
     public void inGame() {
         // Setup template tester
