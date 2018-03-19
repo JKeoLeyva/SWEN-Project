@@ -1,24 +1,24 @@
 ---
 geometry: margin=1in
 ---
-# PROJECT Design Documentation
-
-> The following template provides the headings for your Design Documentation.  As you edit each section make sure you remove these commentary 'blockquotes'; the lines that start with a > character.
+# Web Checkers Design Documentation
 
 # Team Information
-* Team name: TEAMNAME
+* Team name: 2175-swen-261-13-b-checker-masters
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Mark Drobnak
+  * Sam Davis
+  * Karl Coelho
+  * Jacob Keegan
+  * Jorge Leyva
 
 ## Executive Summary
 
-This is a summary of the project.
+The application must allow players to play checkers with other players who are currently signed-in. The game user interface (UI) will support a game experience using drag-and-drop browser capabilities for making moves. Beyond this minimal set of features, we have grand vision for how we could further enhance on the player experience with some additional features beyond the basic checkers game.
 
 ### Purpose
-> Provide a very brief statement about the project and the most important user group and user goals.
+
+The most important user group is players who are interested in playing checkers, online, with other players. Players should be able to play games with other players who have signed in to the game, they should be able to leave any game they are currently playing, and they should be able to actually play a game of checkers.
 
 ### Glossary and Acronyms
 > Provide a table of terms and acronyms.
@@ -35,24 +35,38 @@ This section describes the features of the application.
 > In this section you do not need to be exhaustive and list every story.  Focus on top-level features from the Vision document and maybe Epics and critical Stories.
 
 ### Definition of MVP
-> Provide a simple description of the Minimum Viable Product.
+Every player must sign-in before playing a game, and be able to sign-out when finished playing
+Two players must be able to play a game of checkers based upon the American rules
+Either  player of a game may choose to resign, at any point, which ends the game
 
 ### MVP Features
-> Provide a list of top-level Epics and/or Stories of the MVP.
+- (User Story) Player Sign-in
+- (User Story) Start a Game
+- (User Story) Player Sign-out
+- (User Story) Matchmaking
+- (User Story) Game Requests
+- (User Story) Game Over
+- (User Story) Forfeiting
+- (Epic) Game Play
+- (User Story) Valid Moves
+- (User Story) Player Turns
 
 ### Roadmap of Enhancements
-> Provide a list of top-level features in the order you plan to consider them.
-
+- Make sure that the Player can Sign-out 
+- Make sure that the Game can actually be declared over
+- Make sure players can forfeit from a game
+- Make sure that Game requests can be sent to other players
+- Make sure that the players are allowed to only make valid moves
+- Eventually make sure that an AI player is implemented
+- Eventually implement a way to record and replay games
 
 ## Application Domain
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
-> Replace the placeholder image above with your team's own domain model. 
+![The WebCheckers Domain Model](domain-model.png)
 
-> Provide a high-level overview of the domain for this application. You can discuss the more important domain entities and their relationship to each other.
-
+There are several important entities for this web app, including the Player entities, the Piece entities, the Board entities, which all interact with each other. The Player entity is used to represent a Player in the game, who has control over the Piece entities, which are placed on the Board entity.  Other important entities are the Game entity, which holds all of the other entities, and the Board entity, which holds the board information. Players are able to make Game Requests to other players, and the player is able to manipulate the Piece entities using Moves.
 
 
 ## Architecture
@@ -74,21 +88,20 @@ Controllers are built using the Spark framework and View are built using the Fre
 
 Details of the components within these tiers are supplied below
 
-
 ### Overview of User Interface
 
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
-> Replace the placeholder image above with your team's own web interface state model. 
+![The WebCheckers Web Interface Statechart](web-interface.png)
 
-> Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application.
+A user will first see a Home page with a button indicating a sign in link, which moves the user to the Sign-in page, which will allow the user to type in their name, and sign-in to the game.  Depending on the name used, the sign-in request will be rejected, bringing them back to the Sign-in page, or if it is accepted, then it will take them to the Game-wait page, where they will wait for a game. If the user clicks on an invalid game, they will be sent back to the Game-wait page, else, they will be sent to the Game page, where a game will commence.
 
 
 ### UI Tier
-> Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The Server-side UI tier of the architecture is responsible for responding to the input of the user, so when they click on specific buttons and links, the UI tier has to make sure the corresponding button press will take the user to the corresponding page.
+
+For example, the BoardView component of the UI tier is responsible for showing the game’s board, and to update it whenever moves are made.  The different Get routes are used to bring the user to the various pages, such as the Sign-in page, while the Post routes are used to get the page information from the user and update the pages accordingly.
 
 #### Static models
 > Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
@@ -99,8 +112,9 @@ with the WebCheckers application.
 
 
 ### Application Tier
-> Provide a summary of the Application tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The Application tier of the architecture is the one responsible for keeping track of the information used by the application, such as the number of games that the application is currently hosting, and the number of players that are currently signed in 
+
+The GameManager component of the Application tier is tasked with monitoring the different games that are currently underway. The PlayerLobby component is tasked with monitoring the amount of players that are currently signed into the game and also makes sure that all of the names in the lobby are unique.
 
 #### Static models
 > Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
@@ -110,11 +124,14 @@ with the WebCheckers application.
 
 
 ### Model Tier
-> Provide a summary of the Model tier of your architecture.
-> Describe the types of components in the tier and describe their responsibilities.
+The Model tier of the architecture is responsible for holding the data that has to do with the actual games being played in the application, so anything to do with the Player entities, Boards and Pieces
+
+The different components of the Model tier such as the Board, Piece and Player all represent their namesakes, so the Board represents the board of the game, which holds the different Player’s pieces, the Pieces are the moveable components of the game, which are manipulated by the Player.
 
 #### Static models
 > Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
+
+

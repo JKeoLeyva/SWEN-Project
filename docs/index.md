@@ -1,11 +1,14 @@
-# PROJECT Home
+# Web Checkers Home
 
-Welcome to the PROJECT Project!
+Welcome to the Web Checkers Project!
 
 ## Team
 
-* MEMBER1
-* MEMBER2
+* Mark Drobnak
+* Sam Davis
+* Karl Coelho
+* Jacob Keegan
+* Jorge Leyva
 
 ## [Design Documentation](DesignDoc)
 
