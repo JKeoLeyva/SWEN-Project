@@ -5,7 +5,7 @@ package com.webcheckers.model;
  */
 public class Board {
     public final static int BOARD_SIZE = 8;
-    private final Piece.Color activeColor = Piece.Color.RED;
+    private Piece.Color activeColor = Piece.Color.RED;
     private Piece[][] board;
     private final Player redPlayer;
     private final Player whitePlayer;
@@ -21,7 +21,7 @@ public class Board {
         setUpPlayer(Piece.Color.WHITE);
 
         for(int row = 3; row < 5; row++) {
-            for(int col = 0; col < 8; col++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
                 board[row][col] = null;
             }
         }
@@ -41,7 +41,7 @@ public class Board {
         int initRow = (color == Piece.Color.WHITE ? 0 : 5);
 
         for(int row = initRow; row < initRow + 3; row++) {
-            for(int col = 0; col < 8; col++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
                 // Determines if a piece or no piece should be placed.
                 Piece newPiece = row % 2 != col % 2 ?
                         new Piece(Piece.Type.SINGLE, color) : null;
@@ -74,5 +74,10 @@ public class Board {
 
     public Piece.Color getActiveColor() {
         return activeColor;
+    }
+
+    public void changeActiveColor(){
+        activeColor = activeColor.equals(Piece.Color.RED) ?
+                Piece.Color.WHITE : Piece.Color.RED;
     }
 }
