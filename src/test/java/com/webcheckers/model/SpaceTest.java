@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpaceTest {
+
     /**
      * Generic test for all Piece configurations
      *
@@ -12,7 +13,7 @@ public class SpaceTest {
      * @param color the piece color
      * @param toString the expected output for toString()
      */
-    private void testPiece(Piece.Type type, Piece.Color color, String toString) {
+    private void testSpace(Piece.Type type, Piece.Color color, String toString) {
         // Create the piece
         Piece piece = new Piece(type, color);
 
@@ -27,31 +28,7 @@ public class SpaceTest {
      */
     @Test
     public void testSingleRed() {
-        testPiece(Piece.Type.SINGLE, Piece.Color.RED, "Red Single");
-    }
 
-    /**
-     * Test the single white piece
-     */
-    @Test
-    public void testSingleWhite() {
-        testPiece(Piece.Type.SINGLE, Piece.Color.WHITE, "White Single");
-    }
-
-    /**
-     * Test the king red piece
-     */
-    @Test
-    public void testKingRed() {
-        testPiece(Piece.Type.KING, Piece.Color.RED, "Red King");
-    }
-
-    /**
-     * Test the king white piece
-     */
-    @Test
-    public void testKingWhite() {
-        testPiece(Piece.Type.KING, Piece.Color.WHITE, "White King");
     }
 
 }
