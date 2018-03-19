@@ -5,11 +5,23 @@ package com.webcheckers.model;
  */
 public class Piece {
     public enum Type {
-        SINGLE, KING
+        SINGLE, KING;
+
+        @Override
+        public String toString() {
+            // Uppercase first letter
+            return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
+        }
     }
 
     public enum Color {
-        RED, WHITE
+        RED, WHITE;
+
+        @Override
+        public String toString() {
+            // Uppercase first letter
+            return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
+        }
     }
 
     private Type type;
@@ -37,8 +49,8 @@ public class Piece {
     // For potential testing purposes.
     @Override
     public String toString() {
-        String t_string = this.type == Type.SINGLE ? "Single" : "King";
-        String color_string = this.color == Color.RED ? "Red" : "White";
+        String t_string = this.type.toString();
+        String color_string = this.color.toString();
 
         return color_string + " " + t_string;
     }
