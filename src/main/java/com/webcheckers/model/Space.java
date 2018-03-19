@@ -5,6 +5,7 @@ package com.webcheckers.model;
  */
 public class Space {
 
+    private int row;
     private int cellIdx;
     private Piece piece;
     private boolean isBlack;
@@ -21,7 +22,7 @@ public class Space {
         if(cellIdx < 0 || cellIdx >= Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
-
+        this.row = row;
         this.cellIdx = cellIdx;
         this.piece = piece;
         // Encapsulates logic of board square coloring.
@@ -38,6 +39,10 @@ public class Space {
 
     public Piece getPiece() {
         return piece;
+    }
+
+    public int getRow() {
+        return row;
     }
 
     // For potential testing purposes.
