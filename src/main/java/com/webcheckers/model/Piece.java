@@ -7,8 +7,7 @@ public class Piece {
     public enum Type {
         SINGLE, KING;
 
-        @Override
-        public String toString() {
+        public String getName() {
             // Uppercase first letter
             return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
         }
@@ -17,8 +16,7 @@ public class Piece {
     public enum Color {
         RED, WHITE;
 
-        @Override
-        public String toString() {
+        public String getName() {
             // Uppercase first letter
             return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
         }
@@ -49,8 +47,8 @@ public class Piece {
     // For potential testing purposes.
     @Override
     public String toString() {
-        String t_string = this.type.toString();
-        String color_string = this.color.toString();
+        String t_string = this.type.getName();
+        String color_string = this.color.getName();
 
         return color_string + " " + t_string;
     }
