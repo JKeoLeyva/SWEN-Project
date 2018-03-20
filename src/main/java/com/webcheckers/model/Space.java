@@ -26,7 +26,7 @@ public class Space {
         this.cellIdx = cellIdx;
         this.piece = piece;
         // Encapsulates logic of board square coloring.
-        this.isBlack = (row % 2 != cellIdx % 2);
+        this.isBlack = (row % 2 == cellIdx % 2);
     }
 
     public int getCellIdx() {

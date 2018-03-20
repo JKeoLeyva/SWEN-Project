@@ -44,10 +44,10 @@ public class SpaceTest {
     }
 
     /**
-     * Tests the unvalid space
+     * Tests the invalid space
      */
     @Test
-    public void testUnvalidSpace() {
+    public void testInvalidSpace() {
         testSpace(null, 0, 1, "[ ]", false);
     }
 }
