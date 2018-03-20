@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("UI-tier")
 class BoardViewTest {
@@ -31,7 +31,7 @@ class BoardViewTest {
         rowIterator = CuT.iterator();
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             currRow = rowIterator.next();
-            assertTrue(currRow.getIndex() == row);
+            assertEquals(currRow.getIndex(), row);
         }
         assertFalse(rowIterator.hasNext());
         // Test the BoardView reversed.
@@ -39,16 +39,8 @@ class BoardViewTest {
         rowIterator = CuT.iterator();
         for(int row = Board.BOARD_SIZE-1; row >= 0; row--){
             currRow = rowIterator.next();
-            assertTrue(currRow.getIndex() == row);
+            assertEquals(currRow.getIndex(), row);
         }
         assertFalse(rowIterator.hasNext());
     }
-
-//    private boolean pieceEquals(Piece piece1, Piece piece2){
-//        if(piece1 == null || piece2 == null)
-//            return piece1 == piece2;
-//        return piece1.getColor() == piece2.getColor() &&
-//                piece1.getType() == piece2.getType();
-//    }
-
 }
