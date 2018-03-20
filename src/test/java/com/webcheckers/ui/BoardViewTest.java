@@ -1,15 +1,17 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.Row;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("UI-tier")
 class BoardViewTest {
 
     private static Board board;
