@@ -22,13 +22,13 @@ public class MessageTest {
 
     @Test
     public void checkText() {
-        assertEquals(errorMessage.getText(), ERROR_TEXT);
-        assertEquals(infoMessage.getText(), INFO_TEXT);
+        assertEquals(ERROR_TEXT, errorMessage.getText());
+        assertEquals(INFO_TEXT, infoMessage.getText());
     }
 
     @Test
     public void checkType() {
-        assertEquals(errorMessage.getType(), Message.Type.error);
-        assertEquals(infoMessage.getType(), Message.Type.info);
+        assertEquals(Message.Type.error, errorMessage.getType());
+        assertEquals(Message.Type.info, infoMessage.getType());
     }
 }
