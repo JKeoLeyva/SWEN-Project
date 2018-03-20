@@ -47,15 +47,4 @@ public class BoardView implements Iterable<Row> {
         return rows.iterator();
     }
 
-    // For potential testing purposes.
-    @Override
-    public String toString() {
-        String allRows = "";
-
-        for(int i = 0; i < 8; i++) {
-            allRows += rows.get(i) + "\n";
-        }
-
-        return allRows;
-    }
 }
