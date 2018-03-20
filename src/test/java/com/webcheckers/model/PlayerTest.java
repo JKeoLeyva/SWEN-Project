@@ -7,26 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Model-Tier")
 public class PlayerTest {
-
     private void testPlayer(String name){
         Player newPlayer = new Player(name);
-
         Player mockPlayer = new Player("Mock");
 
         //Tests if it recognizes different players as unique
         assertNotNull(newPlayer, "Player was created");
         assertEquals(name, newPlayer.getName());
         assertNotEquals(mockPlayer.getName(), newPlayer.getName());
-    }
-
-    private void testPlayerEquals(Player p1, Player p2){
-        assertTrue(p1.equals(p2));
-        assertTrue(p2.equals(p1));
-    }
-
-    private void testPlayerHashCode(Player p1, Player p2){
-        assertTrue(p1.hashCode() == p2.hashCode());
-        assertTrue(p2.hashCode() == p1.hashCode());
     }
 
     /**
@@ -53,8 +41,9 @@ public class PlayerTest {
     @Test
     public void testPlayerEquals_With_Same_Players(){
         Player player = new Player("John");
-        Player player2 = player;
-        testPlayerEquals(player, player2);
+        Player player2 = new Player("John");
+        assertTrue(player.equals(player2));
+        assertTrue(player2.equals(player));
     }
 
     /**
@@ -64,7 +53,8 @@ public class PlayerTest {
     public void testPlayerEquals_With_Diff_Players(){
         Player player = new Player("John");
         Player player2 = new Player("Jack");
-        testPlayerEquals(player, player2);
+        assertFalse(player.equals(player2));
+        assertFalse(player2.equals(player));
     }
 
     /**
@@ -73,8 +63,8 @@ public class PlayerTest {
     @Test
     public void testPlayerHashCode_With_Same_Player(){
         Player player = new Player("John");
-        Player player2 = player;
-        testPlayerHashCode(player, player2);
+        Player player2 = new Player("John");
+        assertEquals(player.hashCode(), player2.hashCode());
     }
 
     /**
@@ -84,7 +74,6 @@ public class PlayerTest {
     public void testPlayerHashCode_With_Diff_Players(){
         Player player = new Player("John");
         Player player2 = new Player("Jack");
-        testPlayerHashCode(player, player2);
+        assertNotEquals(player.hashCode(), player2.hashCode());
     }
-
 }
