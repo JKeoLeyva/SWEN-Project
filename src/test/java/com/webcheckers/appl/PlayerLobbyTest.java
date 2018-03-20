@@ -39,6 +39,15 @@ public class PlayerLobbyTest {
 
         // Test whether the getPlayerCount returns the player count
         assertEquals(playerLobby.getPlayerCount(), 1);
+    }
+
+    @Test
+    void testAddingInvalidPlayerToPlayerLobby() {
+        String testUsername = "Testuser";
+        PlayerLobby playerLobby = new PlayerLobby();
+
+        // Add 1 player to PlayerLobby
+        playerLobby.signInPlayer(testUsername);
 
         // Test whether isNameAvailable returns false on occupied player name
         assertFalse(playerLobby.isNameAvailable(testUsername));
