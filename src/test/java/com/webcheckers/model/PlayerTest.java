@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Tag("Model-Tier")
+@Tag("Model-tier")
 public class PlayerTest {
     private void testPlayer(String name){
         Player newPlayer = new Player(name);
