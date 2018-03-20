@@ -40,7 +40,7 @@ public class SpaceTest {
      */
     @Test
     public void testValidSpaceNoPiece() {
-        testSpace(null, 1, 1, "[ ]", true);
+        testSpace(null, 1, 2, "[ ]", true);
     }
 
     /**
@@ -48,6 +48,6 @@ public class SpaceTest {
      */
     @Test
     public void testInvalidSpace() {
-        testSpace(null, 0, 1, "[ ]", false);
+        testSpace(null, 0, 0, "[ ]", false);
     }
 }
