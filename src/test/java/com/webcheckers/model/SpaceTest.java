@@ -1,9 +1,11 @@
 package com.webcheckers.model;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Tag("Model-tier")
 public class SpaceTest {
 
     /**
@@ -40,14 +42,14 @@ public class SpaceTest {
      */
     @Test
     public void testValidSpaceNoPiece() {
-        testSpace(null, 1, 1, "[ ]", true);
+        testSpace(null, 1, 2, "[ ]", true);
     }
 
     /**
-     * Tests the unvalid space
+     * Tests the invalid space
      */
     @Test
-    public void testUnvalidSpace() {
-        testSpace(null, 0, 1, "[ ]", false);
+    public void testInvalidSpace() {
+        testSpace(null, 0, 0, "[ ]", false);
     }
 }
