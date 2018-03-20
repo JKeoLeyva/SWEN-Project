@@ -1,13 +1,16 @@
 package com.webcheckers.model;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Model-tier")
 class BoardTest {
 
-    private static Board board;
+    private static Board CuT;
     private static Player player1;
     private static Player player2;
     private static Piece whiteSingl = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
@@ -22,24 +25,24 @@ class BoardTest {
     }
 
     @BeforeEach
-    void remakeBoard(){board = new Board(player1, player2);}
+    void remakeBoard(){CuT = new Board(player1, player2);}
 
     @Test
     void getPiece() {
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    assertTrue(board.getPiece(row, col) == null);
+                    assertNull(CuT.getPiece(row, col));
                 else if(row < 3) {
-                    assertTrue(board.getPiece(row, col).getColor() == Piece.Color.WHITE);
-                    assertTrue(board.getPiece(row, col).getType() == Piece.Type.SINGLE);
+                    assertEquals(CuT.getPiece(row, col).getColor(), Piece.Color.WHITE);
+                    assertEquals(CuT.getPiece(row, col).getType(), Piece.Type.SINGLE);
                 }
                 else if(row > 4) {
-                    assertTrue(board.getPiece(row, col).getColor() == Piece.Color.RED);
-                    assertTrue(board.getPiece(row, col).getType() == Piece.Type.SINGLE);
+                    assertEquals(CuT.getPiece(row, col).getColor(), Piece.Color.RED);
+                    assertEquals(CuT.getPiece(row, col).getType(), Piece.Type.SINGLE);
                 }
                 else
-                    assertTrue(board.getPiece(row, col) == null);
+                    assertNull(CuT.getPiece(row, col));
             }
         }
     }
@@ -50,65 +53,65 @@ class BoardTest {
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    board.setPiece(row, col, whiteSingl);
+                    CuT.setPiece(row, col, whiteSingl);
                 else if(row < 3)
-                    board.setPiece(row, col, redKing);
+                    CuT.setPiece(row, col, redKing);
                 else if(row > 4)
-                    board.setPiece(row, col, whiteKing);
+                    CuT.setPiece(row, col, whiteKing);
                 else
-                    board.setPiece(row, col, redSingl);
+                    CuT.setPiece(row, col, redSingl);
             }
         }
         // Test the changed pieces.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    assertTrue(board.getPiece(row, col) == whiteSingl);
+                    assertEquals(CuT.getPiece(row, col), whiteSingl);
                 else if(row < 3)
-                    assertTrue(board.getPiece(row, col) == redKing);
+                    assertEquals(CuT.getPiece(row, col), redKing);
                 else if(row > 4)
-                    assertTrue(board.getPiece(row, col) == whiteKing);
+                    assertEquals(CuT.getPiece(row, col), whiteKing);
                 else
-                    assertTrue(board.getPiece(row, col) == redSingl);
+                    assertEquals(CuT.getPiece(row, col), redSingl);
             }
         }
         // Clear the entire board.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                board.setPiece(row, col, null);
+                CuT.setPiece(row, col, null);
             }
         }
         // Test if the board was cleared.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                assertTrue(board.getPiece(row, col) == null);
+                assertNull(CuT.getPiece(row, col));
             }
         }
     }
 
     @Test
     void getRedPlayer() {
-        assertTrue(board.getRedPlayer().equals(player1));
+        assertEquals(CuT.getRedPlayer(), player1);
     }
 
     @Test
     void getWhitePlayer() {
-        assertTrue(board.getWhitePlayer().equals(player2));
+        assertEquals(CuT.getWhitePlayer(), player2);
     }
 
     @Test
     void getActiveColor() {
-        assertTrue(board.getActiveColor() == Piece.Color.RED);
+        assertEquals(CuT.getActiveColor(), Piece.Color.RED);
     }
 
     @Test
     void changeActiveColor(){
-        Piece.Color color1 = board.getActiveColor();
-        board.changeActiveColor();
-        Piece.Color color2 = board.getActiveColor();
-        assertFalse(color1 == color2);
-        board.changeActiveColor();
-        color1 = board.getActiveColor();
-        assertFalse(color1 == color2);
+        Piece.Color color1 = CuT.getActiveColor();
+        CuT.changeActiveColor();
+        Piece.Color color2 = CuT.getActiveColor();
+        assertNotEquals(color1, color2);
+        CuT.changeActiveColor();
+        color1 = CuT.getActiveColor();
+        assertNotEquals(color1, color2);
     }
 }
