@@ -5,15 +5,13 @@ import com.webcheckers.model.Player;
 import java.util.*;
 
 /**
- * A class for listing all players.
+ * Keep track of all players
  */
 public class PlayerLobby {
     private Set<Player> players;
-    private Set<Player> onlinePlayers;
 
     public PlayerLobby() {
         players = new HashSet<>();
-        onlinePlayers = new HashSet<>();
     }
 
     /**
@@ -36,7 +34,6 @@ public class PlayerLobby {
 
         Player player = new Player(name);
         players.add(player);
-        onlinePlayers.add(player);
         return player;
     }
 
@@ -47,23 +44,19 @@ public class PlayerLobby {
      * @return if the player could be signed out
      */
     public boolean signOutPlayer(String name) {
-        return onlinePlayers.remove(new Player(name));
+        return players.remove(new Player(name));
     }
 
     /**
-     * Check if a player is online
-     *
-     * @param name the player's name
-     * @return if the player is online
+     * @return an immutable list of players
      */
-    public boolean isPlayerOnline(String name) {
-        return onlinePlayers.contains(new Player(name));
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(new ArrayList<>(players));
     }
 
+    /**
+     * @return the number of players
+     */
     public int getPlayerCount() {
         return players.size();
     }

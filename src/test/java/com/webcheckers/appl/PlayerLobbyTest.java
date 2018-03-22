@@ -88,8 +88,8 @@ public class PlayerLobbyTest {
         String playerName = "player";
 
         assertEquals(new Player(playerName), playerLobby.signInPlayer(playerName));
-        assertTrue(playerLobby.isPlayerOnline(playerName));
+        assertFalse(playerLobby.isNameAvailable(playerName));
         assertTrue(playerLobby.signOutPlayer(playerName));
-        assertFalse(playerLobby.isPlayerOnline(playerName));
+        assertTrue(playerLobby.isNameAvailable(playerName));
     }
 }
