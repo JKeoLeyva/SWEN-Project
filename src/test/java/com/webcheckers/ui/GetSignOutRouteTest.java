@@ -51,6 +51,10 @@ public class GetSignOutRouteTest {
         verify(response, times(1)).redirect(WebServer.HOME_URL);
     }
 
+    /**
+     * Expect signing out when not signed in to not work
+     */
+    @Test
     void noSession() {
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
 
