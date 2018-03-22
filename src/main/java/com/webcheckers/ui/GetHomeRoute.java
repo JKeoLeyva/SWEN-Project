@@ -28,6 +28,7 @@ public class GetHomeRoute implements Route {
     public static final String CURRENT_PLAYER_ATTR = "currentPlayer";
     public static final String PLAYER_LOBBY_ATTR = "playerLobby";
     public static final String MESSAGE_ATTR = "message";
+    public static final String GAME_MANAGER_ATTR = "gameManager";
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -77,6 +78,7 @@ public class GetHomeRoute implements Route {
         vm.put(TITLE_ATTR, "Welcome!");
         vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(PLAYER_LOBBY_ATTR, playerLobby);
+        vm.put(GAME_MANAGER_ATTR, gameManager);
 
         if(message != null) {
             // Some message exists, and should be displayed.
