@@ -9,7 +9,6 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
-import static com.webcheckers.ui.GetSignOutRoute.PLAYER_PARAM;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
@@ -20,6 +19,7 @@ public class GetSignOutRouteTest {
     private Player player;
     private PlayerLobby playerLobby;
     private String playerName = "player";
+    private GetSignOutRoute route;
 
     /**
      * Set up the mocked objects and method calls
@@ -33,39 +33,32 @@ public class GetSignOutRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
         when(request.session()).thenReturn(session);
+        route = new GetSignOutRoute(playerLobby);
     }
 
     /**
      * Expect signing out the current player to work
      */
     @Test
-    void signOutSelf() throws Exception {
-        GetSignOutRoute route = new GetSignOutRoute(playerLobby);
-
+    void signOutSelf() {
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
-        when(request.queryParams(PLAYER_PARAM)).thenReturn(playerName);
 
         route.handle(request, response);
 
         verify(session, times(1)).attribute(PostSigninRoute.PLAYER_ATTR);
+        verify(session, times(1)).invalidate();
         verify(playerLobby, times(1)).signOutPlayer(playerName);
         verify(response, times(1)).redirect(WebServer.HOME_URL);
     }
 
-    /**
-     * Expect signing out a different player to fail
-     */
-    @Test
-    void signOutOther() throws Exception {
-        GetSignOutRoute route = new GetSignOutRoute(playerLobby);
-        Player otherPlayer = new Player("otherPlayer");
-
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(otherPlayer);
+    void noSession() {
+        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
 
         route.handle(request, response);
 
         verify(session, times(1)).attribute(PostSigninRoute.PLAYER_ATTR);
+        verify(session, never()).invalidate();
         verify(playerLobby, never()).signOutPlayer(playerName);
-        verify(response, never()).redirect(WebServer.HOME_URL);
+        verify(response, times(1)).redirect(WebServer.HOME_URL);
     }
 }

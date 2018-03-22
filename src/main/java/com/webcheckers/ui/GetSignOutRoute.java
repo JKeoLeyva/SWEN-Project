@@ -5,13 +5,12 @@ import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 
 import java.util.logging.Logger;
 
 public class GetSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-
-    static final String PLAYER_PARAM = "player";
 
     private final PlayerLobby playerLobby;
 
@@ -25,16 +24,16 @@ public class GetSignOutRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
-        String playerName = request.queryParams(PLAYER_PARAM);
-        Player player = request.session().attribute(PostSigninRoute.PLAYER_ATTR);
+    public Object handle(Request request, Response response) {
+        Session session = request.session();
+        Player player = session.attribute(PostSigninRoute.PLAYER_ATTR);
 
-        // Ignore unauthenticated sign-outs
-        if(!player.getName().equals(playerName))
-            return null;
+        if(player != null) {
+            // TODO: resign game if in a game
+            playerLobby.signOutPlayer(player.getName());
+            session.invalidate();
+        }
 
-        // TODO: resign game if in a game
-        playerLobby.signOutPlayer(playerName);
         response.redirect(WebServer.HOME_URL);
         return null;
     }
