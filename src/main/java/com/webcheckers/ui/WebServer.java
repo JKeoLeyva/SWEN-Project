@@ -59,6 +59,8 @@ public class WebServer {
 
     public static final String GAME_URL = "/game";
 
+    public static final String SIGNOUT_URL = "/signout";
+
     //
     // Attributes
     //
@@ -148,6 +150,7 @@ public class WebServer {
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
         post(GAME_URL, new PostGameRoute(gameManager));
+        get(SIGNOUT_URL, new GetSignOutRoute(playerLobby));
 
         LOG.config("WebServer is initialized.");
     }
