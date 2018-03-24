@@ -63,7 +63,7 @@ public class GetHomeRoute implements Route {
         Player currentPlayer = null;
 
         final Session httpSession = request.session();
-        if(httpSession.attribute(PostSigninRoute.PLAYER_ATTR) != null) {
+            if(httpSession.attribute(PostSigninRoute.PLAYER_ATTR) != null) {
             currentPlayer = httpSession.attribute(PostSigninRoute.PLAYER_ATTR);
         }
 
