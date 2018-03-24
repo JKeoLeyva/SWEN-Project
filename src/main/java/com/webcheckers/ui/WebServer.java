@@ -59,6 +59,10 @@ public class WebServer {
 
     public static final String GAME_URL = "/game";
 
+    public static final String VALIDATE_MOVE_URL = "/validateMove";
+
+    public static final String SUBMIT_TURN_URL = "/submitTurn";
+
     //
     // Attributes
     //
@@ -148,6 +152,7 @@ public class WebServer {
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
         post(GAME_URL, new PostGameRoute(gameManager));
+        post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameManager, playerLobby));
 
         LOG.config("WebServer is initialized.");
     }

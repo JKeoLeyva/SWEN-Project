@@ -4,6 +4,7 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -50,7 +51,7 @@ public class GetHomeRouteTest {
         when(request.session()).thenReturn(session);
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
         when(session.attribute(PostGameRoute.MESSAGE_ATTR)).thenReturn(null);
-        when(gameManager.getBoard(player)).thenReturn(null);
+        when(gameManager.getGame(player)).thenReturn(null);
         when(message.getText()).thenReturn(MESSAGE_TEXT);
 
         route = new GetHomeRoute(templateEngine, playerLobby, gameManager);
@@ -110,9 +111,9 @@ public class GetHomeRouteTest {
     @Test
     public void inGame() {
         // Add current player (in a game)
-        Board board = mock(Board.class);
+        Game game = mock(Game.class);
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
-        when(gameManager.getBoard(player)).thenReturn(board);
+        when(gameManager.getGame(player)).thenReturn(game);
 
         // Run code
         route.handle(request, response);

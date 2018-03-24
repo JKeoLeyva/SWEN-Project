@@ -11,21 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     private static Board CuT;
-    private static Player player1;
-    private static Player player2;
     private static Piece whiteSingl = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
     private static Piece redSingl = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
     private static Piece whiteKing = new Piece(Piece.Type.KING, Piece.Color.WHITE);
     private static Piece redKing = new Piece(Piece.Type.KING, Piece.Color.RED);
 
-    @BeforeAll
-    static void setup(){
-        player1 = new Player("player1");
-        player2 = new Player("player2");
-    }
-
     @BeforeEach
-    void remakeBoard(){CuT = new Board(player1, player2);}
+    void remakeBoard(){CuT = new Board();}
 
     @Test
     void getPiece() {
@@ -87,31 +79,5 @@ class BoardTest {
                 assertNull(CuT.getPiece(row, col));
             }
         }
-    }
-
-    @Test
-    void getRedPlayer() {
-        assertEquals(CuT.getRedPlayer(), player1);
-    }
-
-    @Test
-    void getWhitePlayer() {
-        assertEquals(CuT.getWhitePlayer(), player2);
-    }
-
-    @Test
-    void getActiveColor() {
-        assertEquals(CuT.getActiveColor(), Piece.Color.RED);
-    }
-
-    @Test
-    void changeActiveColor(){
-        Piece.Color color1 = CuT.getActiveColor();
-        CuT.changeActiveColor();
-        Piece.Color color2 = CuT.getActiveColor();
-        assertNotEquals(color1, color2);
-        CuT.changeActiveColor();
-        color1 = CuT.getActiveColor();
-        assertNotEquals(color1, color2);
     }
 }
