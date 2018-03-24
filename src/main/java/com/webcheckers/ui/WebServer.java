@@ -51,13 +51,15 @@ public class WebServer {
     //
 
     /**
-     * The URL pattern to request the Home page.
+     * The URL pattern to request pages.
      */
     public static final String HOME_URL = "/";
 
     public static final String SIGNIN_URL = "/signin";
 
     public static final String GAME_URL = "/game";
+
+    public static final String VALIDATE_URL = "/validateMove";
 
     //
     // Attributes
@@ -142,12 +144,14 @@ public class WebServer {
         //// Create separate Route classes to handle each route; this keeps your
         //// code clean; using small classes.
 
-        // Shows the Checkers game Home page.
+        // Shows the Checkers pages.
         get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameManager));
         get(SIGNIN_URL, new GetSigninRoute(templateEngine));
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
         post(GAME_URL, new PostGameRoute(gameManager));
+        post(VALIDATE_URL, new PostValidateMove(gson, gameManager));
+
 
         LOG.config("WebServer is initialized.");
     }
