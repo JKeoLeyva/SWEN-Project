@@ -6,7 +6,6 @@ import com.webcheckers.appl.Message;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.ValidMoves;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -32,7 +31,7 @@ public class PostValidateMove implements Route {
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Board board = gameManager.getBoard(currPlayer);
-        Message result = ValidMoves.isValid(move, board);
+        Message result = move.isValid(board);
         return gson.toJson(result);
     }
 }

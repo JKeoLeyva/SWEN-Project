@@ -2,18 +2,19 @@ package com.webcheckers.model;
 
 public class Position {
     private int row;
-    private int col;
+    private int cell;
 
-    public Position(int row, int col) {
+    public Position(int row, int cell) {
         this.row = row;
-        this.col = col;
+        this.cell = cell;
     }
 
     public int getRow() {
         return row;
     }
 
-    public int getCol() {
-        return col;
+    public int getCell() {
+        return cell;
     }
+
 }
