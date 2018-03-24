@@ -71,8 +71,6 @@ public class MatchmakingTemplateTest {
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW);
         final String viewHTML = engine.render(modelAndView);
 
-        //System.out.println(viewHTML);
-
         assertTrue(viewHTML.contains(PLAYER_INGAME));
         assertTrue(viewHTML.contains(PLAYER_NOGAME));
     }
