@@ -78,6 +78,7 @@ public class GetHomeRouteTest {
         engineTester.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
         engineTester.assertViewModelAttribute(GetHomeRoute.CURRENT_PLAYER_ATTR, null);
         engineTester.assertViewModelAttribute(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
+        engineTester.assertViewModelAttribute(GetHomeRoute.GAME_MANAGER_ATTR, gameManager);
         engineTester.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
     }
 
