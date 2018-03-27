@@ -41,7 +41,7 @@ public class Game {
     }
 
     public BoardView makeBoardView(Player player) {
-        return new BoardView(board, !isMyTurn(player));
+        return new BoardView(board, player.equals(whitePlayer));
     }
 
     public boolean isMyTurn(Player player) {
