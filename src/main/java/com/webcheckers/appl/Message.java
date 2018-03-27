@@ -1,5 +1,7 @@
 package com.webcheckers.appl;
 
+import java.util.Objects;
+
 /**
  * A class for text messages from the server.
  */
@@ -34,4 +36,14 @@ public class Message {
     public Type getType() {
         return type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return type == message.type &&
+                Objects.equals(text, message.text);
+    }
+
 }
