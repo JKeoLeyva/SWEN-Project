@@ -37,7 +37,7 @@
                 <#if player != currentPlayer>
                     <li>
                         <form action="/game" method="POST">
-                            <#if gameManager.getBoard(player)??>
+                            <#if gameManager.getGame(player)??>
                                 <p>${player.getName()}</p>
                             <#else>
                                 <input type="submit" name="opponent" value="${player.getName()}">

@@ -13,16 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardViewTest {
 
     private static Board board;
-    private static Player player1;
-    private static Player player2;
     private static BoardView CuT;
     private static Iterator<Row> rowIterator;
 
     @BeforeAll
     static void create() {
-        player1 = new Player("player1");
-        player2 = new Player("player2");
-        board = new Board(player1, player2);
+        board = new Board();
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ViewMode;
 import spark.*;
@@ -49,16 +50,16 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute is invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        Board board = gameManager.getBoard(currPlayer);
+        Game game = gameManager.getGame(currPlayer);
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");
         vm.put("currentPlayer", currPlayer);
         vm.put("viewMode", ViewMode.PLAY);
-        vm.put("redPlayer", board.getRedPlayer());
-        vm.put("whitePlayer", board.getWhitePlayer());
-        vm.put("activeColor", board.getActiveColor());
-        vm.put("board", new BoardView(board, currPlayer.equals(board.getWhitePlayer())));
+        vm.put("redPlayer", game.getRedPlayer());
+        vm.put("whitePlayer", game.getWhitePlayer());
+        vm.put("activeColor", game.getActiveColor());
+        vm.put("board", game.makeBoardView(currPlayer));
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }

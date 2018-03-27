@@ -5,18 +5,12 @@ package com.webcheckers.model;
  */
 public class Board {
     public final static int BOARD_SIZE = 8;
-    private Piece.Color activeColor = Piece.Color.RED;
     private Piece[][] board;
-    private final Player redPlayer;
-    private final Player whitePlayer;
 
     /**
      * Create a new board with the specified players
-     *
-     * @param player1 the red player
-     * @param player2 the white player
      */
-    public Board(final Player player1, final Player player2) {
+    public Board() {
         board = new Piece[BOARD_SIZE][BOARD_SIZE];
         setUpPlayer(Piece.Color.WHITE);
 
@@ -27,8 +21,6 @@ public class Board {
         }
 
         setUpPlayer(Piece.Color.RED);
-        redPlayer = player1;
-        whitePlayer = player2;
     }
 
     /**
@@ -62,22 +54,5 @@ public class Board {
      */
     public void setPiece(int row, int col, Piece piece) {
         board[row][col] = piece;
-    }
-
-    public Player getRedPlayer() {
-        return redPlayer;
-    }
-
-    public Player getWhitePlayer() {
-        return whitePlayer;
-    }
-
-    public Piece.Color getActiveColor() {
-        return activeColor;
-    }
-
-    public void changeActiveColor(){
-        activeColor = activeColor.equals(Piece.Color.RED) ?
-                Piece.Color.WHITE : Piece.Color.RED;
     }
 }

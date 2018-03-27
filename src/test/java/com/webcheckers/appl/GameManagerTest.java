@@ -1,6 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -27,44 +27,44 @@ public class GameManagerTest {
 
     @Test
     public void newBoard() {
-        assertTrue(gameManager.canCreateBoard(player1, player2));
-        assertTrue(gameManager.addBoard(player1, player2));
+        assertTrue(gameManager.canCreateGame(player1, player2));
+        assertTrue(gameManager.addGame(player1, player2));
 
-        Map<Player, Board> boards = gameManager.getBoards();
+        Map<Player, Game> games = gameManager.getGames();
 
-        assertEquals(2, boards.size());
-        assertTrue(boards.containsKey(player1));
-        assertTrue(boards.containsKey(player2));
+        assertEquals(2, games.size());
+        assertTrue(games.containsKey(player1));
+        assertTrue(games.containsKey(player2));
 
-        Board board = gameManager.getBoard(player1);
+        Game game = gameManager.getGame(player1);
 
-        assertEquals(board, gameManager.getBoard(player2));
-        assertEquals(board, boards.get(player1));
-        assertEquals(board, boards.get(player2));
+        assertEquals(game, gameManager.getGame(player2));
+        assertEquals(game, games.get(player1));
+        assertEquals(game, games.get(player2));
     }
 
     @Test
     public void playerAlreadyInGame() {
-        gameManager.addBoard(player2, player3);
+        gameManager.addGame(player2, player3);
 
-        assertFalse(gameManager.canCreateBoard(player1, player3));
-        assertFalse(gameManager.addBoard(player1, player3));
+        assertFalse(gameManager.canCreateGame(player1, player3));
+        assertFalse(gameManager.addGame(player1, player3));
 
-        Map<Player, Board> boards = gameManager.getBoards();
+        Map<Player, Game> games = gameManager.getGames();
 
-        assertEquals(2, boards.size());
-        assertTrue(boards.containsKey(player2));
-        assertTrue(boards.containsKey(player3));
+        assertEquals(2, games.size());
+        assertTrue(games.containsKey(player2));
+        assertTrue(games.containsKey(player3));
     }
 
     @Test
     public void noOnePlayerGame() {
-        assertFalse(gameManager.canCreateBoard(player1, player1));
-        assertFalse(gameManager.addBoard(player1, player1));
+        assertFalse(gameManager.canCreateGame(player1, player1));
+        assertFalse(gameManager.addGame(player1, player1));
     }
 
     @Test
     public void getNullPlayerBoard() {
-        assertNull(gameManager.getBoard(null));
+        assertNull(gameManager.getGame(null));
     }
 }
