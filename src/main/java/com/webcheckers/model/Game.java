@@ -3,6 +3,8 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Game {
@@ -10,7 +12,8 @@ public class Game {
     private final Player redPlayer;
     private final Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
-    private Stack<Move> moves = new Stack<>();
+    private Stack<Move> validatedMoves = new Stack<>();
+    private Queue<Move> submittedMoves = new LinkedList<>();
 
     enum State {
         WAITING_FOR_RED,
@@ -62,6 +65,8 @@ public class Game {
     }
 
     public void switchTurn() {
+        while(!validatedMoves.empty())
+            submittedMoves.add(validatedMoves.pop());
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
         } else {
@@ -70,18 +75,23 @@ public class Game {
     }
 
     public Message isValid(Move move) {
-        if((!moves.empty() && moves.peek().getType() == Move.Type.NON_JUMP))
-            return new Message("Move already made. Backup to make another move.", Message.Type.error);
-        return move.isValid(board);
+        if( !validatedMoves.empty() && !validatedMoves.peek().isJump() )
+            return new Message("Backup to make another move.", Message.Type.error);
+        Message ret = move.isValid(board);
+        if(ret.getType() == Message.Type.info)
+            validatedMoves.push(move);
+
+        System.out.println(validatedMoves.toString());
+
+        return ret;
     }
 
     public void makeMove(Move move) {
         board.makeMove(move);
-        moves.push(move);
     }
 
     public void reverseMove(){
-        Move toReverse = moves.pop();
+        Move toReverse = validatedMoves.pop();
         Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
         board.makeMove(reversed);
     }

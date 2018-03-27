@@ -17,4 +17,11 @@ public class Position {
         return cell;
     }
 
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", cell=" + cell +
+                '}';
+    }
 }

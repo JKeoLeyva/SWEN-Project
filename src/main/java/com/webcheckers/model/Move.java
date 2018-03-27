@@ -9,13 +9,14 @@ public class Move {
 
     private Position start;
     private Position end;
-    private Type type = Type.NON_JUMP;
+    private boolean isJump;
 
     enum Type {NON_JUMP, JUMP}
 
     public Move(Position start, Position end) {
         this.start = start;
         this.end = end;
+        this.isJump = false;
     }
 
     public Position getStart() {
@@ -58,7 +59,16 @@ public class Move {
         return (curr != null);
     }
 
-    public Type getType() {
-        return type;
+    public boolean isJump() {
+        return isJump;
+    }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "start=" + start +
+                ", end=" + end +
+                ", type=" + isJump +
+                '}';
     }
 }
