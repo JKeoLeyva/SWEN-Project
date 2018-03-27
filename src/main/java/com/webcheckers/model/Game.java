@@ -39,7 +39,18 @@ public class Game {
         }
     }
 
-    public BoardView makeBoardView() {
-        return new BoardView(board, currState == State.WAITING_FOR_WHITE);
+    public BoardView makeBoardView(Player player) {
+        return new BoardView(board, !isMyTurn(player));
+    }
+
+    public boolean isMyTurn(Player player) {
+        if(player == redPlayer) {
+            return getActiveColor() == Piece.Color.RED;
+        } else if(player == whitePlayer) {
+            return getActiveColor() == Piece.Color.WHITE;
+        } else {
+            return false;
+        }
+
     }
 }
