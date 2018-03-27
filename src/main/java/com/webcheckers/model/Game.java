@@ -56,4 +56,12 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public void switchTurn() {
+        if(currState == State.WAITING_FOR_RED) {
+            currState = State.WAITING_FOR_WHITE;
+        } else {
+            currState = State.WAITING_FOR_RED;
+        }
+    }
 }

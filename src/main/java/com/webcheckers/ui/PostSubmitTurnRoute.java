@@ -26,11 +26,9 @@ public class PostSubmitTurnRoute implements Route {
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Game game = gameManager.getGame(currPlayer);
         Move move = session.attribute("currentMove");
-        Position start = move.getStart();
-        Position end = move.getEnd();
-        Piece piece = game.getBoard().getPiece(start.getRow(), start.getCell());
-        game.getBoard().setPiece(start.getRow(), start.getCell(), null);
-        game.getBoard().setPiece(end.getRow(), start.getCell(), piece);
+        Board board = game.getBoard();
+        board.makeMove(move);
+        game.switchTurn();
 
         Message result = new Message("true", Message.Type.info);
         return gson.toJson(result);
