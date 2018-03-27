@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
@@ -33,7 +32,7 @@ public class PostValidateMoveRoute implements Route {
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         session.attribute("currentMove", move);
         Game game = gameManager.getGame(currPlayer);
-        Message result = move.isValid(game.getBoard());
+        Message result = game.isValid(move);
         return gson.toJson(result);
     }
 }
