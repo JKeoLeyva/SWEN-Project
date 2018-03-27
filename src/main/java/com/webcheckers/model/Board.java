@@ -55,4 +55,12 @@ public class Board {
     public void setPiece(int row, int col, Piece piece) {
         board[row][col] = piece;
     }
+
+    public void makeMove(Move move) {
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.setPiece(start.getRow(), start.getCell(), null);
+        this.setPiece(end.getRow(), end.getCell(), piece);
+    }
 }
