@@ -45,9 +45,9 @@ public class Game {
     }
 
     public boolean isMyTurn(Player player) {
-        if(player == redPlayer) {
+        if(player.equals(redPlayer)) {
             return getActiveColor() == Piece.Color.RED;
-        } else if(player == whitePlayer) {
+        } else if(player.equals(whitePlayer)) {
             return getActiveColor() == Piece.Color.WHITE;
         } else {
             return false;
