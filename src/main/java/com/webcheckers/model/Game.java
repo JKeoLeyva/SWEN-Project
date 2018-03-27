@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -12,7 +13,7 @@ public class Game {
     private final Player redPlayer;
     private final Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
-    private Stack<Move> validatedMoves = new Stack<>();
+    private StableTurn stableTurn;
     private Queue<Move> submittedMoves = new LinkedList<>();
 
     enum State {
@@ -25,6 +26,7 @@ public class Game {
         this.board = new Board();
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        stableTurn = new StableTurn(board);
     }
 
     public Player getRedPlayer() {
@@ -65,34 +67,27 @@ public class Game {
     }
 
     public void switchTurn() {
-        while(!validatedMoves.empty())
-            submittedMoves.add(validatedMoves.pop());
+
+        for(Move move : stableTurn.getValidatedMoves()) {
+            makeMove(move);
+            submittedMoves.add(move);
+        }
+
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
         } else {
             currState = State.WAITING_FOR_RED;
         }
-    }
 
-    public Message isValid(Move move) {
-        if( !validatedMoves.empty() && !validatedMoves.peek().isJump() )
-            return new Message("Backup to make another move.", Message.Type.error);
-        Message ret = move.isValid(board);
-        if(ret.getType() == Message.Type.info)
-            validatedMoves.push(move);
-
-        System.out.println(validatedMoves.toString());
-
-        return ret;
+        stableTurn = new StableTurn(board);
     }
 
     public void makeMove(Move move) {
         board.makeMove(move);
     }
 
-    public void reverseMove(){
-        Move toReverse = validatedMoves.pop();
-        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
-        board.makeMove(reversed);
+    public StableTurn getStableTurn(){
+        return stableTurn;
     }
+
 }
