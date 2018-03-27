@@ -74,6 +74,7 @@ public class StableTurn {
         temp.makeMove(reversed);
     }
 
+
     public Stack<Move> getValidatedMoves(){
         Collections.reverse(validatedMoves);
         return validatedMoves;
