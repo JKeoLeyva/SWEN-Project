@@ -2,17 +2,16 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
- * A class for listing all logged-in players.
+ * Keep track of all players
  */
 public class PlayerLobby {
-    private List<Player> players;
+    private Set<Player> players;
 
     public PlayerLobby() {
-        players = new ArrayList<>();
+        players = new HashSet<>();
     }
 
     /**
@@ -38,10 +37,26 @@ public class PlayerLobby {
         return player;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    /**
+     * Attempt to sign out a player
+     *
+     * @param name the player's name
+     * @return if the player could be signed out
+     */
+    public boolean signOutPlayer(String name) {
+        return players.remove(new Player(name));
     }
 
+    /**
+     * @return an immutable list of players
+     */
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(new ArrayList<>(players));
+    }
+
+    /**
+     * @return the number of players
+     */
     public int getPlayerCount() {
         return players.size();
     }

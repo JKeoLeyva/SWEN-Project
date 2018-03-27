@@ -15,10 +15,10 @@ public class Row implements Iterable<Space> {
      *
      * @param index  the index of the row in the board
      * @param spaces the cells of the board
-     * @throws IllegalArgumentException if the index is not in 0-7
+     * @throws IllegalArgumentException if the index is not in 0-7 and spaces.size() is not Board.BOARD_SIZE
      */
     public Row(int index, List<Space> spaces) {
-        if(spaces.size() != Board.BOARD_SIZE) {
+        if(index < 0 || index > 8 || spaces.size() != Board.BOARD_SIZE) {
             throw new IllegalArgumentException("Index must be between 0-7");
         }
 
