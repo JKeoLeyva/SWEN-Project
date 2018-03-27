@@ -14,7 +14,7 @@ public class PostSubmitTurnRoute implements Route {
     private PlayerLobby playerLobby;
     private Gson gson;
 
-    public PostSubmitTurnRoute(final Gson gson, final GameManager gameManager, final PlayerLobby playerLobby) {
+    public PostSubmitTurnRoute(final Gson gson, final GameManager gameManager) {
         this.gameManager = gameManager;
         this.playerLobby = playerLobby;
         this.gson = gson;
