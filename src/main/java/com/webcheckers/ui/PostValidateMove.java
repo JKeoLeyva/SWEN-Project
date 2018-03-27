@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import spark.Request;
@@ -30,8 +31,9 @@ public class PostValidateMove implements Route {
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        Board board = gameManager.getBoard(currPlayer);
-        Message result = move.isValid(board);
+        session.attribute("currentMove", move);
+        Game game = gameManager.getGame(currPlayer);
+        Message result = move.isValid(game.getBoard());
         return gson.toJson(result);
     }
 }

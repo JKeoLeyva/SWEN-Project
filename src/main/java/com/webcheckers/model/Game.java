@@ -51,6 +51,9 @@ public class Game {
         } else {
             return false;
         }
+    }
 
+    public Board getBoard() {
+        return board;
     }
 }

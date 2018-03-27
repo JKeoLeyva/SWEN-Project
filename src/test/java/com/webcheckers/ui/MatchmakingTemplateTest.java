@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,8 +61,8 @@ public class MatchmakingTemplateTest {
         players.add(player1);
         players.add(player2);
 
-        when(gameManager.getBoard(player2)).thenReturn(null);
-        when(gameManager.getBoard(player1)).thenReturn(new Board(player1, player2));
+        when(gameManager.getGame(player2)).thenReturn(null);
+        when(gameManager.getGame(player1)).thenReturn(new Game(player1, player2));
         when(playerLobby.getPlayers()).thenReturn(players);
         when(playerLobby.getPlayerCount()).thenReturn(2);
         when(player1.getName()).thenReturn(PLAYER1);
