@@ -9,6 +9,9 @@ public class Move {
 
     private Position start;
     private Position end;
+    private Type type = Type.NON_JUMP;
+
+    enum Type {NON_JUMP, JUMP}
 
     public Move(Position start, Position end) {
         this.start = start;
@@ -55,5 +58,7 @@ public class Move {
         return (curr != null);
     }
 
-
+    public Type getType() {
+        return type;
+    }
 }

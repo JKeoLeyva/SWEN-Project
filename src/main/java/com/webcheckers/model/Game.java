@@ -3,11 +3,14 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
+import java.util.Stack;
+
 public class Game {
     private Board board;
     private final Player redPlayer;
     private final Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
+    private Stack<Move> moves = new Stack<>();
 
     enum State {
         WAITING_FOR_RED,
@@ -67,10 +70,19 @@ public class Game {
     }
 
     public Message isValid(Move move) {
+        if((!moves.empty() && moves.peek().getType() == Move.Type.NON_JUMP))
+            return new Message("Move already made. Backup to make another move.", Message.Type.error);
         return move.isValid(board);
     }
 
     public void makeMove(Move move) {
         board.makeMove(move);
+        moves.push(move);
+    }
+
+    public void reverseMove(){
+        Move toReverse = moves.pop();
+        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
+        board.makeMove(reversed);
     }
 }

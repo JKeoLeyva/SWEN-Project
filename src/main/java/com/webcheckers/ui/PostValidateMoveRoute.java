@@ -30,9 +30,10 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
-        session.attribute("currentMove", move);
         Game game = gameManager.getGame(currPlayer);
         Message result = game.isValid(move);
+        if(result.getType() == Message.Type.info)
+            game.makeMove(move);
         return gson.toJson(result);
     }
 }
