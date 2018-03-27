@@ -50,7 +50,8 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - (Epic) Game Play
 - (User Story) Valid Moves
 - (User Story) Player Turns
-- (User Story) Matchmaking
+- (User Story) Jumps
+- (User Story) Forced Moves
 
 ### Roadmap of Enhancements
 - Make sure that the Player can Sign-out 
