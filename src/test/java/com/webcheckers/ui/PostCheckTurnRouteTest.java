@@ -23,7 +23,7 @@ public class PostCheckTurnRouteTest {
     @BeforeEach
     void setup() {
         gameManager = mock(GameManager.class);
-        gson = mock(Gson.class);
+        //gson = new Gson();
         request = mock(Request.class);
         response = mock(Response.class);
 
@@ -32,10 +32,10 @@ public class PostCheckTurnRouteTest {
 
     @Test
     void returnsTrueInfoMessageForRedPlayer() throws Exception {
-        String message = (String) route.handle(request, response);
-
-        Message m = gson.fromJson(message, Message.class);
-        assertEquals();
-        assertTrue();
+//        String message = (String) route.handle(request, response);
+//
+//        Message m = gson.fromJson(message, Message.class);
+//        assertEquals();
+//        assertTrue();
     }
 }
