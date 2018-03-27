@@ -155,7 +155,7 @@ public class WebServer {
         post(GAME_URL, new PostGameRoute(gameManager));
         post(CHECK_TURN_URL, new PostCheckTurnRoute(gameManager, gson));
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameManager));
-        post(VALIDATE_MOVE_URL, new PostValidateMove(gson, gameManager));
+        post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson, gameManager));
 
         LOG.config("WebServer is initialized.");
     }

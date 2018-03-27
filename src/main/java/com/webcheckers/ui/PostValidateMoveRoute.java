@@ -14,19 +14,19 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
-public class PostValidateMove implements Route {
+public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
     private final Gson gson;
     private final GameManager gameManager;
 
-    public PostValidateMove(Gson gson, GameManager gameManager) {
+    public PostValidateMoveRoute(Gson gson, GameManager gameManager) {
         this.gson = gson;
         this.gameManager = gameManager;
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("PostValidateMove is invoked.");
+        LOG.finer("PostValidateMoveRoute is invoked.");
         String moveJSON = request.body();
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
