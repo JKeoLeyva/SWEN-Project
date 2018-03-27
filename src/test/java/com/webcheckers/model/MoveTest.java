@@ -1,10 +1,10 @@
 package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MoveTest {
 
@@ -20,7 +20,7 @@ class MoveTest {
     private Move CuT;
 
     // Clears board for testing.
-    @BeforeAll
+    @BeforeEach
     void setup(){
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
