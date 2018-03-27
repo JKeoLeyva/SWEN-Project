@@ -4,9 +4,13 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.*;
-import javafx.geometry.Pos;
-import spark.*;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.Player;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
 
 public class PostSubmitTurnRoute implements Route {
 
@@ -26,8 +30,7 @@ public class PostSubmitTurnRoute implements Route {
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Game game = gameManager.getGame(currPlayer);
         Move move = session.attribute("currentMove");
-        Board board = game.getBoard();
-        board.makeMove(move);
+        game.makeMove(move);
         game.switchTurn();
 
         Message result = new Message("true", Message.Type.info);

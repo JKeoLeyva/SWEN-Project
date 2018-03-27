@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
 public class Game {
@@ -44,9 +45,9 @@ public class Game {
     }
 
     public boolean isMyTurn(Player player) {
-        if(player == redPlayer) {
+        if(player.equals(redPlayer)) {
             return getActiveColor() == Piece.Color.RED;
-        } else if(player == whitePlayer) {
+        } else if(player.equals(whitePlayer)) {
             return getActiveColor() == Piece.Color.WHITE;
         } else {
             return false;
@@ -63,5 +64,13 @@ public class Game {
         } else {
             currState = State.WAITING_FOR_RED;
         }
+    }
+
+    public Message isValid(Move move) {
+        return move.isValid(board);
+    }
+
+    public void makeMove(Move move) {
+        board.makeMove(move);
     }
 }
