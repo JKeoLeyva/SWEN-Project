@@ -63,4 +63,5 @@ public class Board {
         this.setPiece(start.getRow(), start.getCell(), null);
         this.setPiece(end.getRow(), end.getCell(), piece);
     }
+
 }

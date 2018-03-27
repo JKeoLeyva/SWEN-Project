@@ -34,6 +34,12 @@ public class PostSubmitTurnRoute implements Route {
         game.switchTurn();
 
         Message result = new Message("true", Message.Type.info);
+
+        if(game.isGameOver(currPlayer)) {
+            //remove the game from the game manager
+            response.redirect(WebServer.HOME_URL);
+        }
+
         return gson.toJson(result);
     }
 }
