@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ViewMode;
