@@ -24,7 +24,7 @@ public class GameManager {
      * @param player2 to-be white player
      * @return if board add was successful
      */
-    public synchronized boolean addGame(Player player1, Player player2) {
+    public synchronized boolean createGame(Player player1, Player player2) {
         // returns if both players are available
         if(!canCreateGame(player1, player2))
             return false;
@@ -59,7 +59,9 @@ public class GameManager {
         return games.get(player);
     }
 
-    public void deleteGame(Player player){
+    public void deleteGame(Player player) {
+        Game game = games.get(player);
+        game.removePlayer(player);
         games.remove(player);
     }
 }
