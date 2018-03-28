@@ -8,8 +8,8 @@ import java.util.Queue;
 
 public class Game {
     private Board board;
-    private final Player redPlayer;
-    private final Player whitePlayer;
+    private Player redPlayer;
+    private Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
     private Turn turn;
     // Stores all moves made during the game.
@@ -34,6 +34,14 @@ public class Game {
 
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    public void removePlayer(Player player) {
+        if(player.equals(redPlayer)) {
+            redPlayer = null;
+        } else {
+            whitePlayer = null;
+        }
     }
 
     public Piece.Color getActiveColor() throws IllegalStateException {

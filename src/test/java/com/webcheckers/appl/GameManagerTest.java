@@ -28,7 +28,7 @@ public class GameManagerTest {
     @Test
     public void newBoard() {
         assertTrue(gameManager.canCreateGame(player1, player2));
-        assertTrue(gameManager.addGame(player1, player2));
+        assertTrue(gameManager.createGame(player1, player2));
 
         Map<Player, Game> games = gameManager.getGames();
 
@@ -45,10 +45,10 @@ public class GameManagerTest {
 
     @Test
     public void playerAlreadyInGame() {
-        gameManager.addGame(player2, player3);
+        gameManager.createGame(player2, player3);
 
         assertFalse(gameManager.canCreateGame(player1, player3));
-        assertFalse(gameManager.addGame(player1, player3));
+        assertFalse(gameManager.createGame(player1, player3));
 
         Map<Player, Game> games = gameManager.getGames();
 
@@ -60,7 +60,7 @@ public class GameManagerTest {
     @Test
     public void noOnePlayerGame() {
         assertFalse(gameManager.canCreateGame(player1, player1));
-        assertFalse(gameManager.addGame(player1, player1));
+        assertFalse(gameManager.createGame(player1, player1));
     }
 
     @Test
