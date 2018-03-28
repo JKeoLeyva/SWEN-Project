@@ -58,4 +58,10 @@ public class GameManager {
         if(player == null) return null;
         return games.get(player);
     }
+
+    public void deleteGame(Player player) {
+        Game game = games.get(player);
+        game.removePlayer(player);
+        games.remove(player);
+    }
 }
