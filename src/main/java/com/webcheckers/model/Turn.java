@@ -10,6 +10,8 @@ public class Turn {
     private static final String INVALID_DISTANCE = "You can only move forward 1 space diagonally.";
     private static final String TAKEN_SPACE = "You can only move onto an empty space.";
     private static final String VALID_MOVE = "Move is valid!";
+    private static final String INVALID_SPACE = "Space is outside board.";
+
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves;
     // A temporary Board to store moves.
@@ -34,6 +36,12 @@ public class Turn {
      * @return Message to be displayed
      */
     public Message tryMove(Move move) {
+        int row = move.getEnd().getRow();
+        int col = move.getEnd().getCell();
+
+        if(row >= Board.BOARD_SIZE || row < 0 || col >= Board.BOARD_SIZE || col < 0)
+            return new Message(INVALID_SPACE, Message.Type.error);
+
         if( !validatedMoves.empty() && !validatedMoves.peek().isJump() )
             return new Message(MOVE_ALREADY_MADE, Message.Type.error);
         else if(distanceIsInvalid(move))
