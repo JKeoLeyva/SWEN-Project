@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("Model-tier")
 class TurnTest {
@@ -19,7 +20,7 @@ class TurnTest {
     @BeforeEach
     void setup(){
         board = new Board();
-        turn = new Turn(board);
+        turn = new Turn(board, Piece.Color.RED);
     }
 
     /**
@@ -33,6 +34,7 @@ class TurnTest {
         ArrayList<Move> moves = new ArrayList<>();
         // Alternates between advancing red and white pieces.
         for(int i = 0; i < Board.BOARD_SIZE; i+=2){
+            turn.setPlayerColor(Piece.Color.RED);
             Position start = new Position(5, i);
             Position end = new Position(4, i+1);
             Move move = new Move(start, end);
@@ -41,6 +43,7 @@ class TurnTest {
             queue.add(move);
             moves.add(turn.getValidatedMoves().peek());
 
+            turn.setPlayerColor(Piece.Color.WHITE);
             start = new Position(2, i+1);
             end = new Position(3, i);
             move = new Move(start, end);
@@ -75,15 +78,14 @@ class TurnTest {
     }
 
     /**
-     * Attempts to make a move that moves too far.
+     * Attempts to make a jump move
      */
     @Test
-    void testInvalidMoves(){
+    void testJumpMove() {
         Position start = new Position(5, 0);
         Position end = new Position(3, 2);
         Message ret = turn.tryMove(new Move(start, end));
-        assertEquals(ret.getType(), Message.Type.error);
-
+        assertEquals(ret.getType(), Message.Type.info);
     }
 
     /**
@@ -107,7 +109,7 @@ class TurnTest {
         board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
         Position start = new Position(4,1);
         Position end = new Position(3, 0);
-        turn = new Turn(board);
+        turn = new Turn(board, Piece.Color.RED);
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(ret.getType(), Message.Type.error);
     }
@@ -120,12 +122,32 @@ class TurnTest {
         Position start = new Position(5, 0);
         Position end = new Position(5, 1);
         Message ret = turn.tryMove(new Move(start, end));
-        assertEquals(ret.getType(), Message.Type.error);
-        turn = new Turn(board);
+        assertEquals(new Message(Turn.INVALID_DISTANCE, Message.Type.error), ret);
+
+        turn = new Turn(board, Piece.Color.RED);
         start = new Position(2, 1);
         end = new Position(3, 1);
         ret = turn.tryMove(new Move(start, end));
-        assertEquals(ret.getType(), Message.Type.error);
+        assertEquals(new Message(Turn.INVALID_DISTANCE, Message.Type.error), ret);
     }
 
+    @Test
+    void jumpAfterSingle() {
+        Move singleMove = new Move(
+                new Position(5, 0),
+                new Position(4, 1)
+        );
+
+        Move jumpMove = new Move(
+                new Position(4, 1),
+                new Position(2, 3)
+        );
+
+        Turn turn = new Turn(board, Piece.Color.RED);
+        Message singleMessage = turn.tryMove(singleMove);
+        assertEquals(Message.Type.info, singleMessage.getType());
+
+        Message jumpMessage = turn.tryMove(jumpMove);
+        assertEquals(new Message(Turn.CAN_NOT_JUMP, Message.Type.error), jumpMessage);
+    }
 }
