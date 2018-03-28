@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.Message;
-
 public class Move {
 
     private Position start;

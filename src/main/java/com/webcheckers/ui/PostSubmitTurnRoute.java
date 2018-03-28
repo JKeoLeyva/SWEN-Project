@@ -5,7 +5,6 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;

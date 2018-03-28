@@ -1,12 +1,9 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 public class Game {
     private Board board;

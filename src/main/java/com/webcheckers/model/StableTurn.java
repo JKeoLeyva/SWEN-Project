@@ -36,8 +36,6 @@ public class StableTurn {
             temp.makeMove(move);
             return new Message(VALID_MOVE, Message.Type.info);
         }
-
-        //System.out.println(validatedMoves.toString());
     }
 
     // Assumes a SINGLE Piece.
