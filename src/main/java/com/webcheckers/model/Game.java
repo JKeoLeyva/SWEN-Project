@@ -1,14 +1,19 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 import javafx.geometry.Pos;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Game {
     private Board board;
     private final Player redPlayer;
     private final Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
+    private Turn turn;
+    // Stores all moves made during the game.
+    private Queue<Move> submittedMoves = new LinkedList<>();
 
     enum State {
         WAITING_FOR_RED,
@@ -20,6 +25,7 @@ public class Game {
         this.board = new Board();
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        turn = new Turn(board);
     }
 
     public Player getRedPlayer() {
@@ -90,15 +96,18 @@ public class Game {
     }
 
     public void switchTurn() {
+
+        // Makes the validated moves stored in Turn.
+        for(Move move : turn.getValidatedMoves())
+            makeMove(move);
+
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
         } else {
             currState = State.WAITING_FOR_RED;
         }
-    }
 
-    public Message isValid(Move move) {
-        return move.isValid(board);
+        turn = new Turn(board);
     }
 
     public boolean hasMove(Player player){
@@ -137,5 +146,11 @@ public class Game {
 
     public void makeMove(Move move) {
         board.makeMove(move);
+        submittedMoves.add(move);
     }
+
+    public Turn getTurn(){
+        return turn;
+    }
+
 }
