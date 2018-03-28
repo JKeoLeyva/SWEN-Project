@@ -10,7 +10,8 @@ public class Game {
     private final Player redPlayer;
     private final Player whitePlayer;
     private State currState = State.WAITING_FOR_RED;
-    private StableTurn stableTurn;
+    private Turn turn;
+    // Stores all moves made during the game.
     private Queue<Move> submittedMoves = new LinkedList<>();
 
     enum State {
@@ -23,7 +24,7 @@ public class Game {
         this.board = new Board();
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        stableTurn = new StableTurn(board);
+        turn = new Turn(board);
     }
 
     public Player getRedPlayer() {
@@ -65,10 +66,9 @@ public class Game {
 
     public void switchTurn() {
 
-        for(Move move : stableTurn.getValidatedMoves()) {
+        // Makes the validated moves stored in Turn.
+        for(Move move : turn.getValidatedMoves())
             makeMove(move);
-            submittedMoves.add(move);
-        }
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
@@ -76,15 +76,16 @@ public class Game {
             currState = State.WAITING_FOR_RED;
         }
 
-        stableTurn = new StableTurn(board);
+        turn = new Turn(board);
     }
 
     public void makeMove(Move move) {
         board.makeMove(move);
+        submittedMoves.add(move);
     }
 
-    public StableTurn getStableTurn(){
-        return stableTurn;
+    public Turn getTurn(){
+        return turn;
     }
 
 }

@@ -6,7 +6,7 @@ import com.webcheckers.appl.Message;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.StableTurn;
+import com.webcheckers.model.Turn;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -15,7 +15,7 @@ import spark.Session;
 import java.util.logging.Logger;
 
 public class PostValidateMoveRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
     private final Gson gson;
     private final GameManager gameManager;
 
@@ -32,8 +32,8 @@ public class PostValidateMoveRoute implements Route {
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Game game = gameManager.getGame(currPlayer);
-        StableTurn stableTurn = game.getStableTurn();
-        Message result = stableTurn.isValid(move);
+        Turn turn = game.getTurn();
+        Message result = turn.tryMove(move);
         return gson.toJson(result);
     }
 }

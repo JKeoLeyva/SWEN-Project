@@ -26,15 +26,7 @@ public class Move {
         return isJump;
     }
 
-    @Override
-    public String toString() {
-        return "Move{" +
-                "start=" + start +
-                ", end=" + end +
-                ", type=" + isJump +
-                '}';
-    }
-
+    // Note: only used for testing.
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;

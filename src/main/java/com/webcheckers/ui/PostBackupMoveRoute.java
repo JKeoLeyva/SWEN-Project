@@ -5,13 +5,16 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.StableTurn;
+import com.webcheckers.model.Turn;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
 
+import java.util.logging.Logger;
+
 public class PostBackupMoveRoute implements Route{
+    private final static Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
     private final Gson gson;
     private final GameManager gameManager;
 
@@ -22,11 +25,12 @@ public class PostBackupMoveRoute implements Route{
 
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("PostBackupMove invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Game game = gameManager.getGame(currPlayer);
-        StableTurn stableTurn = game.getStableTurn();
-        stableTurn.backupMove();
+        Turn turn = game.getTurn();
+        turn.backupMove();
 
         Message message = new Message("Last move undone.", Message.Type.info);
         return gson.toJson(message, Message.class);

@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 public class Position {
     private int row;
     private int cell;
@@ -17,11 +19,12 @@ public class Position {
         return cell;
     }
 
+    // Note: only used for testing.
     @Override
-    public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", cell=" + cell +
-                '}';
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        Position position = (Position) o;
+        return row == position.row &&
+                cell == position.cell;
     }
 }
