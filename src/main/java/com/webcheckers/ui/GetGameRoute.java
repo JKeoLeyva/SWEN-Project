@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ViewMode;
 import spark.*;
 
 import java.util.HashMap;
@@ -18,12 +19,6 @@ public class GetGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;
-    /**
-     * An enum for the type of checkers viewing. May be needed for enhancements.
-     */
-    public enum ViewMode {
-        PLAY, SPECTATOR, REPLAY
-    }
 
     /**
      * Create the Spark Route (UI controller) for the
