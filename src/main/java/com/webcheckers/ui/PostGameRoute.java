@@ -41,7 +41,7 @@ public class PostGameRoute implements Route {
 
         String redirect = WebServer.GAME_URL;
 
-        if(!gameManager.addGame(player1, player2)) {
+        if(!gameManager.createGame(player1, player2)) {
             // One of the players is already in a game: redirect to home page.
             redirect = WebServer.HOME_URL;
             session.attribute(MESSAGE_ATTR, new Message(ALREADY_IN_GAME_ERROR, Message.Type.error));

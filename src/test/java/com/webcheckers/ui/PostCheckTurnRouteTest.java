@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -47,7 +46,7 @@ public class PostCheckTurnRouteTest {
         Player player1 = new Player("Karl");
         Player player2 = new Player("Mark");
 
-        gameManager.addGame(player1, player2);
+        gameManager.createGame(player1, player2);
         when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
 
         String jsonMessage = (String) route.handle(request, response);
