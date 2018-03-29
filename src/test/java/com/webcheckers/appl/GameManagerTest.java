@@ -67,4 +67,26 @@ public class GameManagerTest {
     public void getNullPlayerBoard() {
         assertNull(gameManager.getGame(null));
     }
+
+    @Test
+    public void deletedBoard(){
+        Player player4 = new Player("player4");
+        Player player5 = new Player("player5");
+
+        gameManager.createGame(player4, player5);
+
+        assertNotNull(gameManager.getGame(player4));
+        assertNotNull(gameManager.getGame(player5));
+
+        gameManager.deleteGame(player4);
+        assertNotNull(gameManager.getGame(player5));
+        assertNull(gameManager.getGame(player4));
+
+        gameManager.deleteGame(player5);
+        assertNull(gameManager.getGame(player4));
+        assertNull(gameManager.getGame(player5));
+
+        assertTrue(gameManager.canCreateGame(player4, player5));
+        assertTrue(gameManager.canCreateGame(player5, player4));
+    }
 }

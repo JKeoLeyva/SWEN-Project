@@ -31,4 +31,12 @@ public class GameTest {
     void gameStartsOnRed() {
         assertEquals(game.getActiveColor(), Piece.Color.RED);
     }
+
+    @Test
+    void gameIsOver(){
+        game.setGameOver();
+        assertEquals(game.isGameOver(), true);
+        assertEquals(game.isGameOver(player1), true);
+        assertEquals(game.isGameOver(player2), true);
+    }
 }
