@@ -1,11 +1,10 @@
 package com.webcheckers.model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
     private static final Player player1 = new Player("player1");
@@ -35,8 +34,8 @@ public class GameTest {
     @Test
     void gameIsOver(){
         game.setGameOver();
-        assertEquals(game.isGameOver(), true);
-        assertEquals(game.isGameOver(player1), true);
-        assertEquals(game.isGameOver(player2), true);
+        assertTrue(game.isGameOver());
+        assertTrue(game.isGameOver(player1));
+        assertTrue(game.isGameOver(player2));
     }
 }
