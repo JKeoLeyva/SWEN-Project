@@ -33,7 +33,6 @@ public class GetSignOutRoute implements Route {
         Player player = session.attribute(PostSigninRoute.PLAYER_ATTR);
 
         if(player != null) {
-            // TODO: resign game if in a game
             if(gameManager.getGame(player) != null){
                 Game game = gameManager.getGame(player);
                 game.setGameOver();
