@@ -51,6 +51,11 @@ public class GetGameRoute implements Route {
         Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
         Game game = gameManager.getGame(currPlayer);
 
+        if(game == null) {
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Game");
         vm.put("currentPlayer", currPlayer);
