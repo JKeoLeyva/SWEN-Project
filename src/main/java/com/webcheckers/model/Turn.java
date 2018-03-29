@@ -2,6 +2,9 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class Turn {
@@ -15,7 +18,6 @@ public class Turn {
     static final String TAKEN_SPACE = "You can only move onto an empty space.";
     static final String VALID_MOVE = "Move is valid!";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
-    static final String CAN_NOT_JUMP = "You already made a single space move, so you can't jump.";
 
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves;
@@ -61,24 +63,16 @@ public class Turn {
                     state = State.SINGLE;
                 break;
             case SINGLE:
-                    if(isJump)
-                        return new Message(CAN_NOT_JUMP, Message.Type.error);
-
-                    if(spaceIsTaken(move))
-                        return new Message(TAKEN_SPACE, Message.Type.error);
-
-                    if(!distanceIsValid(move))
-                        return new Message(INVALID_DISTANCE, Message.Type.error);
-                break;
+                return new Message(MOVE_ALREADY_MADE, Message.Type.error);
             case JUMP:
-                    if(distanceIsValid(move))
-                        return new Message(ALREADY_JUMPING, Message.Type.error);
+                if(distanceIsValid(move))
+                    return new Message(ALREADY_JUMPING, Message.Type.error);
 
-                    if(spaceIsTaken(move))
-                        return new Message(TAKEN_SPACE, Message.Type.error);
+                if(spaceIsTaken(move))
+                    return new Message(TAKEN_SPACE, Message.Type.error);
 
-                    if(!isJump)
-                        return new Message(INVALID_DISTANCE, Message.Type.error);
+                if(!isJump)
+                    return new Message(INVALID_DISTANCE, Message.Type.error);
                 break;
         }
 
@@ -135,13 +129,19 @@ public class Turn {
         int colStart = start.getCell();
         int rowEnd = end.getRow();
         int colEnd = end.getCell();
-        int verticalMove = rowStart - rowEnd;
+        int verticalMove = rowEnd - rowStart;
         int horizontalMove = Math.abs(colStart - colEnd);
+        int jumpRow = playerColor == Piece.Color.RED ? rowStart - 1 : rowStart + 1;
+        int jumpCol = colEnd - colStart > 0 ? colStart + 1 : colStart - 1;
+
+        // Check to make sure there's a piece that's being jumped
+        if(temp.getPiece(jumpRow, jumpCol) == null)
+            return false;
 
         // Assumes a Jump move.
         // From the perspective of a Board, red pieces can move down,
         // and white pieces can move up.
-        return horizontalMove == 2 || (playerColor == Piece.Color.RED ?
+        return horizontalMove == 2 && (playerColor == Piece.Color.RED ?
                 verticalMove == -2 : verticalMove == 2);
     }
 
@@ -152,6 +152,17 @@ public class Turn {
         Move toReverse = validatedMoves.pop();
         Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
         temp.makeMove(reversed);
+
+        switch(state) {
+            case UNKNOWN:
+                break;
+            case JUMP:
+                if(validatedMoves.empty())
+                    state = State.UNKNOWN;
+                break;
+            case SINGLE:
+                state = State.UNKNOWN;
+        }
     }
 
 
@@ -159,10 +170,11 @@ public class Turn {
      * Empties out and returns the validated moves.
      * @return A Stack of moves with the first move on top, and so on.
      */
-    public Stack<Move> getValidatedMoves(){
-        Stack<Move> ret = new Stack<>();
+    public List<Move> getValidatedMoves(){
+        List<Move> ret = new ArrayList<>();
         while(!validatedMoves.empty())
-            ret.push(validatedMoves.pop());
+            ret.add(validatedMoves.pop());
+        Collections.reverse(ret);
         return ret;
     }
 
