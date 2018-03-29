@@ -134,8 +134,9 @@ public class Turn {
         int jumpRow = playerColor == Piece.Color.RED ? rowStart - 1 : rowStart + 1;
         int jumpCol = colEnd - colStart > 0 ? colStart + 1 : colStart - 1;
 
-        // Check to make sure there's a piece that's being jumped
-        if(temp.getPiece(jumpRow, jumpCol) == null)
+        // Check to make sure there's a piece of the opposite color that's being jumped
+        Piece piece = temp.getPiece(jumpRow, jumpCol);
+        if(piece == null || piece.getColor() == playerColor)
             return false;
 
         // Assumes a Jump move.
@@ -152,7 +153,26 @@ public class Turn {
         Move toReverse = validatedMoves.pop();
         Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
         temp.makeMove(reversed);
+        resetState();
+    }
 
+    /**
+     * Empties out and returns the validated moves.
+     * @return A Stack of moves with the first move on top, and so on.
+     */
+    public List<Move> getValidatedMoves(){
+        List<Move> ret = new ArrayList<>();
+
+        while(!validatedMoves.empty())
+            ret.add(validatedMoves.pop());
+
+        Collections.reverse(ret);
+        resetState();
+
+        return ret;
+    }
+
+    private void resetState() {
         switch(state) {
             case UNKNOWN:
                 break;
@@ -163,19 +183,6 @@ public class Turn {
             case SINGLE:
                 state = State.UNKNOWN;
         }
-    }
-
-
-    /**
-     * Empties out and returns the validated moves.
-     * @return A Stack of moves with the first move on top, and so on.
-     */
-    public List<Move> getValidatedMoves(){
-        List<Move> ret = new ArrayList<>();
-        while(!validatedMoves.empty())
-            ret.add(validatedMoves.pop());
-        Collections.reverse(ret);
-        return ret;
     }
 
     public void setPlayerColor(Piece.Color playerColor) {

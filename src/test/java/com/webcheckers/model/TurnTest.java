@@ -41,7 +41,7 @@ class TurnTest {
             Message result = turn.tryMove(move);
             assertEquals(result.getType(), Message.Type.info);
             queue.add(move);
-            moves.add(turn.getValidatedMoves().peek());
+            moves.add(turn.getValidatedMoves().get(0));
 
             turn.setPlayerColor(Piece.Color.WHITE);
             start = new Position(2, i+1);
@@ -50,7 +50,7 @@ class TurnTest {
             result = turn.tryMove(move);
             assertEquals(result.getType(), Message.Type.info);
             queue.add(move);
-            moves.add(turn.getValidatedMoves().peek());
+            moves.add(turn.getValidatedMoves().get(0));
         }
 
         // Checks that all moves input to isValid and all moves stored are the same.
@@ -73,7 +73,7 @@ class TurnTest {
             assertEquals(result.getType(), Message.Type.info);
 
             turn.backupMove();
-            assertTrue(turn.getValidatedMoves().empty());
+            assertTrue(turn.getValidatedMoves().isEmpty());
         }
     }
 
@@ -84,6 +84,8 @@ class TurnTest {
     void testJumpMove() {
         Position start = new Position(5, 0);
         Position end = new Position(3, 2);
+        board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        turn = new Turn(board, Piece.Color.RED);
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(ret.getType(), Message.Type.info);
     }
@@ -148,6 +150,6 @@ class TurnTest {
         assertEquals(Message.Type.info, singleMessage.getType());
 
         Message jumpMessage = turn.tryMove(jumpMove);
-        assertEquals(new Message(Turn.CAN_NOT_JUMP, Message.Type.error), jumpMessage);
+        assertEquals(new Message(Turn.MOVE_ALREADY_MADE, Message.Type.error), jumpMessage);
     }
 }
