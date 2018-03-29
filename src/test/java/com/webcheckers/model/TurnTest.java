@@ -152,4 +152,27 @@ class TurnTest {
         Message jumpMessage = turn.tryMove(jumpMove);
         assertEquals(new Message(Turn.MOVE_ALREADY_MADE, Message.Type.error), jumpMessage);
     }
+
+    @Test
+    void doubleJump() {
+        Move jump1 = new Move(
+                new Position(5, 0),
+                new Position(3, 2)
+        );
+
+        Move jump2 = new Move(
+                new Position(3, 2),
+                new Position(1, 4)
+        );
+
+        board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.setPiece(1, 4, null);
+
+        Turn turn = new Turn(board, Piece.Color.RED);
+        Message message1 = turn.tryMove(jump1);
+        assertEquals(Message.Type.info, message1.getType());
+
+        Message message2 = turn.tryMove(jump2);
+        assertEquals(Message.Type.info, message2.getType());
+    }
 }
