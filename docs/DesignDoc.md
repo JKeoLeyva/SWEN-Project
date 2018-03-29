@@ -122,8 +122,9 @@ The GameManager component of the Application tier is tasked with monitoring the 
 #### Static model
 ![Appl model](Appl.PNG)
 
+
 #### Dynamic model
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
+![GameManager.deleteGame](game-manager-delete-game.jpg)
 
 
 ### Model Tier
