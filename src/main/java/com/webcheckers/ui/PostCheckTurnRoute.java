@@ -33,7 +33,7 @@ public class PostCheckTurnRoute implements Route {
         if(player.equals(game.getRedPlayer())) {
             if(game.getWhitePlayer() == null) {
                 outcome = String.valueOf(true);
-            };
+            }
         } else {
             if(game.getRedPlayer() == null) {
                 outcome = String.valueOf(true);
