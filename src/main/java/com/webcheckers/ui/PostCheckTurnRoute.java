@@ -28,6 +28,12 @@ public class PostCheckTurnRoute implements Route {
         }
 
         Game game = gameManager.getGame(player);
+
+        if(game.isGameOver()){
+            gameManager.deleteGame(player);
+            return gson.toJson(new Message("true", Message.Type.info));
+        }
+
         String outcome = String.valueOf(game.isMyTurn(player));
 
         if(player.equals(game.getRedPlayer())) {
