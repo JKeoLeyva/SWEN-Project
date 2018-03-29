@@ -18,6 +18,7 @@ public class Turn {
     static final String TAKEN_SPACE = "You can only move onto an empty space.";
     static final String VALID_MOVE = "Move is valid!";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
+    static final String INVALID_SPACE = "Space is outside board.";
 
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves;
@@ -47,7 +48,10 @@ public class Turn {
      * @return Message to be displayed
      */
     public Message tryMove(Move move) {
-        boolean isJump = isJumpMove(move);
+        if(isOutOfBounds(move))
+            return new Message(INVALID_SPACE, Message.Type.error);
+
+        boolean isJump = move.isJumpMove(temp, playerColor);
 
         switch(state) {
             case UNKNOWN:
@@ -77,8 +81,24 @@ public class Turn {
         }
 
         validatedMoves.push(move);
-        temp.makeMove(move);
+        temp.makeMove(move, playerColor);
         return new Message(VALID_MOVE, Message.Type.info);
+    }
+
+    /**
+     * Check if the move is out of bounds
+     *
+     * @param move the move to check
+     * @return if it's out of bounds
+     */
+    private boolean isOutOfBounds(Move move) {
+        int rowStart = move.getStart().getRow();
+        int colStart = move.getStart().getCell();
+        int rowEnd = move.getEnd().getRow();
+        int colEnd = move.getEnd().getCell();
+
+        return rowEnd >= Board.BOARD_SIZE || rowEnd < 0 || colEnd >= Board.BOARD_SIZE || colEnd < 0 ||
+                rowStart > Board.BOARD_SIZE || rowStart < 0 || colStart > Board.BOARD_SIZE || colStart < 0;
     }
 
     /**
@@ -120,39 +140,13 @@ public class Turn {
         return (curr != null);
     }
 
-    private boolean isJumpMove(Move move) {
-        Position start = move.getStart();
-        Position end = move.getEnd();
-
-        // Get indices
-        int rowStart = start.getRow();
-        int colStart = start.getCell();
-        int rowEnd = end.getRow();
-        int colEnd = end.getCell();
-        int verticalMove = rowEnd - rowStart;
-        int horizontalMove = Math.abs(colStart - colEnd);
-        int jumpRow = playerColor == Piece.Color.RED ? rowStart - 1 : rowStart + 1;
-        int jumpCol = colEnd - colStart > 0 ? colStart + 1 : colStart - 1;
-
-        // Check to make sure there's a piece of the opposite color that's being jumped
-        Piece piece = temp.getPiece(jumpRow, jumpCol);
-        if(piece == null || piece.getColor() == playerColor)
-            return false;
-
-        // Assumes a Jump move.
-        // From the perspective of a Board, red pieces can move down,
-        // and white pieces can move up.
-        return horizontalMove == 2 && (playerColor == Piece.Color.RED ?
-                verticalMove == -2 : verticalMove == 2);
-    }
-
     /**
      * Reverses the last move made, and removes it from the Move stack.
      */
     public void backupMove(){
         Move toReverse = validatedMoves.pop();
         Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
-        temp.makeMove(reversed);
+        temp.makeMove(reversed, playerColor);
         resetState();
     }
 

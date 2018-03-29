@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
 import java.util.LinkedList;
@@ -58,7 +59,41 @@ public class Game {
         return new BoardView(board, player.equals(whitePlayer));
     }
 
+    public boolean isGameOver(Player player) {
+        return hasAPlayerWon() || !hasMove(player);
+    }
+
+    public boolean isGameOver(){
+        return currState == State.GAME_OVER;
+    }
+
+    public void setGameOver(){
+        currState = State.GAME_OVER;
+    }
+
+    public boolean hasAPlayerWon() {
+        boolean redFound = false;
+        boolean whiteFound = false;
+        Piece piece;
+
+        for(int i = 0; i < Board.BOARD_SIZE; i++) {
+            for(int j = 0; j < Board.BOARD_SIZE; j++) {
+                piece = board.getPiece(i, j);
+                if(piece != null) {
+                    if(piece.getColor() == Piece.Color.RED)
+                        redFound = true;
+                    if(piece.getColor() == Piece.Color.WHITE)
+                        whiteFound = true;
+                }
+            }
+        }
+
+        return !(redFound && whiteFound);
+    }
+
     public boolean isMyTurn(Player player) {
+        if(currState == State.GAME_OVER)
+            return true;
         if(player.equals(redPlayer)) {
             return getActiveColor() == Piece.Color.RED;
         } else if(player.equals(whitePlayer)) {
@@ -75,7 +110,7 @@ public class Game {
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
         for(Move move : turn.getValidatedMoves())
-            makeMove(move);
+            makeMove(move, getActiveColor());
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
@@ -86,8 +121,43 @@ public class Game {
         }
     }
 
-    public void makeMove(Move move) {
-        board.makeMove(move);
+    public boolean hasMove(Player player){
+        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
+        Piece piece;
+        Position start, end;
+        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
+        Turn turn = new Turn(board, color);
+
+        for(int row = 0; row < Board.BOARD_SIZE; row++) {
+            for(int col = 0; col < Board.BOARD_SIZE; col++) {
+                piece = board.getPiece(row, col);
+                if(piece != null && piece.getColor() == color) {
+                    start = new Position(row, col);
+
+                    end = new Position(row + rowAdjustment, col - 1);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment, col + 1);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment * 2, col - 2);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment * 2, col + 2);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void makeMove(Move move, Piece.Color playerColor) {
+        board.makeMove(move, playerColor);
         submittedMoves.add(move);
     }
 
