@@ -105,8 +105,10 @@ The Server-side UI tier of the architecture is responsible for responding to the
 
 For example, the BoardView component of the UI tier is responsible for showing the game’s board, and to update it whenever moves are made.  The different Get routes are used to bring the user to the various pages, such as the Sign-in page, while the Post routes are used to get the page information from the user and update the pages accordingly.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecting.
+
+#### Static model
+![The UI UML](UI.png)
 
 #### Dynamic models
 > Provide any dynamic models, such as state and sequence diagrams, as is relevant to a particularly significant user story.
@@ -114,12 +116,12 @@ For example, the BoardView component of the UI tier is responsible for showing t
 
 
 ### Application Tier
-The Application tier of the architecture is the one responsible for keeping track of the information used by the application, such as the number of games that the application is currently hosting, and the number of players that are currently signed in 
+The Application tier of the architecture is the one responsible for keeping track of the information used by the application, such as the games that the application is currently hosting, and the players that are currently signed in.
 
 The GameManager component of the Application tier is tasked with monitoring the different games that are currently underway. The PlayerLobby component is tasked with monitoring the amount of players that are currently signed into the game and also makes sure that all of the names in the lobby are unique.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+#### Static model
+![Appl model](Appl.PNG)
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
@@ -130,9 +132,8 @@ The Model tier of the architecture is responsible for holding the data that has 
 
 The different components of the Model tier such as the Board, Piece and Player all represent their namesakes, so the Board represents the board of the game, which holds the different Player’s pieces, the Pieces are the moveable components of the game, which are manipulated by the Player.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
-
+#### Static model
+![The Model model](Model.PNG)
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
