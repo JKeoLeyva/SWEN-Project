@@ -134,6 +134,4 @@ The different components of the Model tier such as the Board, Piece and Player a
 #### Static model
 ![The Model model](Model.PNG)
 #### Dynamic model
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
-
-
+![Game State Diagram](game-state-diagram.jpg)
