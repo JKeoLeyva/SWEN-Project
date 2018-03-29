@@ -37,14 +37,18 @@ public class PostResignRoute implements Route{
         Player player = request.session().attribute(PostSigninRoute.PLAYER_ATTR);
         Message message;
 
+        Game game = gameManager.getGame(player);
+        game.setGameOver();
+
         gameManager.deleteGame(player);
 
         if(!gameManager.getGames().containsKey(player)){
-            //response.redirect(WebServer.HOME_URL);
             message = new Message(SUCCESS_MSSG, Message.Type.info);
         }else{
             message = new Message(FAILURE_MSSG, Message.Type.error);
         }
+
+
 
         return gson.toJson(message);
     }

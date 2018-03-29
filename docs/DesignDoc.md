@@ -47,11 +47,9 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - (User Story) Game Requests
 - (User Story) Game Over
 - (User Story) Forfeiting
-- (Epic) Game Play
 - (User Story) Valid Moves
 - (User Story) Player Turns
 - (User Story) Jumps
-- (User Story) Forced Moves
 
 ### Roadmap of Enhancements
 - Make sure that the Player can Sign-out 
@@ -99,14 +97,18 @@ with the WebCheckers application.
 
 A user will first see a Home page with a button indicating a sign in link, which moves the user to the Sign-in page, which will allow the user to type in their name, and sign-in to the game.  Depending on the name used, the sign-in request will be rejected, bringing them back to the Sign-in page, or if it is accepted, then it will take them to the Game-wait page, where they will wait for a game. If the user clicks on an invalid game, they will be sent back to the Game-wait page, else, they will be sent to the Game page, where a game will commence.
 
+![The Game statechart](GameView state model.png)
+First, the board will be generated for each player. Then, the first player will make their moves(s) while the second player can do nothing. If a move is validated, the piece is changed to be in that place. The Backup button can be used at any time to reverse a validated move. One the first player has made a validated move or moves, they click submit turn, the changes appear to the second player, and they take their turn.
 
 ### UI Tier
 The Server-side UI tier of the architecture is responsible for responding to the input of the user, so when they click on specific buttons and links, the UI tier has to make sure the corresponding button press will take the user to the corresponding page.
 
 For example, the BoardView component of the UI tier is responsible for showing the game’s board, and to update it whenever moves are made.  The different Get routes are used to bring the user to the various pages, such as the Sign-in page, while the Post routes are used to get the page information from the user and update the pages accordingly.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecting.
+
+#### Static model
+![The UI UML](UI.png)
 
 #### Dynamic models
 > Provide any dynamic models, such as state and sequence diagrams, as is relevant to a particularly significant user story.
@@ -114,12 +116,12 @@ For example, the BoardView component of the UI tier is responsible for showing t
 
 
 ### Application Tier
-The Application tier of the architecture is the one responsible for keeping track of the information used by the application, such as the number of games that the application is currently hosting, and the number of players that are currently signed in 
+The Application tier of the architecture is the one responsible for keeping track of the information used by the application, such as the games that the application is currently hosting, and the players that are currently signed in.
 
 The GameManager component of the Application tier is tasked with monitoring the different games that are currently underway. The PlayerLobby component is tasked with monitoring the amount of players that are currently signed into the game and also makes sure that all of the names in the lobby are unique.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
+#### Static model
+![Appl model](Appl.PNG)
 
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
@@ -130,9 +132,8 @@ The Model tier of the architecture is responsible for holding the data that has 
 
 The different components of the Model tier such as the Board, Piece and Player all represent their namesakes, so the Board represents the board of the game, which holds the different Player’s pieces, the Pieces are the moveable components of the game, which are manipulated by the Player.
 
-#### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.
-
+#### Static model
+![The Model model](Model.PNG)
 #### Dynamic models
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 

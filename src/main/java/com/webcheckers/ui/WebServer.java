@@ -163,7 +163,7 @@ public class WebServer {
         post(CHECK_TURN_URL, new PostCheckTurnRoute(gameManager, gson));
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameManager));
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson, gameManager));
-        get(SIGNOUT_URL, new GetSignOutRoute(playerLobby));
+        get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager));
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
         post(RESIGN_URL, new PostResignRoute(gameManager));
 
