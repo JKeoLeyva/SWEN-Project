@@ -12,6 +12,7 @@ import spark.Response;
 import spark.Session;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Tag("UI-tier")
@@ -21,6 +22,8 @@ public class PostCheckTurnRouteTest {
     private Gson gson;
     private GameManager gameManager;
     private Request request;
+    private Player player1;
+    private Player player2;
     private Response response;
     private Session session;
 
@@ -36,22 +39,59 @@ public class PostCheckTurnRouteTest {
         this.response = mock(Response.class);
         this.session = mock(Session.class);
 
-        route = new PostCheckTurnRoute(gameManager, gson);
+        this.player1 = new Player("Karl");
+        this.player2 = new Player("Mark");
 
         when(request.session()).thenReturn(session);
+        when(request.session().attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+
+        route = new PostCheckTurnRoute(gameManager, gson);
     }
 
     @Test
     void isMyTurn() throws Exception {
-        Player player1 = new Player("Karl");
-        Player player2 = new Player("Mark");
-
         gameManager.createGame(player1, player2);
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
 
         String jsonMessage = (String) route.handle(request, response);
         Message message = gson.fromJson(jsonMessage, Message.class);
 
         assertEquals(message.getType(), Message.Type.info);
+    }
+
+    @Test
+    void playerDoesNotExist() {
+        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
+
+        Object a = route.handle(request, response);
+        verify(response).redirect(WebServer.HOME_URL);
+        assertEquals(a, null);
+    }
+
+    @Test
+    void opponentResigns() {
+        Player player1 = new Player("Karl");
+        Player player2 = new Player("Mark");
+
+        gameManager.createGame(player1, player2);
+        gameManager.deleteGame(player2);
+
+        String jsonMessage = (String) route.handle(request, response);
+        Message message = gson.fromJson(jsonMessage, Message.class);
+
+        assertEquals(message.getText(), String.valueOf(true));
+    }
+
+    @Test
+    void redPlayerResigns() {
+        Player player1 = new Player("Karl");
+        Player player2 = new Player("Mark");
+
+        gameManager.createGame(player2, player1);
+        gameManager.deleteGame(player2);
+
+        String jsonMessage = (String) route.handle(request, response);
+        Message message = gson.fromJson(jsonMessage, Message.class);
+
+        assertEquals(message.getText(), String.valueOf(true));
     }
 }

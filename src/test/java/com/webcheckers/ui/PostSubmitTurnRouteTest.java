@@ -20,6 +20,8 @@ public class PostSubmitTurnRouteTest {
     private Response response;
     private Gson gson;
     private Session session;
+    private Player player1;
+    private Player player2;
     private PostSubmitTurnRoute route;
 
     @BeforeEach
@@ -30,21 +32,25 @@ public class PostSubmitTurnRouteTest {
         this.session = mock(Session.class);
         this.gameManager = mock(GameManager.class);
 
-        this.route = new PostSubmitTurnRoute(gson, gameManager);
+        this.player1 = new Player("Abc");
+        this.player2 = new Player("Xyz");
 
         when(request.session()).thenReturn(session);
+        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+
+        this.route = new PostSubmitTurnRoute(gson, gameManager);
     }
 
     @Test
     void testPlacingValidMove() {
-//        Player player1 = new Player("Karl");
-//        Player player2 = new Player("Neo");
-//        gameManager.createGame(player1, player2);
-//
-//        String jsonMessage = (String) route.handle(request, response);
-//
-//        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
-//        Message message = gson.fromJson(jsonMessage, Message.class);
-//        assertEquals(message.getType(), Message.Type.info);
+        Player player1 = new Player("Karl");
+        Player player2 = new Player("Neo");
+        gameManager.createGame(player1, player2);
+
+        String jsonMessage = (String) route.handle(request, response);
+
+        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+        Message message = gson.fromJson(jsonMessage, Message.class);
+        assertEquals(message.getType(), Message.Type.info);
     }
 }
