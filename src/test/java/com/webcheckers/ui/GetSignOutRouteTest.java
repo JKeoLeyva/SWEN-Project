@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ public class GetSignOutRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
         when(request.session()).thenReturn(session);
-        route = new GetSignOutRoute(playerLobby);
+        route = new GetSignOutRoute(playerLobby, new GameManager());
     }
 
     /**

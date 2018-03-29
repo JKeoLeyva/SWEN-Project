@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
-class PostResginRouteTest {
+class PostResignRouteTest {
 
     private PostResignRoute route;
     private TemplateEngineTester engineTester;
