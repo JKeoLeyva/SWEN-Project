@@ -48,6 +48,11 @@ class PostResginRouteTest {
      * */
     @Test
     void noSession() {
+        try {
+            route.handle(request, response);
+        } catch(Exception e) {
+        }
+        verify(response, never()).redirect(WebServer.HOME_URL);
     }
 
     /*
@@ -56,12 +61,11 @@ class PostResginRouteTest {
      */
     @Test
     void successfulResign(){
+        try{
+            route.handle(request, response);
+        }catch(Exception e){
+        }
+        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
     }
 
-    /*
-    Test an unsuccessful resign
-     */
-    @Test
-    void unsuccessfulResign(){
-    }
 }
