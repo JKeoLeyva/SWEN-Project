@@ -35,7 +35,6 @@ public class PostSubmitTurnRoute implements Route {
         if(game.isGameOver(currPlayer)) {
             gameManager.deleteGame(currPlayer);
             game.setGameOver();
-            response.redirect(WebServer.HOME_URL);
             return gson.toJson(result);
         }
 

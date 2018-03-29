@@ -31,7 +31,6 @@ public class PostCheckTurnRoute implements Route {
 
         if(game.isGameOver()){
             gameManager.deleteGame(player);
-            response.redirect(WebServer.HOME_URL);
             return gson.toJson(new Message("true", Message.Type.info));
         }
 

@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
-import javafx.geometry.Pos;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -111,7 +110,7 @@ public class Game {
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
         for(Move move : turn.getValidatedMoves())
-            makeMove(move);
+            makeMove(move, getActiveColor());
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
@@ -127,6 +126,7 @@ public class Game {
         Piece piece;
         Position start, end;
         int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
+        Turn turn = new Turn(board, color);
 
         for(int row = 0; row < Board.BOARD_SIZE; row++) {
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
@@ -135,28 +135,20 @@ public class Game {
                     start = new Position(row, col);
 
                     end = new Position(row + rowAdjustment, col - 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info) {
-                        turn.backupMove();
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
-                    }
 
                     end = new Position(row + rowAdjustment, col + 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info){
-                        turn.backupMove();
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
-                    }
 
                     end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info) {
-                        turn.backupMove();
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
-                    }
 
                     end = new Position(row + rowAdjustment * 2, col + 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info) {
-                        turn.backupMove();
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
-                    }
                 }
             }
         }
@@ -164,8 +156,8 @@ public class Game {
         return false;
     }
 
-    public void makeMove(Move move) {
-        board.makeMove(move);
+    public void makeMove(Move move, Piece.Color playerColor) {
+        board.makeMove(move, playerColor);
         submittedMoves.add(move);
     }
 

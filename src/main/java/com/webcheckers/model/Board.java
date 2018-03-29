@@ -56,12 +56,17 @@ public class Board {
         board[row][col] = piece;
     }
 
-    public void makeMove(Move move) {
+    public void makeMove(Move move, Piece.Color playerColor) {
         Position start = move.getStart();
         Position end = move.getEnd();
         Piece piece = this.getPiece(start.getRow(), start.getCell());
         this.setPiece(start.getRow(), start.getCell(), null);
         this.setPiece(end.getRow(), end.getCell(), piece);
+
+        if(move.isJumpMove(this, playerColor)) {
+            Position jumpPosition = move.getJumpPosition(playerColor);
+            setPiece(jumpPosition.getRow(), jumpPosition.getCell(), null);
+        }
     }
 
 }
