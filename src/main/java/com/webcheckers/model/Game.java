@@ -60,7 +60,7 @@ public class Game {
     }
 
     public boolean isGameOver(Player player) {
-        return hasAPlayerWon() || !hasMove(player);
+        return isGameOver() || hasAPlayerWon() || !hasMove(player);
     }
 
     public boolean isGameOver(){
