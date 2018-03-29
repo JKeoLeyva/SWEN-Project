@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import java.util.Objects;
-
 public class Position {
     private int row;
     private int cell;
@@ -22,7 +20,7 @@ public class Position {
     // Note: only used for testing.
     @Override
     public boolean equals(Object o) {
-        if(o == null) return false;
+        if(o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
         return row == position.row &&
                 cell == position.cell;

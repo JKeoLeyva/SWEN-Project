@@ -24,7 +24,7 @@ public class Game {
         this.board = new Board();
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        turn = new Turn(board);
+        turn = new Turn(board, Piece.Color.RED);
     }
 
     public Player getRedPlayer() {
@@ -73,18 +73,17 @@ public class Game {
     }
 
     public void switchTurn() {
-
         // Makes the validated moves stored in Turn.
         for(Move move : turn.getValidatedMoves())
             makeMove(move);
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
+            turn = new Turn(board, Piece.Color.WHITE);
         } else {
             currState = State.WAITING_FOR_RED;
+            turn = new Turn(board, Piece.Color.RED);
         }
-
-        turn = new Turn(board);
     }
 
     public void makeMove(Move move) {
