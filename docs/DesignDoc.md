@@ -110,9 +110,8 @@ Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecti
 #### Static model
 ![The UI UML](UI.png)
 
-#### Dynamic models
-> Provide any dynamic models, such as state and sequence diagrams, as is relevant to a particularly significant user story.
-> For example, in WebCheckers you might create a sequence diagram of the `POST /validateMove` HTTP request processing or you might use a state diagram if the Game component uses a state machine to manage the game.
+#### Dynamic model
+![PostGameRoute Sequence Diagram](game-route-seq-diagram.jpg)
 
 
 ### Application Tier
@@ -123,7 +122,7 @@ The GameManager component of the Application tier is tasked with monitoring the 
 #### Static model
 ![Appl model](Appl.PNG)
 
-#### Dynamic models
+#### Dynamic model
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
 
@@ -134,7 +133,7 @@ The different components of the Model tier such as the Board, Piece and Player a
 
 #### Static model
 ![The Model model](Model.PNG)
-#### Dynamic models
+#### Dynamic model
 > Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
 
 
