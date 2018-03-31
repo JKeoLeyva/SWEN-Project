@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Game;
@@ -20,7 +21,7 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        Player player = request.session().attribute(PostSigninRoute.PLAYER_ATTR);
+        Player player = request.session().attribute(Strings.Session.PLAYER);
 
         if(player == null) {
             response.redirect(WebServer.HOME_URL);

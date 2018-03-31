@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -42,11 +43,11 @@ public class GetSignOutRouteTest {
      */
     @Test
     void signOutSelf() {
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
 
         route.handle(request, response);
 
-        verify(session, times(1)).attribute(PostSigninRoute.PLAYER_ATTR);
+        verify(session, times(1)).attribute(Strings.Session.PLAYER);
         verify(session, times(1)).invalidate();
         verify(playerLobby, times(1)).signOutPlayer(playerName);
         verify(response, times(1)).redirect(WebServer.HOME_URL);
@@ -57,11 +58,11 @@ public class GetSignOutRouteTest {
      */
     @Test
     void noSession() {
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
 
         route.handle(request, response);
 
-        verify(session, times(1)).attribute(PostSigninRoute.PLAYER_ATTR);
+        verify(session, times(1)).attribute(Strings.Session.PLAYER);
         verify(session, never()).invalidate();
         verify(playerLobby, never()).signOutPlayer(playerName);
         verify(response, times(1)).redirect(WebServer.HOME_URL);

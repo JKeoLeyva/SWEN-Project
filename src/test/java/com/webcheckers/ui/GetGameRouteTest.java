@@ -1,8 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ViewMode;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import spark.*;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by kac9868 on 3/28/2018.
@@ -47,7 +47,7 @@ public class GetGameRouteTest {
         route = new GetGameRoute(templateEngine, gameManager);
 
         when(request.session()).thenReturn(session);
-        when(request.session().attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
 
         engineTester = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
@@ -55,19 +55,18 @@ public class GetGameRouteTest {
 
     @Test
     void openGame() {
-        session.attribute(PostSigninRoute.PLAYER_ATTR, player1);
+        session.attribute(Strings.Session.PLAYER, player1);
 
         route.handle(request, response);
         //verify(response, times(1)).redirect(WebServer.GAME_URL);
 
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
-        engineTester.assertViewModelAttribute("title", "Game");
-        engineTester.assertViewModelAttribute("currentPlayer", player1);
-        engineTester.assertViewModelAttribute("viewMode", ViewMode.PLAY);
-        engineTester.assertViewModelAttribute("redPlayer", gameManager.getGame(player1).getRedPlayer());
-        engineTester.assertViewModelAttribute("whitePlayer", gameManager.getGame(player1).getWhitePlayer());
-        engineTester.assertViewModelAttribute("activeColor", gameManager.getGame(player1).getActiveColor());
-        //engineTester.assertViewModelAttribute("board", gameManager.getGame(player1).makeBoardView(player1));
+        engineTester.assertViewModelAttribute(Strings.Template.Game.CURRENT_PLAYER, player1);
+        engineTester.assertViewModelAttribute(Strings.Template.Game.VIEW_MODE, ViewMode.PLAY);
+        engineTester.assertViewModelAttribute(Strings.Template.Game.RED_PLAYER, gameManager.getGame(player1).getRedPlayer());
+        engineTester.assertViewModelAttribute(Strings.Template.Game.WHITE_PLAYER, gameManager.getGame(player1).getWhitePlayer());
+        engineTester.assertViewModelAttribute(Strings.Template.Game.ACTIVE_COLOR, gameManager.getGame(player1).getActiveColor());
+        //engineTester.assertViewModelAttribute(Strings.Template.Game.BOARD, gameManager.getGame(player1).makeBoardView(player1));
     }
 }

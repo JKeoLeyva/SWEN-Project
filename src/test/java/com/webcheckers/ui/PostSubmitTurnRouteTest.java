@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Move;
@@ -12,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,7 +42,7 @@ public class PostSubmitTurnRouteTest {
         this.player2 = new Player("Xyz");
 
         when(request.session()).thenReturn(session);
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player1);
 
         this.route = new PostSubmitTurnRoute(gson, gameManager);
         this.validateMoveRoute = new PostValidateMoveRoute(gson, gameManager);

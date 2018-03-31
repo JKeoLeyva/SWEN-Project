@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
@@ -22,13 +23,6 @@ public class GetHomeRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
-
-    public static final String VIEW = "home.ftl";
-    public static final String TITLE_ATTR = "title";
-    public static final String CURRENT_PLAYER_ATTR = "currentPlayer";
-    public static final String PLAYER_LOBBY_ATTR = "playerLobby";
-    public static final String MESSAGE_ATTR = "message";
-    public static final String GAME_MANAGER_ATTR = "gameManager";
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -63,8 +57,8 @@ public class GetHomeRoute implements Route {
         Player currentPlayer = null;
 
         final Session httpSession = request.session();
-        if(httpSession.attribute(PostSigninRoute.PLAYER_ATTR) != null) {
-            currentPlayer = httpSession.attribute(PostSigninRoute.PLAYER_ATTR);
+        if(httpSession.attribute(Strings.Session.PLAYER) != null) {
+            currentPlayer = httpSession.attribute(Strings.Session.PLAYER);
         }
 
         if(gameManager.getGame(currentPlayer) != null) {
@@ -72,21 +66,20 @@ public class GetHomeRoute implements Route {
             response.redirect(WebServer.GAME_URL);
         }
 
-        Message message = httpSession.attribute(PostGameRoute.MESSAGE_ATTR);
+        Message message = httpSession.attribute(Strings.Session.MESSAGE);
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, "Welcome!");
-        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
-        vm.put(PLAYER_LOBBY_ATTR, playerLobby);
-        vm.put(GAME_MANAGER_ATTR, gameManager);
+        vm.put(Strings.Template.Home.CURRENT_PLAYER, currentPlayer);
+        vm.put(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
+        vm.put(Strings.Template.Home.GAME_MANAGER, gameManager);
 
         if(message != null) {
             // Some message exists, and should be displayed.
-            vm.put(MESSAGE_ATTR, message.getText());
-            httpSession.removeAttribute(PostGameRoute.MESSAGE_ATTR);
+            vm.put(Strings.Template.Home.MESSAGE, message.getText());
+            httpSession.removeAttribute(Strings.Session.MESSAGE);
         }
 
-        return templateEngine.render(new ModelAndView(vm, VIEW));
+        return templateEngine.render(new ModelAndView(vm, Strings.Template.Home.FILE_NAME));
     }
 
 }

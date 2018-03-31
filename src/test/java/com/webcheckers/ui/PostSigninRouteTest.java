@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,7 +73,7 @@ public class PostSigninRouteTest {
 
         }
 
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
         //verify(response, times(1)).redirect(WebServer.HOME_URL);
     }
 
@@ -91,6 +92,6 @@ public class PostSigninRouteTest {
 
         }
 
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
     }
 }

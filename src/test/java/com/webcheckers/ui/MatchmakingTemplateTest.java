@@ -1,12 +1,10 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,23 +38,20 @@ public class MatchmakingTemplateTest {
     private Map<String, Object> vm;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         playerLobby = mock(PlayerLobby.class);
         player1 = mock(Player.class);
         player2 = mock(Player.class);
         gameManager = mock(GameManager.class);
 
         vm = new HashMap<>();
-        vm.put(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        vm.put(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
-        vm.put(GetHomeRoute.GAME_MANAGER_ATTR, gameManager);
-
+        vm.put(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
+        vm.put(Strings.Template.Home.GAME_MANAGER, gameManager);
     }
 
     @Test
     public void playerInAndOutOfGame() {
-
-        vm.put(GetHomeRoute.CURRENT_PLAYER_ATTR, new Player("test"));
+        vm.put(Strings.Template.Home.CURRENT_PLAYER, new Player("test"));
 
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
@@ -68,8 +64,7 @@ public class MatchmakingTemplateTest {
         when(player1.getName()).thenReturn(PLAYER1);
         when(player2.getName()).thenReturn(PLAYER2);
 
-
-        final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW);
+        final ModelAndView modelAndView = new ModelAndView(vm, Strings.Template.Home.FILE_NAME);
         final String viewHTML = engine.render(modelAndView);
 
         assertTrue(viewHTML.contains(PLAYER_INGAME));

@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,10 +10,10 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 import spark.TemplateEngine;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
 public class PostGameRouteTest {
@@ -38,7 +39,7 @@ public class PostGameRouteTest {
         route = new PostGameRoute(gameManager);
 
         when(request.session()).thenReturn(session);
-        when(request.session().attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
         when(request.queryParams("opponent")).thenReturn(player2.getName());
     }
 
@@ -56,7 +57,7 @@ public class PostGameRouteTest {
         gameManager.createGame(player1, player2);
         route.handle(request, response);
         assertFalse(gameManager.canCreateGame(player1, player2));
-        //assertNotNull(session.attribute(PostGameRoute.MESSAGE_ATTR));
+        //assertNotNull(session.attribute(Strings.Session.MESSAGE));
 
         verify(response).redirect(WebServer.HOME_URL);
     }

@@ -1,9 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,8 +49,8 @@ public class GetHomeRouteTest {
         message = mock(Message.class);
 
         when(request.session()).thenReturn(session);
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
-        when(session.attribute(PostGameRoute.MESSAGE_ATTR)).thenReturn(null);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
+        when(session.attribute(Strings.Session.MESSAGE)).thenReturn(null);
         when(gameManager.getGame(player)).thenReturn(null);
         when(message.getText()).thenReturn(MESSAGE_TEXT);
 
@@ -75,12 +75,11 @@ public class GetHomeRouteTest {
         // Verify data sent to template engine
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
-        engineTester.assertViewName(GetHomeRoute.VIEW);
-        engineTester.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        engineTester.assertViewModelAttribute(GetHomeRoute.CURRENT_PLAYER_ATTR, null);
-        engineTester.assertViewModelAttribute(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
-        engineTester.assertViewModelAttribute(GetHomeRoute.GAME_MANAGER_ATTR, gameManager);
-        engineTester.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
+        engineTester.assertViewName(Strings.Template.Home.FILE_NAME);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.CURRENT_PLAYER, null);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.GAME_MANAGER, gameManager);
+        engineTester.assertViewModelAttributeIsAbsent(Strings.Template.Home.MESSAGE);
     }
 
     /**
@@ -89,7 +88,7 @@ public class GetHomeRouteTest {
     @Test
     public void waitingPlayer() {
         // Add current player
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
 
         // Run code
         route.handle(request, response);
@@ -100,10 +99,9 @@ public class GetHomeRouteTest {
         // Verify data sent to template engine
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
-        engineTester.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        engineTester.assertViewModelAttribute(GetHomeRoute.CURRENT_PLAYER_ATTR, player);
-        engineTester.assertViewModelAttribute(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
-        engineTester.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.CURRENT_PLAYER, player);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
+        engineTester.assertViewModelAttributeIsAbsent(Strings.Template.Home.MESSAGE);
     }
 
     /**
@@ -113,7 +111,7 @@ public class GetHomeRouteTest {
     public void inGame() {
         // Add current player (in a game)
         Game game = mock(Game.class);
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
         when(gameManager.getGame(player)).thenReturn(game);
 
         // Run code
@@ -129,7 +127,7 @@ public class GetHomeRouteTest {
     @Test
     public void message() {
         // Add message to session
-        when(session.attribute(PostGameRoute.MESSAGE_ATTR)).thenReturn(message);
+        when(session.attribute(Strings.Session.MESSAGE)).thenReturn(message);
 
         // Run code
         route.handle(request, response);
@@ -140,9 +138,8 @@ public class GetHomeRouteTest {
         // Verify data sent to template engine
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
-        engineTester.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        engineTester.assertViewModelAttribute(GetHomeRoute.CURRENT_PLAYER_ATTR, null);
-        engineTester.assertViewModelAttribute(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
-        engineTester.assertViewModelAttribute(GetHomeRoute.MESSAGE_ATTR, MESSAGE_TEXT);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.CURRENT_PLAYER, null);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
+        engineTester.assertViewModelAttribute(Strings.Template.Home.MESSAGE, MESSAGE_TEXT);
     }
 }
