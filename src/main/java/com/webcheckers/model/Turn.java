@@ -16,6 +16,7 @@ public class Turn {
 
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves = new Stack<>();
+    // A set to store spaces jumped over.
     private Set<Position> jumpedSpaces = new HashSet<>();
     // A temporary Board to store moves.
     private Board temp = new Board();
@@ -65,6 +66,10 @@ public class Turn {
         return new Message(VALID_MOVE, Message.Type.info);
     }
 
+    /**
+     * @param move to be tested
+     * @return if the jump moves jumps over a valid piece
+     */
     private boolean isInvalidJumpMove(Move move){
         int row = (move.getStart().getRow() + move.getEnd().getRow())/2;
         int col = (move.getStart().getCell() + move.getEnd().getCell())/2;
@@ -82,6 +87,11 @@ public class Turn {
         makeMove(reversed, true);
     }
 
+    /**
+     * Makes the given move on the temp board.
+     * @param move to be made
+     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.
+     */
     private void makeMove(Move move, boolean reversed){
         int startRow = move.getStart().getRow();
         int startCol = move.getStart().getCell();

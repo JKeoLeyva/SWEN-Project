@@ -34,6 +34,10 @@ public class Move {
         return color;
     }
 
+    /**
+     * Acts as a pseudo-constructor. Sets up some Move attributes.
+     * @param color of the moving piece.
+     */
     public void moveSetup(Piece.Color color){
         this.color = color;
         if(isDiagonal(1))
