@@ -90,7 +90,7 @@ public class Turn {
     /**
      * Makes the given move on the temp board.
      * @param move to be made
-     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.
+     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.In any case,
      */
     private void makeMove(Move move, boolean reversed){
         int startRow = move.getStart().getRow();

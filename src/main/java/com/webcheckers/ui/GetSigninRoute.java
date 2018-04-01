@@ -25,12 +25,12 @@ public class GetSigninRoute implements Route {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
 
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetSigninRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetHomeRoute is invoked.");
+        LOG.finer("GetSigninRoute is invoked.");
 
         return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
     }
