@@ -5,10 +5,24 @@ import java.util.Objects;
 public class Move {
     private Position start;
     private Position end;
+    private Piece.Color color;
+    private Type type;
 
-    public Move(Position start, Position end) {
+    // Note: this only shows what the jump distance is
+    enum Type {
+        INVALID, SINGLE, JUMP
+    }
+
+    public Move(Position start, Position end, Piece.Color color) {
         this.start = start;
         this.end = end;
+        this.color = color;
+        if(isDiagonal(1))
+            type = Type.SINGLE;
+        else if (isDiagonal(2))
+            type = Type.JUMP;
+        else
+            type = Type.INVALID;
     }
 
     public Position getStart() {
@@ -19,37 +33,46 @@ public class Move {
         return end;
     }
 
-    public Position getJumpPosition(Piece.Color playerColor) {
-        int rowStart = start.getRow();
-        int colStart = start.getCell();
-        int colEnd = end.getCell();
-        int jumpRow = playerColor == Piece.Color.RED ? rowStart - 1 : rowStart + 1;
-        int jumpCol = colEnd - colStart > 0 ? colStart + 1 : colStart - 1;
-
-        return new Position(jumpRow, jumpCol);
+    public Move.Type getMoveType(){
+        return type;
     }
 
-    public boolean isJumpMove(Board board, Piece.Color playerColor) {
-        // Get indices
+    public Piece.Color getColor() {
+        return color;
+    }
+
+    /**
+     * @return the Position this move jumped over, or null if it was not a jump move.
+     */
+    public Position getJumped(){
+        if(type != Type.JUMP)
+            return null;
+        int startRow = start.getRow();
+        int endRow = end.getRow();
+        int startCol = start.getCell();
+        int endCol = end.getCell();
+        return new Position((startRow + endRow)/2, (startCol + endCol)/2);
+    }
+
+    /**
+     * @param dist distance to check
+     * @return if the inout moves goes (dist) diagonally
+     */
+    private boolean isDiagonal(int dist){
         int rowStart = start.getRow();
         int colStart = start.getCell();
         int rowEnd = end.getRow();
         int colEnd = end.getCell();
         int verticalMove = rowEnd - rowStart;
         int horizontalMove = Math.abs(colStart - colEnd);
-        Position jumpPosition = getJumpPosition(playerColor);
 
-        // Check to make sure there's a piece of the opposite color that's being jumped
-        Piece piece = board.getPiece(jumpPosition.getRow(), jumpPosition.getCell());
-        if(piece == null || piece.getColor() == playerColor)
-            return false;
-
-        // Assumes a Jump move.
+        // Assumes a SINGLE Piece.
         // From the perspective of a Board, red pieces can move down,
         // and white pieces can move up.
-        return horizontalMove == 2 && (playerColor == Piece.Color.RED ?
-                verticalMove == -2 : verticalMove == 2);
+        return horizontalMove == dist && (color == Piece.Color.RED ?
+                verticalMove == -dist : verticalMove == dist);
     }
+
 
     // Note: only used for testing.
     @Override

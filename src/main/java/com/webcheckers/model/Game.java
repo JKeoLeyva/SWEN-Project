@@ -135,19 +135,19 @@ public class Game {
                     start = new Position(row, col);
 
                     end = new Position(row + rowAdjustment, col - 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment, col + 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col + 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
                         return true;
                 }
             }

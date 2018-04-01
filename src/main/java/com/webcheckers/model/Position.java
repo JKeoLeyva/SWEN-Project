@@ -17,7 +17,6 @@ public class Position {
         return cell;
     }
 
-    // Note: only used for testing.
     @Override
     public boolean equals(Object o) {
         if(o == null || getClass() != o.getClass()) return false;

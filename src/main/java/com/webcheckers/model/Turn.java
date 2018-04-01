@@ -2,35 +2,28 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Turn {
-    enum State {
-        UNKNOWN, SINGLE, JUMP
-    }
 
     // Some Strings for displaying the results of trying to validate moves.
     static final String MOVE_ALREADY_MADE = "Backup to make another move.";
     static final String INVALID_DISTANCE = "You can only move forward 1 space diagonally or make any number of valid jumps.";
-    static final String TAKEN_SPACE = "You can only move onto an empty space.";
-    static final String VALID_MOVE = "Move is valid!";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
-    static final String INVALID_SPACE = "Space is outside board.";
+    static final String BAD_JUMP = "You must jump over a piece of the opposite color.";
+    static final String JUMPED_OVER = "Piece was already jumped over.";
+    static final String VALID_MOVE = "Move is valid!";
 
     // A Stack to store validated moves.
-    private Stack<Move> validatedMoves;
+    private Stack<Move> validatedMoves = new Stack<>();
+    private Set<Position> jumpedSpaces = new HashSet<>();
     // A temporary Board to store moves.
-    private Board temp;
+    private Board temp = new Board();
     // If the turn has jumps (and therefore can't have any more single moves)
-    private State state = State.UNKNOWN;
     private Piece.Color playerColor;
 
     public Turn(Board board, Piece.Color playerColor) {
         this.playerColor = playerColor;
-        temp = new Board();
         // Copies from the original board to the temporary board.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++){
@@ -38,7 +31,6 @@ public class Turn {
                 temp.setPiece(row, col, curr);
             }
         }
-        validatedMoves = new Stack<>();
     }
 
     /**
@@ -48,96 +40,32 @@ public class Turn {
      * @return Message to be displayed
      */
     public Message tryMove(Move move) {
-        if(isOutOfBounds(move))
-            return new Message(INVALID_SPACE, Message.Type.error);
+        if(move.getMoveType() == Move.Type.INVALID)
+            return new Message(INVALID_DISTANCE, Message.Type.error);
 
-        boolean isJump = move.isJumpMove(temp, playerColor);
+        Move.Type prevType = validatedMoves.peek().getMoveType();
+        if(prevType == Move.Type.SINGLE)
+            return new Message(MOVE_ALREADY_MADE, Message.Type.error);
 
-        switch(state) {
-            case UNKNOWN:
-                if(spaceIsTaken(move))
-                    return new Message(TAKEN_SPACE, Message.Type.error);
-
-                if(!isJump && !distanceIsValid(move))
-                    return new Message(INVALID_DISTANCE, Message.Type.error);
-
-                if(isJump)
-                    state = State.JUMP;
-                else
-                    state = State.SINGLE;
-                break;
-            case SINGLE:
-                return new Message(MOVE_ALREADY_MADE, Message.Type.error);
-            case JUMP:
-                if(distanceIsValid(move))
-                    return new Message(ALREADY_JUMPING, Message.Type.error);
-
-                if(spaceIsTaken(move))
-                    return new Message(TAKEN_SPACE, Message.Type.error);
-
-                if(!isJump)
-                    return new Message(INVALID_DISTANCE, Message.Type.error);
-                break;
+        if(prevType == Move.Type.JUMP){
+            if(move.getMoveType() == Move.Type.SINGLE)
+                return new Message(ALREADY_JUMPING, Message.Type.error);
+            if(isInvalidJumpMove(move))
+                return new Message(BAD_JUMP, Message.Type.error);
+            if(jumpedSpaces.contains(move.getJumped()))
+                return new Message(JUMPED_OVER, Message.Type.error);
         }
 
         validatedMoves.push(move);
-        temp.makeMove(move, playerColor);
+        makeMove(move, false);
         return new Message(VALID_MOVE, Message.Type.info);
     }
 
-    /**
-     * Check if the move is out of bounds
-     *
-     * @param move the move to check
-     * @return if it's out of bounds
-     */
-    private boolean isOutOfBounds(Move move) {
-        int rowStart = move.getStart().getRow();
-        int colStart = move.getStart().getCell();
-        int rowEnd = move.getEnd().getRow();
-        int colEnd = move.getEnd().getCell();
-
-        return rowEnd >= Board.BOARD_SIZE || rowEnd < 0 || colEnd >= Board.BOARD_SIZE || colEnd < 0 ||
-                rowStart > Board.BOARD_SIZE || rowStart < 0 || colStart > Board.BOARD_SIZE || colStart < 0;
-    }
-
-    /**
-     * Helper method called by tryMove.
-     * Determines if a Piece is trying to move too far.
-     * @param move to be checked
-     * @return if it travels too far
-     */
-    private boolean distanceIsValid(Move move){
-        Position start = move.getStart();
-        Position end = move.getEnd();
-
-        int rowStart = start.getRow();
-        int colStart = start.getCell();
-        int rowEnd = end.getRow();
-        int colEnd = end.getCell();
-        int verticalMove = rowEnd - rowStart;
-        int horizontalMove = Math.abs(colStart - colEnd);
-
-        // Assumes a SINGLE Piece.
-        // From the perspective of a Board, red pieces can move down,
-        // and white pieces can move up.
-        return horizontalMove == 1 && (playerColor == Piece.Color.RED ?
-                verticalMove == -1 : verticalMove == 1);
-    }
-
-    /**
-     * Helper method called by tryMove.
-     * Determines if a Piece is trying to move onto an occupied space.
-     * @param move to be checked
-     * @return if the destination is occupied
-     */
-    private boolean spaceIsTaken(Move move) {
-        Position end = move.getEnd();
-
-        int rowEnd = end.getRow();
-        int colEnd = end.getCell();
-        Piece curr = temp.getPiece(rowEnd, colEnd);
-        return (curr != null);
+    private boolean isInvalidJumpMove(Move move){
+        int row = (move.getStart().getRow() + move.getEnd().getRow())/2;
+        int col = (move.getStart().getCell() + move.getEnd().getCell())/2;
+        Piece jumped = temp.getPiece(row, col);
+        return jumped == null || jumped.getColor() == playerColor;
     }
 
     /**
@@ -145,40 +73,39 @@ public class Turn {
      */
     public void backupMove(){
         Move toReverse = validatedMoves.pop();
-        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
-        temp.makeMove(reversed, playerColor);
-        resetState();
+        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart(), toReverse.getColor());
+        makeMove(reversed, true);
+    }
+
+    private void makeMove(Move move, boolean reversed){
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        int startRow = start.getRow();
+        int startCol = start.getCell();
+        int endRow = end.getRow();
+        int endCol = end.getCell();
+        Piece moving = temp.getPiece(startRow, startCol);
+        temp.setPiece(startRow, startCol, null);
+        temp.setPiece(endRow, endCol, moving);
+        if(reversed)
+            jumpedSpaces.remove(move.getJumped());
+        else
+            jumpedSpaces.add(move.getJumped());
     }
 
     /**
      * Empties out and returns the validated moves.
      * @return A Stack of moves with the first move on top, and so on.
      */
-    public List<Move> getValidatedMoves(){
-        List<Move> ret = new ArrayList<>();
-
+    public Stack<Move> getValidatedMoves(){
+        Stack<Move> ret = new Stack<>();
         while(!validatedMoves.empty())
-            ret.add(validatedMoves.pop());
-
-        Collections.reverse(ret);
-        resetState();
+            ret.push(validatedMoves.pop());
 
         return ret;
     }
 
-    private void resetState() {
-        switch(state) {
-            case UNKNOWN:
-                break;
-            case JUMP:
-                if(validatedMoves.empty())
-                    state = State.UNKNOWN;
-                break;
-            case SINGLE:
-                state = State.UNKNOWN;
-        }
-    }
-
+    // Not used outside tests
     public void setPlayerColor(Piece.Color playerColor) {
         this.playerColor = playerColor;
     }
