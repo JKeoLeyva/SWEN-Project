@@ -5,6 +5,7 @@ import com.webcheckers.ui.BoardView;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Game {
     private Board board;
@@ -109,8 +110,9 @@ public class Game {
 
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
-        for(Move move : turn.getValidatedMoves())
-            makeMove(move, getActiveColor());
+        Stack<Move> validMoves = turn.getValidatedMoves();
+        while(!validMoves.empty())
+            makeMove(validMoves.pop());
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
@@ -122,42 +124,53 @@ public class Game {
     }
 
     public boolean hasMove(Player player){
-        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
-        Piece piece;
-        Position start, end;
-        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
-        Turn turn = new Turn(board, color);
-
-        for(int row = 0; row < Board.BOARD_SIZE; row++) {
-            for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                piece = board.getPiece(row, col);
-                if(piece != null && piece.getColor() == color) {
-                    start = new Position(row, col);
-
-                    end = new Position(row + rowAdjustment, col - 1);
-                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment, col + 1);
-                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment * 2, col + 2);
-                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-                        return true;
-                }
-            }
-        }
-
-        return false;
+//        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
+//        Piece piece;
+//        Position start, end;
+//        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
+//        Turn turn = new Turn(board, color);
+//
+//        for(int row = 0; row < Board.BOARD_SIZE; row++) {
+//            for(int col = 0; col < Board.BOARD_SIZE; col++) {
+//                piece = board.getPiece(row, col);
+//                if(piece != null && piece.getColor() == color) {
+//                    start = new Position(row, col);
+//
+//                    end = new Position(row + rowAdjustment, col - 1);
+//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
+//                        return true;
+//
+//                    end = new Position(row + rowAdjustment, col + 1);
+//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
+//                        return true;
+//
+//                    end = new Position(row + rowAdjustment * 2, col - 2);
+//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
+//                        return true;
+//
+//                    end = new Position(row + rowAdjustment * 2, col + 2);
+//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
+//                        return true;
+//                }
+//            }
+//        }
+//
+//        return false;
+        return true;
     }
 
-    public void makeMove(Move move, Piece.Color playerColor) {
-        board.makeMove(move, playerColor);
+    public void makeMove(Move move) {
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCol = move.getEnd().getCell();
+        Piece moving = board.getPiece(startRow, startCol);
+        board.setPiece(startRow, startCol, null);
+        board.setPiece(endRow, endCol, moving);
+        if(move.getMoveType() == Move.Type.JUMP) {
+            Position jumped = move.getJumped();
+            board.setPiece(jumped.getRow(), jumped.getCell(), null);
+        }
         submittedMoves.add(move);
     }
 

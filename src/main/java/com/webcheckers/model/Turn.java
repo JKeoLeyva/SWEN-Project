@@ -40,20 +40,24 @@ public class Turn {
      * @return Message to be displayed
      */
     public Message tryMove(Move move) {
+        move.moveSetup(playerColor);
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
-        Move.Type prevType = validatedMoves.peek().getMoveType();
+        Move.Type prevType = validatedMoves.empty() ? null : validatedMoves.peek().getMoveType();
         if(prevType == Move.Type.SINGLE)
             return new Message(MOVE_ALREADY_MADE, Message.Type.error);
 
-        if(prevType == Move.Type.JUMP){
+        else if (prevType == Move.Type.JUMP){
             if(move.getMoveType() == Move.Type.SINGLE)
                 return new Message(ALREADY_JUMPING, Message.Type.error);
-            if(isInvalidJumpMove(move))
-                return new Message(BAD_JUMP, Message.Type.error);
             if(jumpedSpaces.contains(move.getJumped()))
                 return new Message(JUMPED_OVER, Message.Type.error);
+        }
+
+        if(move.getMoveType() == Move.Type.JUMP){
+            if(isInvalidJumpMove(move))
+                return new Message(BAD_JUMP, Message.Type.error);
         }
 
         validatedMoves.push(move);
@@ -73,17 +77,16 @@ public class Turn {
      */
     public void backupMove(){
         Move toReverse = validatedMoves.pop();
-        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart(), toReverse.getColor());
+        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
+        reversed.moveSetup(playerColor);
         makeMove(reversed, true);
     }
 
     private void makeMove(Move move, boolean reversed){
-        Position start = move.getStart();
-        Position end = move.getEnd();
-        int startRow = start.getRow();
-        int startCol = start.getCell();
-        int endRow = end.getRow();
-        int endCol = end.getCell();
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCol = move.getEnd().getCell();
         Piece moving = temp.getPiece(startRow, startCol);
         temp.setPiece(startRow, startCol, null);
         temp.setPiece(endRow, endCol, moving);

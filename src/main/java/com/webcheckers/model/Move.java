@@ -13,16 +13,9 @@ public class Move {
         INVALID, SINGLE, JUMP
     }
 
-    public Move(Position start, Position end, Piece.Color color) {
+    public Move(Position start, Position end) {
         this.start = start;
         this.end = end;
-        this.color = color;
-        if(isDiagonal(1))
-            type = Type.SINGLE;
-        else if (isDiagonal(2))
-            type = Type.JUMP;
-        else
-            type = Type.INVALID;
     }
 
     public Position getStart() {
@@ -39,6 +32,16 @@ public class Move {
 
     public Piece.Color getColor() {
         return color;
+    }
+
+    public void moveSetup(Piece.Color color){
+        this.color = color;
+        if(isDiagonal(1))
+            type = Type.SINGLE;
+        else if (isDiagonal(2))
+            type = Type.JUMP;
+        else
+            type = Type.INVALID;
     }
 
     /**
