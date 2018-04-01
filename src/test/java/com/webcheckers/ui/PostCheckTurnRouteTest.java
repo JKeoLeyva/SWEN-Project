@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Player;
@@ -10,10 +11,9 @@ import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
 public class PostCheckTurnRouteTest {
@@ -43,7 +43,7 @@ public class PostCheckTurnRouteTest {
         this.player2 = new Player("Mark");
 
         when(request.session()).thenReturn(session);
-        when(request.session().attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(player1);
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
 
         route = new PostCheckTurnRoute(gameManager, gson);
     }
@@ -60,7 +60,7 @@ public class PostCheckTurnRouteTest {
 
     @Test
     void playerDoesNotExist() {
-        when(session.attribute(PostSigninRoute.PLAYER_ATTR)).thenReturn(null);
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
 
         Object a = route.handle(request, response);
         verify(response).redirect(WebServer.HOME_URL);

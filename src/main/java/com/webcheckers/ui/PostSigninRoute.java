@@ -1,11 +1,11 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -19,8 +19,6 @@ public class PostSigninRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
-
-    public static final String PLAYER_ATTR = "currPlayer";
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -42,7 +40,6 @@ public class PostSigninRoute implements Route {
         LOG.finer("PostSigninRoute is invoked.");
 
         final Session session = request.session();
-
         final String playerName = request.queryParams("name");
 
         // If the given player name has non-alphaNumeric characters.
@@ -50,24 +47,20 @@ public class PostSigninRoute implements Route {
 
         if(hasNonAlpha) {
             // Name is not valid.
-            Map<String, Object> vm = new HashMap<>();
-            vm.put("title", "Sign in");
-            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
         }
 
         if(playerLobby.isNameAvailable(playerName)) {
             // Redirect to the homepage, now signed-in.
             Player newPlayer = playerLobby.signInPlayer(playerName);
-            session.attribute(PLAYER_ATTR, newPlayer);
+            session.attribute(Strings.Session.PLAYER, newPlayer);
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
         else {
             // Name already taken, reload this page.
-            Map<String, Object> vm = new HashMap<>();
-            vm.put("title", "Sign in");
-            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
         }
     }
 }
