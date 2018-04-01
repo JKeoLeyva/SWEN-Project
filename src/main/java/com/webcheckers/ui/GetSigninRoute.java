@@ -1,9 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import spark.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -29,11 +29,9 @@ public class GetSigninRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("GetHomeRoute is invoked.");
 
-        Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Sign in");
-        return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+        return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
     }
 }

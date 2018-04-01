@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
@@ -30,7 +31,7 @@ public class GetSignOutRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Session session = request.session();
-        Player player = session.attribute(PostSigninRoute.PLAYER_ATTR);
+        Player player = session.attribute(Strings.Session.PLAYER);
 
         if(player != null) {
             if(gameManager.getGame(player) != null){

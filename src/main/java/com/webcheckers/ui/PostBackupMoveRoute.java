@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Game;
@@ -27,7 +28,7 @@ public class PostBackupMoveRoute implements Route{
     public Object handle(Request request, Response response) {
         LOG.finer("PostBackupMove invoked.");
         Session session = request.session();
-        Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
+        Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
         Turn turn = game.getTurn();
         turn.backupMove();

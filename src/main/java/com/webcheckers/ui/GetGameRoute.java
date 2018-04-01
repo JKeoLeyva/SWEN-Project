@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -48,7 +49,7 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
         Session session = request.session();
-        Player currPlayer = session.attribute(PostSigninRoute.PLAYER_ATTR);
+        Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
 
         if(game == null) {
@@ -57,14 +58,13 @@ public class GetGameRoute implements Route {
         }
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Game");
-        vm.put("currentPlayer", currPlayer);
-        vm.put("viewMode", ViewMode.PLAY);
-        vm.put("redPlayer", game.getRedPlayer());
-        vm.put("whitePlayer", game.getWhitePlayer());
-        vm.put("activeColor", game.getActiveColor());
-        vm.put("board", game.makeBoardView(currPlayer));
+        vm.put(Strings.Template.Game.CURRENT_PLAYER, currPlayer);
+        vm.put(Strings.Template.Game.VIEW_MODE, ViewMode.PLAY);
+        vm.put(Strings.Template.Game.RED_PLAYER, game.getRedPlayer());
+        vm.put(Strings.Template.Game.WHITE_PLAYER, game.getWhitePlayer());
+        vm.put(Strings.Template.Game.ACTIVE_COLOR, game.getActiveColor());
+        vm.put(Strings.Template.Game.BOARD, game.makeBoardView(currPlayer));
 
-        return templateEngine.render(new ModelAndView(vm, "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm, Strings.Template.Game.FILE_NAME));
     }
 }
