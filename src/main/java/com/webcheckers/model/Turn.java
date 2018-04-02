@@ -7,6 +7,7 @@ import java.util.*;
 public class Turn {
 
     // Some Strings for displaying the results of trying to validate moves.
+    static final String BAD_MOVE = "ERROR! Move is out of board range.";
     static final String MOVE_ALREADY_MADE = "Backup to make another move.";
     static final String INVALID_DISTANCE = "You can only move forward 1 space diagonally or make any number of valid jumps.";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
@@ -19,19 +20,13 @@ public class Turn {
     // A set to store spaces jumped over.
     private Set<Position> jumpedSpaces = new HashSet<>();
     // A temporary Board to store moves.
-    private Board temp = new Board();
+    private Board temp;
     // If the turn has jumps (and therefore can't have any more single moves)
     private Piece.Color playerColor;
 
-    public Turn(Board board, Piece.Color playerColor) {
+    Turn(Board board, Piece.Color playerColor) {
         this.playerColor = playerColor;
-        // Copies from the original board to the temporary board.
-        for(int row = 0; row < Board.BOARD_SIZE; row++){
-            for(int col = 0; col < Board.BOARD_SIZE; col++){
-                Piece curr = board.getPiece(row, col);
-                temp.setPiece(row, col, curr);
-            }
-        }
+        this.temp = new Board(board);
     }
 
     /**
@@ -40,8 +35,10 @@ public class Turn {
      * @param move to be validated
      * @return Message to be displayed
      */
-    public Message tryMove(Move move) {
-        move.moveSetup(playerColor);
+    Message tryMove(Move move) {
+        move = new Move(move, playerColor);
+        if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
+            return new Message(BAD_MOVE, Message.Type.error);
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
@@ -73,17 +70,16 @@ public class Turn {
     private boolean isInvalidJumpMove(Move move){
         int row = (move.getStart().getRow() + move.getEnd().getRow())/2;
         int col = (move.getStart().getCell() + move.getEnd().getCell())/2;
-        Piece jumped = temp.getPiece(row, col);
+        Piece jumped = temp.getPiece(new Position(row, col));
         return jumped == null || jumped.getColor() == playerColor;
     }
 
     /**
      * Reverses the last move made, and removes it from the Move stack.
      */
-    public void backupMove(){
+    void backupMove(){
         Move toReverse = validatedMoves.pop();
-        Move reversed = new Move(toReverse.getEnd(), toReverse.getStart());
-        reversed.moveSetup(playerColor);
+        Move reversed = new Move(toReverse);
         makeMove(reversed, true);
     }
 
@@ -93,13 +89,9 @@ public class Turn {
      * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.In any case,
      */
     private void makeMove(Move move, boolean reversed){
-        int startRow = move.getStart().getRow();
-        int startCol = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCol = move.getEnd().getCell();
-        Piece moving = temp.getPiece(startRow, startCol);
-        temp.setPiece(startRow, startCol, null);
-        temp.setPiece(endRow, endCol, moving);
+        Piece moving = temp.getPiece(move.getStart());
+        temp.setPiece(move.getStart(), null);
+        temp.setPiece(move.getEnd(), moving);
         if(reversed)
             jumpedSpaces.remove(move.getJumped());
         else
@@ -110,7 +102,7 @@ public class Turn {
      * Empties out and returns the validated moves.
      * @return A Stack of moves with the first move on top, and so on.
      */
-    public Stack<Move> getValidatedMoves(){
+    Stack<Move> getValidatedMoves(){
         Stack<Move> ret = new Stack<>();
         while(!validatedMoves.empty())
             ret.push(validatedMoves.pop());
@@ -118,8 +110,7 @@ public class Turn {
         return ret;
     }
 
-    // Not used outside tests
-    public void setPlayerColor(Piece.Color playerColor) {
+    void setPlayerColor(Piece.Color playerColor) {
         this.playerColor = playerColor;
     }
 }

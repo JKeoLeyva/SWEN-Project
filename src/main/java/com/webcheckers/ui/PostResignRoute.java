@@ -23,9 +23,7 @@ public class PostResignRoute implements Route {
 
     public PostResignRoute(final GameManager gameManager) {
         this.gameManager = gameManager;
-        gson = new Gson();
-
-        LOG.config("PostResignRoute is initialized");
+        this.gson = new Gson();
     }
 
     public Object handle(Request request, Response response) {

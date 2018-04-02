@@ -25,7 +25,6 @@ public class GetSignOutRoute implements Route {
     public GetSignOutRoute(final PlayerLobby playerLobby, final GameManager gameManager) {
         this.playerLobby = playerLobby;
         this.gameManager = gameManager;
-        LOG.config("GetSignOutRoute is initialized.");
     }
 
     @Override

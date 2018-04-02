@@ -26,7 +26,6 @@ public class PostSubmitTurnRoute implements Route {
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
-        game.switchTurn();
 
         Message result = new Message("true", Message.Type.info);
 
@@ -35,6 +34,8 @@ public class PostSubmitTurnRoute implements Route {
             game.setGameOver();
             return gson.toJson(result);
         }
+
+        game.switchTurn();
 
         return gson.toJson(result);
     }

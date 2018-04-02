@@ -8,7 +8,7 @@ public class Move {
     private Piece.Color color;
     private Type type;
 
-    // Note: this only shows what the jump distance is
+    // Note: this only shows what the jump distance is.
     enum Type {
         INVALID, SINGLE, JUMP
     }
@@ -16,6 +16,34 @@ public class Move {
     public Move(Position start, Position end) {
         this.start = start;
         this.end = end;
+    }
+
+    /**
+     * Initializes a Move with additional information.
+     * @param move the move to copy start and end from
+     * @param color the color of the moving piece
+     */
+    Move(Move move, Piece.Color color){
+        this.start = move.getStart();
+        this.end = move.getEnd();
+        this.color = color;
+        if(isDiagonal(1))
+            type = Type.SINGLE;
+        else if (isDiagonal(2))
+            type = Type.JUMP;
+        else
+            type = Type.INVALID;
+    }
+
+    /**
+     * Creates the reverse of a given Move.
+     * @param toReverse the Move to reverse
+     */
+    Move(Move toReverse){
+        this.start = toReverse.getEnd();
+        this.end = toReverse.getStart();
+        this.color = toReverse.getColor();
+        this.type = toReverse.getMoveType();
     }
 
     public Position getStart() {
@@ -32,20 +60,6 @@ public class Move {
 
     public Piece.Color getColor() {
         return color;
-    }
-
-    /**
-     * Acts as a pseudo-constructor. Sets up some Move attributes.
-     * @param color of the moving piece.
-     */
-    public void moveSetup(Piece.Color color){
-        this.color = color;
-        if(isDiagonal(1))
-            type = Type.SINGLE;
-        else if (isDiagonal(2))
-            type = Type.JUMP;
-        else
-            type = Type.INVALID;
     }
 
     /**

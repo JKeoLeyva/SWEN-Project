@@ -34,8 +34,6 @@ public class GetGameRoute implements Route {
 
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
-
-        LOG.config("GetGameRoute is initialized.");
     }
 
     /**

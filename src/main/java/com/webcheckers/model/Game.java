@@ -72,14 +72,14 @@ public class Game {
         currState = State.GAME_OVER;
     }
 
-    public boolean hasAPlayerWon() {
+    private boolean hasAPlayerWon() {
         boolean redFound = false;
         boolean whiteFound = false;
         Piece piece;
 
         for(int i = 0; i < Board.BOARD_SIZE; i++) {
             for(int j = 0; j < Board.BOARD_SIZE; j++) {
-                piece = board.getPiece(i, j);
+                piece = board.getPiece(new Position(i, j));
                 if(piece != null) {
                     if(piece.getColor() == Piece.Color.RED)
                         redFound = true;
@@ -123,59 +123,56 @@ public class Game {
         }
     }
 
-    public boolean hasMove(Player player){
-//        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
-//        Piece piece;
-//        Position start, end;
-//        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
-//        Turn turn = new Turn(board, color);
-//
-//        for(int row = 0; row < Board.BOARD_SIZE; row++) {
-//            for(int col = 0; col < Board.BOARD_SIZE; col++) {
-//                piece = board.getPiece(row, col);
-//                if(piece != null && piece.getColor() == color) {
-//                    start = new Position(row, col);
-//
-//                    end = new Position(row + rowAdjustment, col - 1);
-//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-//                        return true;
-//
-//                    end = new Position(row + rowAdjustment, col + 1);
-//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-//                        return true;
-//
-//                    end = new Position(row + rowAdjustment * 2, col - 2);
-//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-//                        return true;
-//
-//                    end = new Position(row + rowAdjustment * 2, col + 2);
-//                    if(turn.tryMove(new Move(start, end, color)).getType() == Message.Type.info)
-//                        return true;
-//                }
-//            }
-//        }
-//
-//        return false;
-        return true;
+    private boolean hasMove(Player player){
+        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
+        Piece piece;
+        Position start, end;
+        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
+        Turn turn = new Turn(board, color);
+
+        for(int row = 0; row < Board.BOARD_SIZE; row++) {
+            for(int col = 0; col < Board.BOARD_SIZE; col++) {
+                piece = board.getPiece(new Position(row, col));
+                if(piece != null && piece.getColor() == color) {
+                    start = new Position(row, col);
+
+                    end = new Position(row + rowAdjustment, col - 1);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment, col + 1);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment * 2, col - 2);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+
+                    end = new Position(row + rowAdjustment * 2, col + 2);
+                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public void makeMove(Move move) {
-        int startRow = move.getStart().getRow();
-        int startCol = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCol = move.getEnd().getCell();
-        Piece moving = board.getPiece(startRow, startCol);
-        board.setPiece(startRow, startCol, null);
-        board.setPiece(endRow, endCol, moving);
+    private void makeMove(Move move) {
+        Piece moving = board.getPiece(move.getStart());
+        board.setPiece(move.getStart(), null);
+        board.setPiece(move.getEnd(), moving);
         if(move.getMoveType() == Move.Type.JUMP) {
             Position jumped = move.getJumped();
-            board.setPiece(jumped.getRow(), jumped.getCell(), null);
+            board.setPiece(jumped,null);
         }
         submittedMoves.add(move);
     }
 
-    public Turn getTurn(){
-        return turn;
+    public void backupMove(){
+        turn.backupMove();
     }
 
+    public Message tryMove(Move move){
+        return turn.tryMove(move);
+    }
 }

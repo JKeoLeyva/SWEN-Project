@@ -40,8 +40,6 @@ public class GetHomeRoute implements Route {
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
         this.gameManager = gameManager;
-
-        LOG.config("GetHomeRoute is initialized.");
     }
 
     /**
