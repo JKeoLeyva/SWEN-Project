@@ -12,6 +12,7 @@ public class Turn {
     static final String INVALID_DISTANCE = "You can only move forward 1 space diagonally or make any number of valid jumps.";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
     static final String BAD_JUMP = "You must jump over a piece of the opposite color.";
+    static final String JUMP_CHANGE = "You cannot jump with two pieces in the same turn.";
     static final String JUMPED_OVER = "Piece was already jumped over.";
     static final String VALID_MOVE = "Move is valid!";
 
@@ -56,6 +57,8 @@ public class Turn {
         if(move.getMoveType() == Move.Type.JUMP){
             if(isInvalidJumpMove(move))
                 return new Message(BAD_JUMP, Message.Type.error);
+            if(!validatedMoves.empty() && validatedMoves.peek().getEnd() != move.getStart())
+                return new Message(JUMP_CHANGE, Message.Type.error);
         }
 
         validatedMoves.push(move);
