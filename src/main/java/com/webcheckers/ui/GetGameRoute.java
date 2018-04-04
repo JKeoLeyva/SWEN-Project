@@ -52,7 +52,13 @@ public class GetGameRoute implements Route {
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
 
-        if(game == null) {
+        if(currPlayer == null || game == null) {
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
+        if(game.isGameOver()) {
+            gameManager.deleteGame(currPlayer);
             response.redirect(WebServer.HOME_URL);
             return null;
         }
