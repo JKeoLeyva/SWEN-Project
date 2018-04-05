@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 
 @Tag("UI-tier")
-public class PostSigninRouteTest {
+class PostSigninRouteTest {
 
     private PostSigninRoute route;
     private TemplateEngineTester engineTester;
@@ -27,7 +27,7 @@ public class PostSigninRouteTest {
     * Set up the mocked objects and some method calls
     * */
     @BeforeEach
-    public void setup() {
+    void setup() {
         request = mock(Request.class);
         response = mock(Response.class);
         session = mock(Session.class);

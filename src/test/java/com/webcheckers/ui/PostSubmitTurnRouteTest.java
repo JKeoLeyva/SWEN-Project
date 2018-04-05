@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Tag("UI-tier")
-public class PostSubmitTurnRouteTest {
+class PostSubmitTurnRouteTest {
     private GameManager gameManager;
     private Request request;
     private Response response;

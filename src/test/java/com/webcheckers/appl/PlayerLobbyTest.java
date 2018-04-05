@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
-public class PlayerLobbyTest {
+class PlayerLobbyTest {
 
     /*
     * Test instantiation of playerLobby

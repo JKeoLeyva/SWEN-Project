@@ -22,7 +22,6 @@ public class PostGameRoute implements Route {
 
     public PostGameRoute(final GameManager gameManager) {
         this.gameManager = gameManager;
-        LOG.config("PostGameRoute is initialized.");
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Position;
 import com.webcheckers.model.Row;
 import com.webcheckers.model.Space;
 
@@ -28,7 +29,8 @@ public class BoardView implements Iterable<Row> {
 
             // Creates an array of 8 spaces, containing their proper pieces.
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                spaces.add(new Space(row, col, gameBoard.getPiece(row, col)));
+                spaces.add(new Space(
+                        row, col, gameBoard.getPiece(new Position(row, col))));
             }
 
             if(reversed)

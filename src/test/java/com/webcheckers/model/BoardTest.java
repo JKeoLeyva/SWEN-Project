@@ -24,17 +24,17 @@ class BoardTest {
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    assertNull(CuT.getPiece(row, col));
+                    assertNull(CuT.getPiece(new Position(row, col)));
                 else if(row < 3) {
-                    assertEquals(CuT.getPiece(row, col).getColor(), Piece.Color.WHITE);
-                    assertEquals(CuT.getPiece(row, col).getType(), Piece.Type.SINGLE);
+                    assertEquals(CuT.getPiece(new Position(row, col)).getColor(), Piece.Color.WHITE);
+                    assertEquals(CuT.getPiece(new Position(row, col)).getType(), Piece.Type.SINGLE);
                 }
                 else if(row > 4) {
-                    assertEquals(CuT.getPiece(row, col).getColor(), Piece.Color.RED);
-                    assertEquals(CuT.getPiece(row, col).getType(), Piece.Type.SINGLE);
+                    assertEquals(CuT.getPiece(new Position(row, col)).getColor(), Piece.Color.RED);
+                    assertEquals(CuT.getPiece(new Position(row, col)).getType(), Piece.Type.SINGLE);
                 }
                 else
-                    assertNull(CuT.getPiece(row, col));
+                    assertNull(CuT.getPiece(new Position(row, col)));
             }
         }
     }
@@ -45,39 +45,50 @@ class BoardTest {
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    CuT.setPiece(row, col, whiteSingl);
+                    CuT.setPiece(new Position(row, col), whiteSingl);
                 else if(row < 3)
-                    CuT.setPiece(row, col, redKing);
+                    CuT.setPiece(new Position(row, col), redKing);
                 else if(row > 4)
-                    CuT.setPiece(row, col, whiteKing);
+                    CuT.setPiece(new Position(row, col), whiteKing);
                 else
-                    CuT.setPiece(row, col, redSingl);
+                    CuT.setPiece(new Position(row, col), redSingl);
             }
         }
         // Test the changed pieces.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
                 if(row % 2 == col % 2)
-                    assertEquals(CuT.getPiece(row, col), whiteSingl);
+                    assertEquals(CuT.getPiece(new Position(row, col)), whiteSingl);
                 else if(row < 3)
-                    assertEquals(CuT.getPiece(row, col), redKing);
+                    assertEquals(CuT.getPiece(new Position(row, col)), redKing);
                 else if(row > 4)
-                    assertEquals(CuT.getPiece(row, col), whiteKing);
+                    assertEquals(CuT.getPiece(new Position(row, col)), whiteKing);
                 else
-                    assertEquals(CuT.getPiece(row, col), redSingl);
+                    assertEquals(CuT.getPiece(new Position(row, col)), redSingl);
             }
         }
         // Clear the entire board.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                CuT.setPiece(row, col, null);
+                CuT.setPiece(new Position(row, col), null);
             }
         }
         // Test if the board was cleared.
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                assertNull(CuT.getPiece(row, col));
+                assertNull(CuT.getPiece(new Position(row, col)));
             }
         }
+    }
+
+    /**
+     * Test positions that are out of bounds.
+     */
+    @Test
+    void outOfBounds(){
+        assertTrue(CuT.outOfBounds(new Position(-1, 0)));
+        assertTrue(CuT.outOfBounds(new Position(0, -1)));
+        assertTrue(CuT.outOfBounds(new Position(Board.BOARD_SIZE+1, 0)));
+        assertTrue(CuT.outOfBounds(new Position(0, Board.BOARD_SIZE+1)));
     }
 }

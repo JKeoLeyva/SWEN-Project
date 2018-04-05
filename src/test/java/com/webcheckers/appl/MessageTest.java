@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @Tag("Application-tier")
-public class MessageTest {
+class MessageTest {
     private static Message errorMessage;
     private static Message infoMessage;
 
@@ -15,20 +16,38 @@ public class MessageTest {
     private static final String INFO_TEXT = "info text";
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         errorMessage = new Message(ERROR_TEXT, Message.Type.error);
         infoMessage = new Message(INFO_TEXT, Message.Type.info);
     }
 
     @Test
-    public void checkText() {
+    void checkText() {
         assertEquals(ERROR_TEXT, errorMessage.getText());
         assertEquals(INFO_TEXT, infoMessage.getText());
     }
 
     @Test
-    public void checkType() {
+    void checkType() {
         assertEquals(Message.Type.error, errorMessage.getType());
         assertEquals(Message.Type.info, infoMessage.getType());
+    }
+
+    /**
+     * Basic testing of the equals method.
+     */
+    @Test
+    void equals(){
+        assertEquals(infoMessage, infoMessage);
+        assertNotEquals(infoMessage, null);
+        assertNotEquals(infoMessage, "");
+        assertNotEquals(infoMessage, errorMessage);
+
+        Message newInfoMessage = new Message("Wow! Information!", Message.Type.info);
+        Message newErrorMessage = new Message("Wow! Errors!", Message.Type.error);
+        assertNotEquals(errorMessage, newErrorMessage);
+        assertNotEquals(infoMessage, newInfoMessage);
+        newInfoMessage = new Message(INFO_TEXT, Message.Type.info);
+        assertEquals(infoMessage, newInfoMessage);
     }
 }

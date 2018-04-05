@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
  * Created by kac9868 on 3/28/2018.
  */
 @Tag("UI-tier")
-public class GetGameRouteTest {
+class GetGameRouteTest {
     private TemplateEngineTester engineTester;
 
     private GameManager gameManager;

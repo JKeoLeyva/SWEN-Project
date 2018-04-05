@@ -21,7 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Tag("UI-tier")
-public class MatchmakingTemplateTest {
+class MatchmakingTemplateTest {
 
     private static final String PLAYER1 = "player1";
     private static final String PLAYER2 = "player2";
@@ -38,7 +38,7 @@ public class MatchmakingTemplateTest {
     private Map<String, Object> vm;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         playerLobby = mock(PlayerLobby.class);
         player1 = mock(Player.class);
         player2 = mock(Player.class);
@@ -50,7 +50,7 @@ public class MatchmakingTemplateTest {
     }
 
     @Test
-    public void playerInAndOutOfGame() {
+    void playerInAndOutOfGame() {
         vm.put(Strings.Template.Home.CURRENT_PLAYER, new Player("test"));
 
         ArrayList<Player> players = new ArrayList<>();

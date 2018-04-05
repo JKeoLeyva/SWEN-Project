@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class TemplateEngineTester {
+class TemplateEngineTester {
 
   /** Holds the View-Model map from the Spark ModelAndView object. */
   private Object model;
@@ -27,7 +27,7 @@ public class TemplateEngineTester {
    *
    * @return  a Mockito {@link Answer} object
    */
-  public Answer<Object> makeAnswer() {
+  Answer<Object> makeAnswer() {
     return new Answer<Object>() {
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -43,21 +43,21 @@ public class TemplateEngineTester {
   /**
    * Assert that the View-Model object exists.
    */
-  public void assertViewModelExists() {
+  void assertViewModelExists() {
     assertNotNull(model, "the View-Model exists");
   }
 
   /**
    * Assert that the View-Model object exists.
    */
-  public void assertViewModelIsaMap() {
+  void assertViewModelIsaMap() {
     assertTrue(model instanceof Map, "the View-Model is a Map");
   }
 
   /**
    * Assert that the View-Model attributes matches the expected value.
    */
-  public void assertViewModelAttribute(final String attrName, final Object expectedValue) {
+  void assertViewModelAttribute(final String attrName, final Object expectedValue) {
     @SuppressWarnings("unchecked")
     final Map<String, Object> vm = (Map<String, Object>) model;
     assertEquals(expectedValue, vm.get(attrName));
@@ -66,7 +66,7 @@ public class TemplateEngineTester {
   /**
    * Assert that the View-Model attribute is absent.
    */
-  public void assertViewModelAttributeIsAbsent(final String attrName) {
+  void assertViewModelAttributeIsAbsent(final String attrName) {
     @SuppressWarnings("unchecked")
     final Map<String, Object> vm = (Map<String, Object>) model;
     assertFalse(vm.containsKey(attrName));
@@ -75,7 +75,7 @@ public class TemplateEngineTester {
   /**
    * Assert that the View name exists and matches the expected value.
    */
-  public void assertViewName(final String expectedName) {
+  void assertViewName(final String expectedName) {
     assertAll("View assertions",
         () -> { assertNotNull(viewName, "the View name exists"); },
         () -> { assertEquals(expectedName, viewName, "the View name matches"); }

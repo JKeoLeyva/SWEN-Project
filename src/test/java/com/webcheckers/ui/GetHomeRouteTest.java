@@ -14,7 +14,7 @@ import spark.*;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
-public class GetHomeRouteTest {
+class GetHomeRouteTest {
     // Class under test
     private GetHomeRoute route;
 
@@ -38,7 +38,7 @@ public class GetHomeRouteTest {
      * Set up the mocked objects and some method calls
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
         request = mock(Request.class);
         response = mock(Response.class);
         session = mock(Session.class);
@@ -65,7 +65,7 @@ public class GetHomeRouteTest {
      * Test the no session scenario
      */
     @Test
-    public void noSession() {
+    void noSession() {
         // Run code
         route.handle(request, response);
 
@@ -86,7 +86,7 @@ public class GetHomeRouteTest {
      * Test the signed in (but waiting) player home
      */
     @Test
-    public void waitingPlayer() {
+    void waitingPlayer() {
         // Add current player
         when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
 
@@ -108,7 +108,7 @@ public class GetHomeRouteTest {
      * Test the redirect from home to game when the player is in a game
      */
     @Test
-    public void inGame() {
+    void inGame() {
         // Add current player (in a game)
         Game game = mock(Game.class);
         when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
@@ -125,7 +125,7 @@ public class GetHomeRouteTest {
      * Test the message functionality
      */
     @Test
-    public void message() {
+    void message() {
         // Add message to session
         when(session.attribute(Strings.Session.MESSAGE)).thenReturn(message);
 

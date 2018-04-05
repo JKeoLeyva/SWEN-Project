@@ -31,12 +31,10 @@ public class PostSigninRoute implements Route {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
-
-        LOG.config("PostSigninRoute is initialized.");
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostSigninRoute is invoked.");
 
         final Session session = request.session();

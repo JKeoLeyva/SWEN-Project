@@ -24,8 +24,22 @@ public class Board {
     }
 
     /**
+     * Copy constructor.
+     * @param origBoard Board to be copied
+     */
+    public Board(Board origBoard) {
+        board = new Piece[BOARD_SIZE][BOARD_SIZE];
+
+        for(int row = 0; row < Board.BOARD_SIZE; row++){
+            for(int col = 0; col < Board.BOARD_SIZE; col++){
+                Piece curr = origBoard.getPiece(new Position(row, col));
+                setPiece(new Position(row, col), curr);
+            }
+        }
+    }
+
+    /**
      * Sets up a player of either color.
-     *
      * @param color of player to be set up
      */
     private void setUpPlayer(Piece.Color color) {
@@ -45,28 +59,25 @@ public class Board {
     /**
      * @return the Piece at the given location.
      */
-    public Piece getPiece(int row, int col) {
-        return board[row][col];
+    public Piece getPiece(Position pos) {
+        return board[pos.getRow()][pos.getCell()];
     }
 
     /**
      * Set the Piece at the given location to the given piece.
      */
-    public void setPiece(int row, int col, Piece piece) {
-        board[row][col] = piece;
+    void setPiece(Position pos, Piece piece) {
+        board[pos.getRow()][pos.getCell()] = piece;
     }
 
-    public void makeMove(Move move, Piece.Color playerColor) {
-        Position start = move.getStart();
-        Position end = move.getEnd();
-        Piece piece = this.getPiece(start.getRow(), start.getCell());
-        this.setPiece(start.getRow(), start.getCell(), null);
-        this.setPiece(end.getRow(), end.getCell(), piece);
-
-        if(move.isJumpMove(this, playerColor)) {
-            Position jumpPosition = move.getJumpPosition(playerColor);
-            setPiece(jumpPosition.getRow(), jumpPosition.getCell(), null);
-        }
+    /**
+     * Returns true if the positions is out of bounds on this board.
+     * @param pos to be judged
+     * @return if pos is out of bounds
+     */
+    boolean outOfBounds(Position pos){
+        return !(pos.getRow() < BOARD_SIZE && pos.getCell() < BOARD_SIZE &&
+                pos.getRow() >= 0 && pos.getCell() >= 0);
     }
 
 }

@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.Turn;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -32,9 +30,7 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
-        Game game = gameManager.getGame(currPlayer);
-        Turn turn = game.getTurn();
-        Message result = turn.tryMove(move);
+        Message result = gameManager.getGame(currPlayer).tryMove(move);
         return gson.toJson(result);
     }
 }

@@ -5,6 +5,7 @@ import com.webcheckers.ui.BoardView;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Game {
     private Board board;
@@ -71,14 +72,14 @@ public class Game {
         currState = State.GAME_OVER;
     }
 
-    public boolean hasAPlayerWon() {
+    private boolean hasAPlayerWon() {
         boolean redFound = false;
         boolean whiteFound = false;
         Piece piece;
 
         for(int i = 0; i < Board.BOARD_SIZE; i++) {
             for(int j = 0; j < Board.BOARD_SIZE; j++) {
-                piece = board.getPiece(i, j);
+                piece = board.getPiece(new Position(i, j));
                 if(piece != null) {
                     if(piece.getColor() == Piece.Color.RED)
                         redFound = true;
@@ -103,14 +104,15 @@ public class Game {
         }
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
+    /**
+     * Makes the moves validated within Turn, then switches State,
+     * and creates a turn for the next player.
+     */
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
-        for(Move move : turn.getValidatedMoves())
-            makeMove(move, getActiveColor());
+        Stack<Move> validMoves = turn.getValidatedMoves();
+        while(!validMoves.empty())
+            makeMove(validMoves.pop());
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
@@ -121,7 +123,12 @@ public class Game {
         }
     }
 
-    public boolean hasMove(Player player){
+    /**
+     * Checks if a given player can still play.
+     * @param player to be tested
+     * @return if player can make a move
+     */
+    private boolean hasMove(Player player){
         Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
         Piece piece;
         Position start, end;
@@ -130,7 +137,7 @@ public class Game {
 
         for(int row = 0; row < Board.BOARD_SIZE; row++) {
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
-                piece = board.getPiece(row, col);
+                piece = board.getPiece(new Position(row, col));
                 if(piece != null && piece.getColor() == color) {
                     start = new Position(row, col);
 
@@ -152,17 +159,30 @@ public class Game {
                 }
             }
         }
-
         return false;
     }
 
-    public void makeMove(Move move, Piece.Color playerColor) {
-        board.makeMove(move, playerColor);
+    /**
+     * Game's method to make a move. Changes the Board according to what the
+     * move says, and removes jumped pieces.
+     * @param move to be registered
+     */
+    private void makeMove(Move move) {
+        Piece moving = board.getPiece(move.getStart());
+        board.setPiece(move.getStart(), null);
+        board.setPiece(move.getEnd(), moving);
+        if(move.getMoveType() == Move.Type.JUMP) {
+            Position jumped = move.getJumped();
+            board.setPiece(jumped,null);
+        }
         submittedMoves.add(move);
     }
 
-    public Turn getTurn(){
-        return turn;
+    public void backupMove(){
+        turn.backupMove();
     }
 
+    public Message tryMove(Move move){
+        return turn.tryMove(move);
+    }
 }

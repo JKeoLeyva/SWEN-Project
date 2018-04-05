@@ -2,16 +2,17 @@ package com.webcheckers.model;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Tag("Model-tier")
-public class SpaceTest {
+class SpaceTest {
 
     /**
      * Generic test for all Space configurations
      *
-     * @param type the piece type
      * @param row the space row
      * @param cellIdx the space cell index
      * @param toString the expected output for toString()
@@ -32,24 +33,26 @@ public class SpaceTest {
      * Tests the valid space w/ piece
      */
     @Test
-    public void testValidSpacePiece() {
+    void testValidSpacePiece() {
         Piece p = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
         testSpace(p, 1, 1, "[" + p.toString() + "]", false);
+        testSpace(p, 1, 2, "[" + p.toString() + "]", false);
     }
 
     /**
      * Tests the valid space w/o piece
      */
     @Test
-    public void testValidSpaceNoPiece() {
+    void testValidSpaceNoPiece() {
         testSpace(null, 1, 2, "[ ]", true);
     }
 
     /**
-     * Tests the invalid space
+     * Tests invalid spaces
      */
     @Test
-    public void testInvalidSpace() {
-        testSpace(null, 0, 0, "[ ]", false);
+    void testInvalidSpaces() {
+        assertThrows(IllegalArgumentException.class, () -> new Space(0, -1, null));
+        assertThrows(IllegalArgumentException.class, () -> new Space(0, Board.BOARD_SIZE+1, null));
     }
 }

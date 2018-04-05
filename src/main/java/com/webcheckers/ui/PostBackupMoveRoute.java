@@ -29,9 +29,7 @@ public class PostBackupMoveRoute implements Route{
         LOG.finer("PostBackupMove invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
-        Game game = gameManager.getGame(currPlayer);
-        Turn turn = game.getTurn();
-        turn.backupMove();
+        gameManager.getGame(currPlayer).backupMove();
 
         Message message = new Message("Last move undone.", Message.Type.info);
         return gson.toJson(message, Message.class);

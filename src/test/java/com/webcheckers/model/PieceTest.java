@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("Model-tier")
-public class PieceTest {
+class PieceTest {
     /**
      * Generic test for all Piece configurations
      *
@@ -28,7 +28,7 @@ public class PieceTest {
      * Test the single red piece
      */
     @Test
-    public void testSingleRed() {
+    void testSingleRed() {
         testPiece(Piece.Type.SINGLE, Piece.Color.RED, "Red Single");
     }
 
@@ -36,7 +36,7 @@ public class PieceTest {
      * Test the single white piece
      */
     @Test
-    public void testSingleWhite() {
+    void testSingleWhite() {
         testPiece(Piece.Type.SINGLE, Piece.Color.WHITE, "White Single");
     }
 
@@ -44,7 +44,7 @@ public class PieceTest {
      * Test the king red piece
      */
     @Test
-    public void testKingRed() {
+    void testKingRed() {
         testPiece(Piece.Type.KING, Piece.Color.RED, "Red King");
     }
 
@@ -52,7 +52,7 @@ public class PieceTest {
      * Test the king white piece
      */
     @Test
-    public void testKingWhite() {
+    void testKingWhite() {
         testPiece(Piece.Type.KING, Piece.Color.WHITE, "White King");
     }
 }
