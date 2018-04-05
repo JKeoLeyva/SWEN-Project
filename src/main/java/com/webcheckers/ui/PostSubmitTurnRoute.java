@@ -28,14 +28,13 @@ public class PostSubmitTurnRoute implements Route {
         Game game = gameManager.getGame(currPlayer);
 
         Message result = new Message("true", Message.Type.info);
-
+        game.switchTurn();
+        
         if(game.isGameOver(currPlayer)) {
             gameManager.deleteGame(currPlayer);
             game.setGameOver();
             return gson.toJson(result);
         }
-
-        game.switchTurn();
 
         return gson.toJson(result);
     }
