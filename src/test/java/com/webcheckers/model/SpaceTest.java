@@ -11,7 +11,6 @@ public class SpaceTest {
     /**
      * Generic test for all Space configurations
      *
-     * @param type the piece type
      * @param row the space row
      * @param cellIdx the space cell index
      * @param toString the expected output for toString()

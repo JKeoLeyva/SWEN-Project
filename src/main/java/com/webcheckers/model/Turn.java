@@ -12,7 +12,7 @@ public class Turn {
     static final String INVALID_DISTANCE = "You can only move forward 1 space diagonally or make any number of valid jumps.";
     static final String ALREADY_JUMPING = "You can't make a single space move after jumping.";
     static final String BAD_JUMP = "You must jump over a piece of the opposite color.";
-    static final String JUMP_CHANGE = "You cannot jump with two pieces in the same turn.";
+    static final String JUMP_CHANGE = "You cannot jump with two different pieces in the same turn.";
     static final String JUMPED_OVER = "Piece was already jumped over.";
     static final String VALID_MOVE = "Move is valid!";
 
@@ -52,14 +52,12 @@ public class Turn {
                 return new Message(ALREADY_JUMPING, Message.Type.error);
             if(jumpedSpaces.contains(move.getJumped()))
                 return new Message(JUMPED_OVER, Message.Type.error);
+            if(!validatedMoves.peek().getEnd().equals(move.getStart())){
+                return new Message(JUMP_CHANGE, Message.Type.error);}
         }
 
-        if(move.getMoveType() == Move.Type.JUMP){
-            if(isInvalidJumpMove(move))
-                return new Message(BAD_JUMP, Message.Type.error);
-            if(!validatedMoves.empty() && validatedMoves.peek().getEnd() != move.getStart())
-                return new Message(JUMP_CHANGE, Message.Type.error);
-        }
+        if(isInvalidJumpMove(move))
+            return new Message(BAD_JUMP, Message.Type.error);
 
         validatedMoves.push(move);
         makeMove(move, false);
@@ -71,9 +69,10 @@ public class Turn {
      * @return if the jump moves jumps over a valid piece
      */
     private boolean isInvalidJumpMove(Move move){
-        int row = (move.getStart().getRow() + move.getEnd().getRow())/2;
-        int col = (move.getStart().getCell() + move.getEnd().getCell())/2;
-        Piece jumped = temp.getPiece(new Position(row, col));
+        Position jumpedPos = move.getJumped();
+        // This would mean the move is not a jump move.
+        if(jumpedPos == null) return false;
+        Piece jumped = temp.getPiece(jumpedPos);
         return jumped == null || jumped.getColor() == playerColor;
     }
 

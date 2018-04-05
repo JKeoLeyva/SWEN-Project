@@ -1,11 +1,13 @@
 package com.webcheckers.model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("Model-tier")
 public class GameTest {
     private static final Player player1 = new Player("player1");
     private static final Player player2 = new Player("player2");

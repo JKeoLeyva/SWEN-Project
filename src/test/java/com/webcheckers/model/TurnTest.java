@@ -84,7 +84,7 @@ class TurnTest {
     void testJumpMove() {
         Position start = new Position(5, 0);
         Position end = new Position(3, 2);
-        board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.setPiece(new Position(4,1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
         turn = new Turn(board, Piece.Color.RED);
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(ret.getType(), Message.Type.info);
@@ -99,20 +99,6 @@ class TurnTest {
         Position end = new Position(4, 1);
         turn.tryMove(new Move(start, end));
         Message ret = turn.tryMove(new Move(end, start));
-        assertEquals(ret.getType(), Message.Type.error);
-    }
-
-    /**
-     * Attempts to move to an occupied space.
-     */
-    @Test
-    void occupiedSpace(){
-        board.setPiece(3, 0, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-        board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-        Position start = new Position(4,1);
-        Position end = new Position(3, 0);
-        turn = new Turn(board, Piece.Color.RED);
-        Message ret = turn.tryMove(new Move(start, end));
         assertEquals(ret.getType(), Message.Type.error);
     }
 
@@ -165,14 +151,15 @@ class TurnTest {
                 new Position(1, 4)
         );
 
-        board.setPiece(4, 1, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-        board.setPiece(1, 4, null);
+        board.setPiece(new Position(4, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.setPiece(new Position(1, 4), null);
 
         Turn turn = new Turn(board, Piece.Color.RED);
         Message message1 = turn.tryMove(jump1);
         assertEquals(Message.Type.info, message1.getType());
 
         Message message2 = turn.tryMove(jump2);
+        System.out.println(message2.getText());
         assertEquals(Message.Type.info, message2.getType());
     }
 }

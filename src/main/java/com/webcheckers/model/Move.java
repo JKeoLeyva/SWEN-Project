@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import java.util.Objects;
-
 public class Move {
     private Position start;
     private Position end;
@@ -40,10 +38,10 @@ public class Move {
      * @param toReverse the Move to reverse
      */
     Move(Move toReverse){
-        this.start = toReverse.getEnd();
-        this.end = toReverse.getStart();
-        this.color = toReverse.getColor();
-        this.type = toReverse.getMoveType();
+        this.start = toReverse.end;
+        this.end = toReverse.start;
+        this.color = toReverse.color;
+        this.type = toReverse.type;
     }
 
     public Position getStart() {
@@ -54,12 +52,8 @@ public class Move {
         return end;
     }
 
-    public Move.Type getMoveType(){
+    Move.Type getMoveType(){
         return type;
-    }
-
-    public Piece.Color getColor() {
-        return color;
     }
 
     /**
@@ -77,7 +71,7 @@ public class Move {
 
     /**
      * @param dist distance to check
-     * @return if the inout moves goes (dist) diagonally
+     * @return if the input move goes (dist) diagonally
      */
     private boolean isDiagonal(int dist){
         int rowStart = start.getRow();
@@ -101,7 +95,6 @@ public class Move {
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
         Move move = (Move) o;
-        return Objects.equals(start, move.start) &&
-                Objects.equals(end, move.end);
+        return start.equals(move.start) && end.equals(move.end);
     }
 }

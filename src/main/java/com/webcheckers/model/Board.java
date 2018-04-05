@@ -70,6 +70,11 @@ public class Board {
         board[pos.getRow()][pos.getCell()] = piece;
     }
 
+    /**
+     * Returns true if the positions is out of bounds on this board.
+     * @param pos to be judged
+     * @return if pos is out of bounds
+     */
     boolean outOfBounds(Position pos){
         return !(pos.getRow() < BOARD_SIZE && pos.getCell() < BOARD_SIZE &&
                 pos.getRow() >= 0 && pos.getCell() >= 0);

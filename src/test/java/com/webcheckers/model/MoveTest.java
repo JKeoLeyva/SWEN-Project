@@ -1,0 +1,31 @@
+package com.webcheckers.model;
+
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@Tag("Model-tier")
+class MoveTest {
+
+    @Test
+    void equals() {
+        Position zero = new Position(0, 0);
+        Position rowIsOne = new Position(1, 0);
+        Position colisOne = new Position(0, 1);
+        Position one = new Position(1, 1);
+        // Basic checking of every case of the equals method.
+        Move move = new Move(zero, zero);
+        assertEquals(move, move);
+        assertNotEquals(null, move);
+        assertNotEquals("", move);
+        Move move2 = new Move(zero, zero);
+        assertEquals(move, move2);
+        move2 = new Move(zero, one);
+        assertNotEquals(move, move2);
+        move2 = new Move(rowIsOne, zero);
+        assertNotEquals(move, move2);
+        move2 = new Move(rowIsOne, colisOne);
+        assertNotEquals(move, move2);
+    }
+}
