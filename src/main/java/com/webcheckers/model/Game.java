@@ -104,10 +104,10 @@ public class Game {
         }
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
+    /**
+     * Makes the moves validated within Turn, then switches State,
+     * and creates a turn for the next player.
+     */
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
         Stack<Move> validMoves = turn.getValidatedMoves();
@@ -123,6 +123,11 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if a given player can still play.
+     * @param player to be tested
+     * @return if player can make a move
+     */
     private boolean hasMove(Player player){
         Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
         Piece piece;
@@ -157,6 +162,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Game's method to make a move. Changes the Board according to what the
+     * move says, and removes jumped pieces.
+     * @param move to be registered
+     */
     private void makeMove(Move move) {
         Piece moving = board.getPiece(move.getStart());
         board.setPiece(move.getStart(), null);

@@ -21,6 +21,7 @@ class PositionTest {
         assertNotEquals(zero, null);
         assertNotEquals(zero, "");
         assertEquals(zero, zero);
+        assertEquals(zero, new Position(0, 0));
         assertNotEquals(zero, rowIsOne);
         assertNotEquals(zero, colIsOne);
         assertNotEquals(zero, one);

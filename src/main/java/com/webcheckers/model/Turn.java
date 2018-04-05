@@ -56,7 +56,7 @@ public class Turn {
                 return new Message(JUMP_CHANGE, Message.Type.error);}
         }
 
-        if(isInvalidJumpMove(move))
+        if(move.getMoveType() == Move.Type.JUMP && isInvalidJumpMove(move))
             return new Message(BAD_JUMP, Message.Type.error);
 
         validatedMoves.push(move);
@@ -70,8 +70,6 @@ public class Turn {
      */
     private boolean isInvalidJumpMove(Move move){
         Position jumpedPos = move.getJumped();
-        // This would mean the move is not a jump move.
-        if(jumpedPos == null) return false;
         Piece jumped = temp.getPiece(jumpedPos);
         return jumped == null || jumped.getColor() == playerColor;
     }

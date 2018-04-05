@@ -78,16 +78,45 @@ class TurnTest {
     }
 
     /**
-     * Attempts to make a jump move
+     * Attempts to make a jump move, then several invalid moves.
      */
     @Test
     void testJumpMove() {
         Position start = new Position(5, 0);
+        Position middle = new Position(4,1);
         Position end = new Position(3, 2);
-        board.setPiece(new Position(4,1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
         turn = new Turn(board, Piece.Color.RED);
         Message ret = turn.tryMove(new Move(start, end));
-        assertEquals(ret.getType(), Message.Type.info);
+        assertEquals(Message.Type.info, ret.getType());
+        assertEquals(Turn.VALID_MOVE, ret.getText());
+        // Test a single move after a jump move.
+        Position nextEnd = new Position(2, 3);
+        Move move = new Move(end, nextEnd);
+        ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.ALREADY_JUMPING, ret.getText());
+        // Test a jump move with a different piece than the starting piece.
+        move = new Move(middle, nextEnd);
+        ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.JUMP_CHANGE, ret.getText());
+        // Test a jump move over an empty spot.
+        board = new Board();
+        board.setPiece(middle, null);
+        turn = new Turn(board, Piece.Color.RED);
+        move = new Move(start, end);
+        ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.BAD_JUMP, ret.getText());
+        // Test q jump move over a piece of the wrong color.
+        board = new Board();
+        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+        turn = new Turn(board, Piece.Color.RED);
+        move = new Move(start, end);
+        ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.BAD_JUMP, ret.getText());
     }
 
     /**
@@ -161,4 +190,42 @@ class TurnTest {
         Message message2 = turn.tryMove(jump2);
         assertEquals(Message.Type.info, message2.getType());
     }
+
+
+    /**
+     * Tests some out of bounds moves.
+     */
+    @Test
+    void outOfBounds(){
+        Position in = new Position(0, 0);
+        Position out = new Position(-1, 0);
+        Move move = new Move(in, out);
+        Message ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.BAD_MOVE, ret.getText());
+        move = new Move(out, in);
+        ret = turn.tryMove(move);
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.BAD_MOVE, ret.getText());
+    }
+
+    /**
+     * Tests if a King was trying to make jump moves back and forth.
+     */
+//    @Test
+//    void jumpBackAndForth(){
+//        //First, perform a valid jump move.
+//        Position start = new Position(5, 0);
+//        Position middle = new Position(4,1);
+//        Position end = new Position(3, 2);
+//        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+//        board.setPiece(start, new Piece(Piece.Type.KING, Piece.Color.RED));
+//        turn = new Turn(board, Piece.Color.RED);
+//        turn.tryMove(new Move(start, end));
+//        // Trying to jump back.
+//        Message ret = turn.tryMove(new Move(end, start));
+//        assertEquals(Message.Type.error, ret.getType());
+//        assertEquals(Turn.JUMPED_OVER, ret.getText());
+//    }
+
 }

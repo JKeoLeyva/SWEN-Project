@@ -83,5 +83,6 @@ class PlayerTest {
         Player player = new Player("");
         assertNotEquals(player, null);
         assertNotEquals(player, "");
+        assertEquals(player, player);
     }
 }
