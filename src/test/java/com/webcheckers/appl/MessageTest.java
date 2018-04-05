@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("Application-tier")
-public class MessageTest {
+class MessageTest {
     private static Message errorMessage;
     private static Message infoMessage;
 
@@ -15,19 +15,19 @@ public class MessageTest {
     private static final String INFO_TEXT = "info text";
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         errorMessage = new Message(ERROR_TEXT, Message.Type.error);
         infoMessage = new Message(INFO_TEXT, Message.Type.info);
     }
 
     @Test
-    public void checkText() {
+    void checkText() {
         assertEquals(ERROR_TEXT, errorMessage.getText());
         assertEquals(INFO_TEXT, infoMessage.getText());
     }
 
     @Test
-    public void checkType() {
+    void checkType() {
         assertEquals(Message.Type.error, errorMessage.getType());
         assertEquals(Message.Type.info, infoMessage.getType());
     }

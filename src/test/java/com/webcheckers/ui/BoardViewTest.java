@@ -35,7 +35,7 @@ class BoardViewTest {
         rowIterator = CuT.iterator();
         for(int row = 0; row < Board.BOARD_SIZE; row++){
             Row currRow = rowIterator.next();
-            assertTrue(currRow.getIndex() == row);
+            assertEquals(currRow.getIndex(), row);
         }
         assertFalse(rowIterator.hasNext());
     }
@@ -47,7 +47,7 @@ class BoardViewTest {
         rowIterator = CuT.iterator();
         for(int row = Board.BOARD_SIZE-1; row >= 0; row--){
             Row currRow = rowIterator.next();
-            assertTrue(currRow.getIndex() == row);
+            assertEquals(currRow.getIndex(), row);
         }
         assertFalse(rowIterator.hasNext());
     }

@@ -11,14 +11,14 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
-public class GameManagerTest {
+class GameManagerTest {
     private GameManager gameManager;
     private Player player1;
     private Player player2;
     private Player player3;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         gameManager = new GameManager();
         player1 = new Player("player1");
         player2 = new Player("player2");
@@ -26,7 +26,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newBoard() {
+    void newBoard() {
         assertTrue(gameManager.canCreateGame(player1, player2));
         assertTrue(gameManager.createGame(player1, player2));
 
@@ -44,7 +44,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void playerAlreadyInGame() {
+    void playerAlreadyInGame() {
         gameManager.createGame(player2, player3);
 
         assertFalse(gameManager.canCreateGame(player1, player3));
@@ -58,18 +58,18 @@ public class GameManagerTest {
     }
 
     @Test
-    public void noOnePlayerGame() {
+    void noOnePlayerGame() {
         assertFalse(gameManager.canCreateGame(player1, player1));
         assertFalse(gameManager.createGame(player1, player1));
     }
 
     @Test
-    public void getNullPlayerBoard() {
+    void getNullPlayerBoard() {
         assertNull(gameManager.getGame(null));
     }
 
     @Test
-    public void deletedBoard(){
+    void deletedBoard(){
         Player player4 = new Player("player4");
         Player player5 = new Player("player5");
 

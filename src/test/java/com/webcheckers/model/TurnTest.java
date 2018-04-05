@@ -159,7 +159,6 @@ class TurnTest {
         assertEquals(Message.Type.info, message1.getType());
 
         Message message2 = turn.tryMove(jump2);
-        System.out.println(message2.getText());
         assertEquals(Message.Type.info, message2.getType());
     }
 }

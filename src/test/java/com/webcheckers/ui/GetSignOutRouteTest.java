@@ -14,7 +14,7 @@ import spark.Session;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
-public class GetSignOutRouteTest {
+class GetSignOutRouteTest {
     private Request request;
     private Response response;
     private Session session;

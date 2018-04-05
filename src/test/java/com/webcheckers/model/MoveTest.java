@@ -12,20 +12,21 @@ class MoveTest {
     void equals() {
         Position zero = new Position(0, 0);
         Position rowIsOne = new Position(1, 0);
-        Position colisOne = new Position(0, 1);
+        Position colIsOne = new Position(0, 1);
         Position one = new Position(1, 1);
         // Basic checking of every case of the equals method.
         Move move = new Move(zero, zero);
         assertEquals(move, move);
-        assertNotEquals(null, move);
-        assertNotEquals("", move);
+        assertNotEquals(move, null);
+        assertNotEquals(move, "");
         Move move2 = new Move(zero, zero);
         assertEquals(move, move2);
         move2 = new Move(zero, one);
         assertNotEquals(move, move2);
         move2 = new Move(rowIsOne, zero);
         assertNotEquals(move, move2);
-        move2 = new Move(rowIsOne, colisOne);
+        move2 = new Move(rowIsOne, colIsOne);
         assertNotEquals(move, move2);
     }
+
 }

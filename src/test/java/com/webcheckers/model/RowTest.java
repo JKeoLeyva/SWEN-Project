@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Model-tier")
-public class RowTest {
+class RowTest {
     private Space space;
     private List<Space> spaces;
 

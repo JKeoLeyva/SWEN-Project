@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("Model-tier")
-public class SpaceTest {
+class SpaceTest {
 
     /**
      * Generic test for all Space configurations
@@ -31,7 +31,7 @@ public class SpaceTest {
      * Tests the valid space w/ piece
      */
     @Test
-    public void testValidSpacePiece() {
+    void testValidSpacePiece() {
         Piece p = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
         testSpace(p, 1, 1, "[" + p.toString() + "]", false);
     }
@@ -40,7 +40,7 @@ public class SpaceTest {
      * Tests the valid space w/o piece
      */
     @Test
-    public void testValidSpaceNoPiece() {
+    void testValidSpaceNoPiece() {
         testSpace(null, 1, 2, "[ ]", true);
     }
 
@@ -48,7 +48,7 @@ public class SpaceTest {
      * Tests the invalid space
      */
     @Test
-    public void testInvalidSpace() {
+    void testInvalidSpace() {
         testSpace(null, 0, 0, "[ ]", false);
     }
 }

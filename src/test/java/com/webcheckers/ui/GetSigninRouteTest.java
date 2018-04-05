@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
 @Tag("UI-tier")
-public class GetSigninRouteTest{
+class GetSigninRouteTest{
 
     // Class under test
     private GetSigninRoute route;
@@ -28,7 +28,7 @@ public class GetSigninRouteTest{
      * Set up the mocked objects and some method calls
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
         request = mock(Request.class);
         response = mock(Response.class);
         session = mock(Session.class);
@@ -47,7 +47,7 @@ public class GetSigninRouteTest{
      * Test the no session scenario
      */
     @Test
-    public void noSession() throws Exception {
+    void noSession() throws Exception {
         // Run code
         route.handle(request, response);
 

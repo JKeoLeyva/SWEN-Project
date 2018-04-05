@@ -80,4 +80,15 @@ class BoardTest {
             }
         }
     }
+
+    /**
+     * Test positions that are out of bounds.
+     */
+    @Test
+    void outOfBounds(){
+        assertTrue(CuT.outOfBounds(new Position(-1, 0)));
+        assertTrue(CuT.outOfBounds(new Position(0, -1)));
+        assertTrue(CuT.outOfBounds(new Position(Board.BOARD_SIZE+1, 0)));
+        assertTrue(CuT.outOfBounds(new Position(0, Board.BOARD_SIZE+1)));
+    }
 }

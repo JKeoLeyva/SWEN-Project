@@ -13,10 +13,11 @@ import spark.Response;
 import spark.Session;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
-public class PostCheckTurnRouteTest {
+class PostCheckTurnRouteTest {
 
     private PostCheckTurnRoute route;
     private Gson gson;
@@ -64,7 +65,7 @@ public class PostCheckTurnRouteTest {
 
         Object a = route.handle(request, response);
         verify(response).redirect(WebServer.HOME_URL);
-        assertEquals(a, null);
+        assertNull(a);
     }
 
     @Test
