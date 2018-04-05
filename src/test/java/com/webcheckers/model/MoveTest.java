@@ -8,13 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("Model-tier")
 class MoveTest {
 
+    /**
+     * Basic checking of every case of the equals method.
+     */
     @Test
     void equals() {
         Position zero = new Position(0, 0);
         Position rowIsOne = new Position(1, 0);
         Position colIsOne = new Position(0, 1);
         Position one = new Position(1, 1);
-        // Basic checking of every case of the equals method.
+
         Move move = new Move(zero, zero);
         assertEquals(move, move);
         assertNotEquals(move, null);

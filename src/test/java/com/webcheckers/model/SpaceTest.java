@@ -2,8 +2,10 @@ package com.webcheckers.model;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Tag("Model-tier")
 class SpaceTest {
@@ -34,6 +36,7 @@ class SpaceTest {
     void testValidSpacePiece() {
         Piece p = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
         testSpace(p, 1, 1, "[" + p.toString() + "]", false);
+        testSpace(p, 1, 2, "[" + p.toString() + "]", false);
     }
 
     /**
@@ -45,10 +48,11 @@ class SpaceTest {
     }
 
     /**
-     * Tests the invalid space
+     * Tests invalid spaces
      */
     @Test
-    void testInvalidSpace() {
-        testSpace(null, 0, 0, "[ ]", false);
+    void testInvalidSpaces() {
+        assertThrows(IllegalArgumentException.class, () -> new Space(0, -1, null));
+        assertThrows(IllegalArgumentException.class, () -> new Space(0, Board.BOARD_SIZE+1, null));
     }
 }
