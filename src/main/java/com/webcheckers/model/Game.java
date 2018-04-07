@@ -37,14 +37,6 @@ public class Game {
         return whitePlayer;
     }
 
-    public void removePlayer(Player player) {
-        if(player.equals(redPlayer)) {
-            redPlayer = null;
-        } else {
-            whitePlayer = null;
-        }
-    }
-
     public Piece.Color getActiveColor() throws IllegalStateException {
         switch(currState) {
             case WAITING_FOR_RED:
@@ -56,6 +48,7 @@ public class Game {
         }
     }
 
+    // TODO: explain this, why is it here raising coupling lol
     public BoardView makeBoardView(Player player) {
         return new BoardView(board, player.equals(whitePlayer));
     }
@@ -64,7 +57,7 @@ public class Game {
         return isGameOver() || hasAPlayerWon() || !hasMove(player);
     }
 
-    public boolean isGameOver(){
+    private boolean isGameOver(){
         return currState == State.GAME_OVER;
     }
 
@@ -111,13 +104,16 @@ public class Game {
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
         Stack<Move> validMoves = turn.getValidatedMoves();
+        // If no moves were made, the turn should not be switched.
+        if(validMoves.size() == 0)
+            return;
         while(!validMoves.empty())
             makeMove(validMoves.pop());
 
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
             turn = new Turn(board, Piece.Color.WHITE);
-        } else {
+        } else if (currState == State.WAITING_FOR_WHITE){
             currState = State.WAITING_FOR_RED;
             turn = new Turn(board, Piece.Color.RED);
         }
@@ -133,7 +129,7 @@ public class Game {
         Piece piece;
         Position start, end;
         int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
-        Turn turn = new Turn(board, color);
+        Turn testTurn = new Turn(board, color);
 
         for(int row = 0; row < Board.BOARD_SIZE; row++) {
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
@@ -142,19 +138,19 @@ public class Game {
                     start = new Position(row, col);
 
                     end = new Position(row + rowAdjustment, col - 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment, col + 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col + 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
                 }
             }
@@ -176,6 +172,14 @@ public class Game {
             board.setPiece(jumped,null);
         }
         submittedMoves.add(move);
+    }
+
+    /**
+     * Clears validates moves. Used whenever /game is loaded, to prevent not
+     * being able to make moves if you validate a move then reload the page.
+     */
+    public void clearTurn(){
+        turn.getValidatedMoves();
     }
 
     public void backupMove(){

@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * Spark Route for a page displaying the current game.
  */
@@ -50,17 +52,18 @@ public class GetGameRoute implements Route {
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
 
-        if(currPlayer == null || game == null) {
+        if(game == null) {
             response.redirect(WebServer.HOME_URL);
             return null;
         }
 
-        if(game.isGameOver()) {
+        if(game.isGameOver(currPlayer)) {
             gameManager.deleteGame(currPlayer);
             response.redirect(WebServer.HOME_URL);
             return null;
         }
 
+        game.clearTurn();
         Map<String, Object> vm = new HashMap<>();
         vm.put(Strings.Template.Game.CURRENT_PLAYER, currPlayer);
         vm.put(Strings.Template.Game.VIEW_MODE, ViewMode.PLAY);

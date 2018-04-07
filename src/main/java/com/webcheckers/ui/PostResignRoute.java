@@ -29,10 +29,6 @@ public class PostResignRoute implements Route {
     public Object handle(Request request, Response response) {
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
-
-        Game game = gameManager.getGame(player);
-        game.setGameOver();
-
         gameManager.deleteGame(player);
 
         if(!gameManager.getGames().containsKey(player)) {

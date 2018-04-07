@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * A Spark Route to display a sign-in page.
  */
@@ -29,6 +31,11 @@ public class GetSigninRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSigninRoute is invoked.");
+        if(request.session().attribute(Strings.Session.PLAYER) != null){
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
 
         return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
     }

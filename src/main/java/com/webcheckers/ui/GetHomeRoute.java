@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * The UI Controller to GET the Home page.
  *
@@ -62,6 +64,7 @@ public class GetHomeRoute implements Route {
         if(gameManager.getGame(currentPlayer) != null) {
             // The current player is in a game, and sent to it.
             response.redirect(WebServer.GAME_URL);
+            return null;
         }
 
         Message message = httpSession.attribute(Strings.Session.MESSAGE);

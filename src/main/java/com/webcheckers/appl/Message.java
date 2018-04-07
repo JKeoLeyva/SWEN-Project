@@ -1,7 +1,5 @@
 package com.webcheckers.appl;
 
-import java.util.Objects;
-
 /**
  * A class for text messages from the server.
  */

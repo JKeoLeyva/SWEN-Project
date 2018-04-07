@@ -38,7 +38,7 @@ public class PostSigninRoute implements Route {
         LOG.finer("PostSigninRoute is invoked.");
 
         final Session session = request.session();
-        final String playerName = request.queryParams("name");
+        final String playerName = request.queryParams(Strings.Template.SignIn.PLAYER_NAME);
 
         // If the given player name has non-alphaNumeric characters.
         boolean hasNonAlpha = playerName.matches("^.*[^a-zA-Z0-9 ].*$");
@@ -53,7 +53,6 @@ public class PostSigninRoute implements Route {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(Strings.Session.PLAYER, newPlayer);
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
         else {
