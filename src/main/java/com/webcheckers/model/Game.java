@@ -37,14 +37,6 @@ public class Game {
         return whitePlayer;
     }
 
-    public void removePlayer(Player player) {
-        if(player.equals(redPlayer)) {
-            redPlayer = null;
-        } else {
-            whitePlayer = null;
-        }
-    }
-
     public Piece.Color getActiveColor() throws IllegalStateException {
         switch(currState) {
             case WAITING_FOR_RED:
@@ -64,7 +56,7 @@ public class Game {
         return isGameOver() || hasAPlayerWon() || !hasMove(player);
     }
 
-    public boolean isGameOver(){
+    private boolean isGameOver(){
         return currState == State.GAME_OVER;
     }
 
@@ -117,7 +109,7 @@ public class Game {
         if(currState == State.WAITING_FOR_RED) {
             currState = State.WAITING_FOR_WHITE;
             turn = new Turn(board, Piece.Color.WHITE);
-        } else {
+        } else if (currState == State.WAITING_FOR_WHITE){
             currState = State.WAITING_FOR_RED;
             turn = new Turn(board, Piece.Color.RED);
         }

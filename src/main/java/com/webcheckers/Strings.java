@@ -19,6 +19,7 @@ public final class Strings {
 
         public static final class SignIn {
             public static final String FILE_NAME = "signin.ftl";
+            public static final String PLAYER_NAME = "name";
         }
 
         public static final class Game {

@@ -10,6 +10,8 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import static spark.Spark.halt;
+
 public class PostCheckTurnRoute implements Route {
     private GameManager gameManager;
     private Gson gson;
@@ -25,15 +27,14 @@ public class PostCheckTurnRoute implements Route {
 
         if(player == null) {
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
         Game game = gameManager.getGame(player);
 
-        if(game.isGameOver()){
-            gameManager.deleteGame(player);
+        if(game == null || game.isGameOver(player))
             return gson.toJson(new Message("true", Message.Type.info));
-        }
 
         String outcome = String.valueOf(game.isMyTurn(player));
 

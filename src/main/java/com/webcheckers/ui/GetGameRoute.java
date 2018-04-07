@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * Spark Route for a page displaying the current game.
  */
@@ -52,12 +54,14 @@ public class GetGameRoute implements Route {
 
         if(game == null) {
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
-        if(game.isGameOver()) {
+        if(game.isGameOver(currPlayer)) {
             gameManager.deleteGame(currPlayer);
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 

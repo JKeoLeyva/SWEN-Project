@@ -12,6 +12,8 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 public class GetSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -33,16 +35,14 @@ public class GetSignOutRoute implements Route {
         Player player = session.attribute(Strings.Session.PLAYER);
 
         if(player != null) {
-            if(gameManager.getGame(player) != null){
-                Game game = gameManager.getGame(player);
-                game.setGameOver();
+            if(gameManager.getGame(player) != null)
                 gameManager.deleteGame(player);
-            }
             playerLobby.signOutPlayer(player.getName());
             session.invalidate();
         }
 
         response.redirect(WebServer.HOME_URL);
+        halt();
         return null;
     }
 }

@@ -54,14 +54,14 @@ public class GameManager {
      * @param player that may be in a game
      * @return the game that player is in, if any
      */
-    public Game getGame(Player player) {
+    public synchronized Game getGame(Player player) {
         if(player == null) return null;
         return games.get(player);
     }
 
-    public void deleteGame(Player player) {
+    public synchronized void deleteGame(Player player) {
         Game game = games.get(player);
-        game.removePlayer(player);
+        game.setGameOver();
         games.remove(player);
     }
 }

@@ -11,6 +11,8 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 public class PostSubmitTurnRoute implements Route {
 
     private GameManager gameManager;
@@ -29,12 +31,6 @@ public class PostSubmitTurnRoute implements Route {
 
         Message result = new Message("true", Message.Type.info);
         game.switchTurn();
-        
-        if(game.isGameOver(currPlayer)) {
-            gameManager.deleteGame(currPlayer);
-            game.setGameOver();
-            return gson.toJson(result);
-        }
 
         return gson.toJson(result);
     }
