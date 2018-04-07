@@ -11,8 +11,6 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
-import static spark.Spark.halt;
-
 public class PostSubmitTurnRoute implements Route {
 
     private GameManager gameManager;

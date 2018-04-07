@@ -48,6 +48,7 @@ public class Game {
         }
     }
 
+    // TODO: explain this, why is it here raising coupling lol
     public BoardView makeBoardView(Player player) {
         return new BoardView(board, player.equals(whitePlayer));
     }
@@ -103,6 +104,9 @@ public class Game {
     public void switchTurn() {
         // Makes the validated moves stored in Turn.
         Stack<Move> validMoves = turn.getValidatedMoves();
+        // If no moves were made, the turn should not be switched.
+        if(validMoves.size() == 0)
+            return;
         while(!validMoves.empty())
             makeMove(validMoves.pop());
 
@@ -125,7 +129,7 @@ public class Game {
         Piece piece;
         Position start, end;
         int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
-        Turn turn = new Turn(board, color);
+        Turn testTurn = new Turn(board, color);
 
         for(int row = 0; row < Board.BOARD_SIZE; row++) {
             for(int col = 0; col < Board.BOARD_SIZE; col++) {
@@ -134,19 +138,19 @@ public class Game {
                     start = new Position(row, col);
 
                     end = new Position(row + rowAdjustment, col - 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment, col + 1);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
 
                     end = new Position(row + rowAdjustment * 2, col + 2);
-                    if(turn.tryMove(new Move(start, end)).getType() == Message.Type.info)
+                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
                 }
             }
