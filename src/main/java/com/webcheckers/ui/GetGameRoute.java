@@ -54,14 +54,12 @@ public class GetGameRoute implements Route {
 
         if(game == null) {
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
 
         if(game.isGameOver(currPlayer)) {
             gameManager.deleteGame(currPlayer);
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
 

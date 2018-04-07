@@ -33,7 +33,6 @@ public class GetSigninRoute implements Route {
         LOG.finer("GetSigninRoute is invoked.");
         if(request.session().attribute(Strings.Session.PLAYER) != null){
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
 

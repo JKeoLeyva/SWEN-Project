@@ -27,7 +27,6 @@ public class PostCheckTurnRoute implements Route {
 
         if(player == null) {
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
 

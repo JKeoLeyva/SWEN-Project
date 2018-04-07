@@ -64,7 +64,6 @@ public class GetHomeRoute implements Route {
         if(gameManager.getGame(currentPlayer) != null) {
             // The current player is in a game, and sent to it.
             response.redirect(WebServer.GAME_URL);
-            halt();
             return null;
         }
 

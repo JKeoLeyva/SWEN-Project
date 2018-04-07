@@ -53,7 +53,6 @@ public class PostSigninRoute implements Route {
             Player newPlayer = playerLobby.signInPlayer(playerName);
             session.attribute(Strings.Session.PLAYER, newPlayer);
             response.redirect(WebServer.HOME_URL);
-            halt();
             return null;
         }
         else {

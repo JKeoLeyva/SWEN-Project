@@ -47,7 +47,6 @@ public class PostGameRoute implements Route {
         }
 
         response.redirect(redirect);
-        halt();
         return null;
     }
 }
