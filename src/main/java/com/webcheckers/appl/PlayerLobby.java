@@ -18,7 +18,7 @@ public class PlayerLobby {
      * @param name that a user wants to log in with
      * @return true if the name is available
      */
-    public boolean isNameAvailable(String name) {
+    public synchronized boolean isNameAvailable(String name) {
         return !players.contains(new Player(name));
     }
 
@@ -28,7 +28,7 @@ public class PlayerLobby {
      * @param name the player's name
      * @return the new Player, if the name is available
      */
-    public Player signInPlayer(String name) {
+    public synchronized Player signInPlayer(String name) {
         if(!isNameAvailable(name))
             return null;
 
