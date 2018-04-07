@@ -178,6 +178,14 @@ public class Game {
         submittedMoves.add(move);
     }
 
+    /**
+     * Clears validates moves. Used whenever /game is loaded, to prevent not
+     * being able to make moves if you validate a move then reload the page.
+     */
+    public void clearTurn(){
+        turn.getValidatedMoves();
+    }
+
     public void backupMove(){
         turn.backupMove();
     }

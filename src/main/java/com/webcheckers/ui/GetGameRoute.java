@@ -50,7 +50,7 @@ public class GetGameRoute implements Route {
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
 
-        if(currPlayer == null || game == null) {
+        if(game == null) {
             response.redirect(WebServer.HOME_URL);
             return null;
         }
@@ -61,6 +61,7 @@ public class GetGameRoute implements Route {
             return null;
         }
 
+        game.clearTurn();
         Map<String, Object> vm = new HashMap<>();
         vm.put(Strings.Template.Game.CURRENT_PLAYER, currPlayer);
         vm.put(Strings.Template.Game.VIEW_MODE, ViewMode.PLAY);
