@@ -13,8 +13,8 @@ import java.util.Map;
 public class GameManager {
     private Map<Player, Game> games;
 
-    public GameManager() {
-        games = new HashMap<>();
+    public GameManager(Map<Player, Game> map) {
+        games = map;
     }
 
     /**

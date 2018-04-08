@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import java.util.HashMap;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -35,7 +37,7 @@ class GetGameRouteTest {
         this.request = mock(Request.class);
         this.response = mock(Response.class);
         this.session = mock(Session.class);
-        this.gameManager = new GameManager();
+        this.gameManager = new GameManager(new HashMap<>());
         this.player1 = new Player("Dank");
         this.player2 = new Player("Memes");
 

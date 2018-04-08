@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ class GameManagerTest {
 
     @BeforeEach
     void setup() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new HashMap<>());
         player1 = new Player("player1");
         player2 = new Player("player2");
         player3 = new Player("player3");

@@ -26,8 +26,8 @@ public class Turn {
     private Piece.Color playerColor;
 
     Turn(Board board, Piece.Color playerColor) {
-        this.playerColor = playerColor;
         this.temp = new Board(board);
+        this.playerColor = playerColor;
     }
 
     /**

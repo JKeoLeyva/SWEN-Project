@@ -25,7 +25,12 @@ public class Game {
     }
 
     public Game(Player redPlayer, Player whitePlayer) {
-        this.board = new Board();
+        this(redPlayer, whitePlayer, new Board());
+    }
+
+    // For creating a Game out of a pre-made board.
+    Game(Player redPlayer, Player whitePlayer, Board board){
+        this.board = new Board(board);
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         turn = new Turn(board, Piece.Color.RED);
@@ -46,7 +51,7 @@ public class Game {
             case WAITING_FOR_WHITE:
                 return Piece.Color.WHITE;
             default:
-                throw new IllegalStateException("The game is over");
+                throw new IllegalStateException("The game is over.");
         }
     }
 
@@ -55,18 +60,18 @@ public class Game {
     }
 
     public boolean isGameOver(Player player) {
-        return isGameOver() || hasAPlayerWon() || !hasMove(player);
-    }
-
-    private boolean isGameOver(){
-        return currState == State.GAME_OVER;
+        return currState == State.GAME_OVER || aPlayerWon() || !hasMove(player);
     }
 
     public void setGameOver(){
         currState = State.GAME_OVER;
     }
 
-    private boolean hasAPlayerWon() {
+    /**
+     * Checks if a player has eliminated all of the opponent's pieces.
+     * @return if a player has won in this way
+     */
+    private boolean aPlayerWon() {
         boolean redFound = false;
         boolean whiteFound = false;
         Piece piece;
@@ -86,8 +91,14 @@ public class Game {
         return !(redFound && whiteFound);
     }
 
+    /**
+     * Checks if it is the input player's turn.
+     * @param player to check
+     * @return if it is player's turn
+     */
     public boolean isMyTurn(Player player) {
         if(currState == State.GAME_OVER)
+            // Forces a page reload.
             return true;
         if(player.equals(redPlayer)) {
             return getActiveColor() == Piece.Color.RED;

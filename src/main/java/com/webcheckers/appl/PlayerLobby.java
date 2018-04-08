@@ -10,8 +10,8 @@ import java.util.*;
 public class PlayerLobby {
     private Set<Player> players;
 
-    public PlayerLobby() {
-        players = new HashSet<>();
+    public PlayerLobby(Set<Player> set) {
+        players = set;
     }
 
     /**
