@@ -65,6 +65,7 @@ public class Board {
 
     /**
      * Set the Piece at the given location to the given piece.
+     * If a piece should be Kinged, it is.
      */
     void setPiece(Position pos, Piece piece) {
         board[pos.getRow()][pos.getCell()] = piece;

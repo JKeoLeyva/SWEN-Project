@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+import static com.webcheckers.model.Board.BOARD_SIZE;
+
 public class Game {
     private Board board;
     private Player redPlayer;
@@ -48,7 +50,6 @@ public class Game {
         }
     }
 
-    // TODO: explain this, why is it here raising coupling lol
     public BoardView makeBoardView(Player player) {
         return new BoardView(board, player.equals(whitePlayer));
     }
@@ -70,8 +71,8 @@ public class Game {
         boolean whiteFound = false;
         Piece piece;
 
-        for(int i = 0; i < Board.BOARD_SIZE; i++) {
-            for(int j = 0; j < Board.BOARD_SIZE; j++) {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for(int j = 0; j < BOARD_SIZE; j++) {
                 piece = board.getPiece(new Position(i, j));
                 if(piece != null) {
                     if(piece.getColor() == Piece.Color.RED)
@@ -131,8 +132,8 @@ public class Game {
         int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
         Turn testTurn = new Turn(board, color);
 
-        for(int row = 0; row < Board.BOARD_SIZE; row++) {
-            for(int col = 0; col < Board.BOARD_SIZE; col++) {
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
                 piece = board.getPiece(new Position(row, col));
                 if(piece != null && piece.getColor() == color) {
                     start = new Position(row, col);
@@ -166,6 +167,12 @@ public class Game {
     private void makeMove(Move move) {
         Piece moving = board.getPiece(move.getStart());
         board.setPiece(move.getStart(), null);
+
+        if(move.getEnd().getRow() == 0 && moving.getColor() == Piece.Color.RED)
+            moving = new Piece(Piece.Type.KING, Piece.Color.RED);
+        else if(move.getEnd().getRow() == BOARD_SIZE-1 && moving.getColor() == Piece.Color.WHITE)
+            moving = new Piece(Piece.Type.KING, Piece.Color.WHITE);
+
         board.setPiece(move.getEnd(), moving);
         if(move.getMoveType() == Move.Type.JUMP) {
             Position jumped = move.getJumped();

@@ -37,7 +37,7 @@ public class Turn {
      * @return Message to be displayed
      */
     Message tryMove(Move move) {
-        move = new Move(move, playerColor);
+        move = new Move(move, temp.getPiece(move.getStart()));
         if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
             return new Message(BAD_MOVE, Message.Type.error);
         if(move.getMoveType() == Move.Type.INVALID)
@@ -86,7 +86,7 @@ public class Turn {
     /**
      * Makes the given move on the temp board.
      * @param move to be made
-     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.In any case,
+     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.
      */
     private void makeMove(Move move, boolean reversed){
         Piece moving = temp.getPiece(move.getStart());
