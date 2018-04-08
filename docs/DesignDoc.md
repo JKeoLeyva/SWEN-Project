@@ -50,6 +50,7 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - (User Story) Valid Moves
 - (User Story) Player Turns
 - (User Story) Jumps
+- (User Story) Player Help
 
 ### Roadmap of Enhancements
 - Make sure that the Player can Sign-out 
@@ -57,8 +58,7 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - Make sure players can forfeit from a game
 - Make sure that Game requests can be sent to other players
 - Make sure that the players are allowed to only make valid moves
-- Eventually make sure that an AI player is implemented
-- Eventually implement a way to record and replay games
+- Allow users to request help from the Game view
 
 ## Application Domain
 
