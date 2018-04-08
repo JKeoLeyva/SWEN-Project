@@ -50,7 +50,7 @@ class PostCheckTurnRouteTest {
     }
 
     @Test
-    void isMyTurn() throws Exception {
+    void isMyTurn() {
         gameManager.createGame(player1, player2);
 
         String jsonMessage = (String) route.handle(request, response);

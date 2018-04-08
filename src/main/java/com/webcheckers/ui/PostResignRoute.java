@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;

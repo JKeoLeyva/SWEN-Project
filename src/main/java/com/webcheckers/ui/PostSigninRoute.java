@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 /**
  * Checks if an entered sign-in name is acceptable and signs in the player
  */

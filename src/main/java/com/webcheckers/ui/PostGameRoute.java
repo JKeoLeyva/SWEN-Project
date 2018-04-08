@@ -11,8 +11,6 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 /**
  * A Spark Route for requesting a new checkers game.
  */
