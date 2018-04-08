@@ -36,7 +36,7 @@ public class PostGameRoute implements Route {
         LOG.finer("PostGameRoute is invoked.");
         final Session session = request.session();
         final Player player1 = session.attribute(Strings.Session.PLAYER);
-        final Player player2 = new Player(request.queryParams("opponent"));
+        final Player player2 = new Player(request.queryParams(Strings.Session.OPPONENT));
 
         String redirect = WebServer.GAME_URL;
 

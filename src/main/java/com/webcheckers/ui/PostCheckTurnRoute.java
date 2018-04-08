@@ -10,9 +10,12 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.util.logging.Logger;
+
 import static spark.Spark.halt;
 
 public class PostCheckTurnRoute implements Route {
+    private final static Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
     private GameManager gameManager;
     private Gson gson;
 
@@ -23,6 +26,7 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("PostCheckTurnRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
 
         if(player == null) {

@@ -5,6 +5,7 @@ public final class Strings {
 
     public static final class Session {
         public static final String PLAYER = "player";
+        public static final String OPPONENT = "opponent";
         public static final String MESSAGE = "message";
     }
 

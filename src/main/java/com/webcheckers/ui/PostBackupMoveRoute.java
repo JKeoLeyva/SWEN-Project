@@ -24,7 +24,7 @@ public class PostBackupMoveRoute implements Route{
 
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("PostBackupMove invoked.");
+        LOG.finer("PostBackupMoveRoute is invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         gameManager.getGame(currPlayer).backupMove();

@@ -11,8 +11,11 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+import java.util.logging.Logger;
+
 public class PostSubmitTurnRoute implements Route {
 
+    private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
     private GameManager gameManager;
     private Gson gson;
 
@@ -23,6 +26,7 @@ public class PostSubmitTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("PostSubmitTurnRoute is invoked.");
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);

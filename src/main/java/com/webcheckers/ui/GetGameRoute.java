@@ -18,7 +18,7 @@ import static spark.Spark.halt;
  * Spark Route for a page displaying the current game.
  */
 public class GetGameRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;

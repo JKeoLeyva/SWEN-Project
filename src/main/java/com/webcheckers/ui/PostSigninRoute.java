@@ -15,7 +15,7 @@ import static spark.Spark.halt;
  * Checks if an entered sign-in name is acceptable and signs in the player
  */
 public class PostSigninRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostSigninRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;

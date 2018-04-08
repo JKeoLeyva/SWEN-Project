@@ -27,6 +27,7 @@ public class PostResignRoute implements Route {
     }
 
     public Object handle(Request request, Response response) {
+        LOG.finer("PostResignRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
         gameManager.deleteGame(player);
