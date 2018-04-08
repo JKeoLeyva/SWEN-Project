@@ -15,20 +15,17 @@ public class GetHelpRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHelpRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
     private final GameManager gameManager;
 
-    public GetHelpRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
-                        final GameManager gameManager) {
+    public GetHelpRoute(final TemplateEngine templateEngine, final GameManager gameManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
         this.gameManager = gameManager;
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response){
         LOG.finer("GetHelpRoute is invoked.");
 
         Session session = request.session();
