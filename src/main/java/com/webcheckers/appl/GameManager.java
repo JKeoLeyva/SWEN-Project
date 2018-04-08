@@ -43,7 +43,7 @@ public class GameManager {
      * @return if a board can be created with these players
      */
     public synchronized boolean canCreateGame(Player p1, Player p2) {
-        return !p1.equals(p2) && !games.containsKey(p1) && !games.containsKey(p2);
+        return !games.containsKey(p1) && !games.containsKey(p2) && !p1.equals(p2);
     }
 
     public Map<Player, Game> getGames() {
