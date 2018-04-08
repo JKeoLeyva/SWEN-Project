@@ -37,9 +37,10 @@ public class Turn {
      * @return Message to be displayed
      */
     Message tryMove(Move move) {
-        move = new Move(move, temp.getPiece(move.getStart()));
         if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
             return new Message(BAD_MOVE, Message.Type.error);
+
+        move = new Move(move, temp.getPiece(move.getStart()));
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
