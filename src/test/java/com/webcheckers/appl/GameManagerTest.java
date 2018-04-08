@@ -49,6 +49,8 @@ class GameManagerTest {
 
         assertFalse(gameManager.canCreateGame(player1, player3));
         assertFalse(gameManager.createGame(player1, player3));
+        assertFalse(gameManager.canCreateGame(player1, player2));
+        assertFalse(gameManager.createGame(player1, player2));
 
         Map<Player, Game> games = gameManager.getGames();
 
@@ -61,6 +63,16 @@ class GameManagerTest {
     void noOnePlayerGame() {
         assertFalse(gameManager.canCreateGame(player1, player1));
         assertFalse(gameManager.createGame(player1, player1));
+        gameManager.createGame(player1, player2);
+        assertFalse(gameManager.canCreateGame(player1, player1));
+        assertFalse(gameManager.createGame(player1, player1));
+    }
+
+    @Test
+    void nullPlayers(){
+        assertFalse(gameManager.canCreateGame(null, player1));
+        assertFalse(gameManager.canCreateGame(player1, null));
+        assertFalse(gameManager.canCreateGame(null, null));
     }
 
     @Test
