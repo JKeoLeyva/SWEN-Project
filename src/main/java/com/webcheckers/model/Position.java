@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 public class Position {
     private int row;
     private int cell;
@@ -24,5 +26,10 @@ public class Position {
         Position position = (Position) o;
         return row == position.row &&
                 cell == position.cell;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, cell);
     }
 }
