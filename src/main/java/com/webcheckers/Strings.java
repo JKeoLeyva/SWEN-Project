@@ -31,5 +31,9 @@ public final class Strings {
             public static final String ACTIVE_COLOR = "activeColor";
             public static final String BOARD = "board";
         }
+
+        public static final class Help {
+            public static final String FILE_NAME = "help.ftl";
+        }
     }
 }

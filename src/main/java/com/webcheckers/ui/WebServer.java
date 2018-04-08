@@ -71,6 +71,8 @@ public class WebServer {
 
     public static final String RESIGN_URL = "/resignGame";
 
+    public static final String HELP_URL = "/help";
+
     //
     // Attributes
     //
@@ -166,6 +168,7 @@ public class WebServer {
         get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager));
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
         post(RESIGN_URL, new PostResignRoute(gameManager));
+        get(HELP_URL, new GetHelpRoute(templateEngine, gameManager));
 
         LOG.config("WebServer is initialized.");
     }
