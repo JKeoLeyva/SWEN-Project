@@ -4,6 +4,7 @@ import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@Tag("UI-tier")
 public class GetHelpRouteTest {
 
     private TemplateEngineTester engineTester;
