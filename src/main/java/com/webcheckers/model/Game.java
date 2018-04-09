@@ -13,7 +13,7 @@ public class Game {
     private Board board;
     private Player redPlayer;
     private Player whitePlayer;
-    private State currState = State.WAITING_FOR_RED;
+    private State currState;
     private Turn turn;
     // Stores all moves made during the game.
     private Queue<Move> submittedMoves = new LinkedList<>();
@@ -33,7 +33,8 @@ public class Game {
         this.board = new Board(board);
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        turn = new Turn(board, Piece.Color.RED);
+        this.currState = State.WAITING_FOR_RED;
+        clearTurn();
     }
 
     public Player getRedPlayer() {
@@ -46,7 +47,7 @@ public class Game {
 
     public Piece.Color getActiveColor() {
         // If it's an even turn, it's Red's turn, starting from Turn 0.
-        return submittedMoves.size()%2 == 0 ? Piece.Color.RED : Piece.Color.WHITE;
+        return currState == State.WAITING_FOR_RED ? Piece.Color.RED : Piece.Color.WHITE;
     }
 
     public BoardView makeBoardView(Player player) {
@@ -117,9 +118,9 @@ public class Game {
         while(!validMoves.empty())
             makeMove(validMoves.pop());
         // Switches the cuurent state.
-        currState = (currState == State.WAITING_FOR_RED ?
+        currState = (getActiveColor() == Piece.Color.RED ?
                 State.WAITING_FOR_WHITE : State.WAITING_FOR_RED);
-        turn = new Turn(board, getActiveColor());
+        clearTurn();
     }
 
     /**

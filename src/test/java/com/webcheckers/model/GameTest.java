@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -220,14 +221,49 @@ class GameTest {
     }
 
     /**
+     * Tests a quadruple jump by a king piece.
+     */
+    @Test
+    void quadJump(){
+        // Sets up the pieces and the game.
+        Board board = new Board(emptyBoard);
+        Position start = new Position(0, 3);
+        Position jumped1 = new Position(1, 2);
+        Position jumped2 = new Position(1, 4);
+        Position jumped3 = new Position(3, 2);
+        Position jumped4 = new Position(3, 4);
+        board.setPiece(start, RED_KING);
+        board.setPiece(jumped1, WHITE_KING);
+        board.setPiece(jumped2, WHITE_KING);
+        board.setPiece(jumped3, WHITE_KING);
+        board.setPiece(jumped4, WHITE_KING);
+        game = new Game(player1, player2, board);
+        // Makes the 4 moves.
+        Position[] positions = {start, new Position(2, 1), new Position(4, 3), new Position(2, 5)};
+        for(int move = 0; move < 4; move++)
+            game.tryMove(new Move(positions[move], positions[(move+1)%4]));
+        game.submitTurn();
+        // Checks that the correct pieces were removed.
+        assertNull(getPieceFromGame(jumped1, game));
+        assertNull(getPieceFromGame(jumped2, game));
+        assertNull(getPieceFromGame(jumped3, game));
+        assertNull(getPieceFromGame(jumped4, game));
+        // Checks that the original piece is at the proper position.
+        assertSame(Piece.Color.RED, getPieceFromGame(start, game).getColor());
+        assertSame(Piece.Type.KING, getPieceFromGame(start, game).getType());
+
+        assertSame(Piece.Color.WHITE, game.getActiveColor());
+    }
+
+    /**
      * Using the BoardView constructor in Game,
      * returns the piece at a given position in Game.
      * @param pos to get the piece from
-     * @param game to make the BoardView from
+     * @param game1 to make the BoardView from
      * @return the Piece at that position
      */
-    private Piece getPieceFromGame(Position pos, Game game){
-        BoardView view = game.makeBoardView(player1);
+    private Piece getPieceFromGame(Position pos, Game game1){
+        BoardView view = game1.makeBoardView(player1);
         Iterator<Row> rows = view.iterator();
         for(int i = 0; i < pos.getRow(); i++)
             rows.next();
