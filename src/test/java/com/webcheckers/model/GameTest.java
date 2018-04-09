@@ -1,9 +1,11 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.Message;
+import com.webcheckers.ui.BoardView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +36,7 @@ class GameTest {
      */
     @Test
     void testGetPlayers() {
+        ViewMode mode = ViewMode.PLAY;
         assertEquals(game.getActiveColor(), Piece.Color.RED);
         assertEquals(game.getRedPlayer(), player1);
         assertEquals(game.getWhitePlayer(), player2);
@@ -47,7 +50,6 @@ class GameTest {
         game.setGameOver();
         assertTrue(game.isGameOver());
         assertTrue(game.isGameOver());
-        assertThrows(IllegalStateException.class, () -> game.getActiveColor());
     }
 
     /**
@@ -134,5 +136,104 @@ class GameTest {
         assertTrue(game.isMyTurn(player1));
         // Tests odd case for when the game is already over.
         game.submitTurn();
+    }
+
+    /**
+     * Test kinging both a white and a red piece.
+     */
+    @Test
+    void testKinging(){
+        Position redStart = new Position(1, 0);
+        Position whiteStart = new Position(6, 1);
+        Position redEnd = new Position(0, 1);
+        Position whiteEnd = new Position(7, 0);
+
+        Board curr = new Board(emptyBoard);
+        curr.setPiece(redStart, RED_SINGLE);
+        curr.setPiece(whiteStart, WHITE_SINGLE);
+        game = new Game(player1, player2, curr);
+
+        game.tryMove(new Move(redStart, redEnd));
+        game.submitTurn();
+        game.tryMove(new Move(whiteStart, whiteEnd));
+        game.submitTurn();
+        // Checks that the red piece was kinged.
+        Piece piece = getPieceFromGame(redEnd, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.KING, piece.getType());
+        assertSame(Piece.Color.RED, piece.getColor());
+        // Checks that the white piece was kinged.
+        piece = getPieceFromGame(whiteEnd, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.KING, piece.getType());
+        assertSame(Piece.Color.WHITE, piece.getColor());
+
+        // Move Kings into the starting row for their color, and check that they sstay the right color and type.
+        curr.setPiece(whiteStart, RED_KING);
+        curr.setPiece(redStart, WHITE_KING);
+        game = new Game(player1, player2, curr);
+        game.tryMove(new Move(redStart, redEnd));
+        game.submitTurn();
+        game.tryMove(new Move(whiteStart, whiteEnd));
+        game.submitTurn();
+        // King colors should be switched compared to previous test.
+        piece = getPieceFromGame(redEnd, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.KING, piece.getType());
+        assertSame(Piece.Color.WHITE, piece.getColor());
+
+        piece = getPieceFromGame(whiteEnd, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.KING, piece.getType());
+        assertSame(Piece.Color.RED, piece.getColor());
+    }
+
+    /**
+     * Simply tests a jump move, and checks that the correct piece was removed.
+     * Checks through BoardView, th
+     */
+    @Test
+    void testJump(){
+        Position start = new Position(5, 0);
+        Position middle = new Position(4,1);
+        Position end = new Position(3, 2);
+        Position whiteStart = new Position(2, 3);
+
+        Board board = new Board();
+        board.setPiece(middle, new Piece(Piece.Type.KING, Piece.Color.WHITE));
+        game = new Game(player1, player2, board);
+        game.tryMove(new Move(start, end));
+        game.submitTurn();
+
+        Piece piece = getPieceFromGame(end, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.SINGLE, piece.getType());
+        assertSame(Piece.Color.RED, piece.getColor());
+
+        game.tryMove(new Move(whiteStart, middle));
+        game.submitTurn();
+
+        piece = getPieceFromGame(middle, game);
+        assertNotNull(piece);
+        assertSame(Piece.Type.SINGLE, piece.getType());
+        assertSame(Piece.Color.WHITE, piece.getColor());
+    }
+
+    /**
+     * Using the BoardView constructor in Game,
+     * returns the piece at a given position in Game.
+     * @param pos to get the piece from
+     * @param game to make the BoardView from
+     * @return the Piece at that position
+     */
+    private Piece getPieceFromGame(Position pos, Game game){
+        BoardView view = game.makeBoardView(player1);
+        Iterator<Row> rows = view.iterator();
+        for(int i = 0; i < pos.getRow(); i++)
+            rows.next();
+        Iterator<Space> spaces = rows.next().iterator();
+        for(int i = 0; i < pos.getCell(); i++)
+            spaces.next();
+        return spaces.next().getPiece();
     }
 }

@@ -18,7 +18,7 @@ public class Game {
     // Stores all moves made during the game.
     private Queue<Move> submittedMoves = new LinkedList<>();
 
-    enum State {
+    private enum State {
         WAITING_FOR_RED,
         WAITING_FOR_WHITE,
         GAME_OVER
@@ -44,19 +44,13 @@ public class Game {
         return whitePlayer;
     }
 
-    public Piece.Color getActiveColor() throws IllegalStateException {
-        switch(currState) {
-            case WAITING_FOR_RED:
-                return Piece.Color.RED;
-            case WAITING_FOR_WHITE:
-                return Piece.Color.WHITE;
-            default:
-                throw new IllegalStateException("The game is over.");
-        }
+    public Piece.Color getActiveColor() {
+        // If it's an even turn, it's Red's turn, starting from Turn 0.
+        return submittedMoves.size()%2 == 0 ? Piece.Color.RED : Piece.Color.WHITE;
     }
 
     public BoardView makeBoardView(Player player) {
-        return new BoardView(board, player.equals(whitePlayer));
+        return new BoardView(board, whitePlayer.equals(player));
     }
 
     public boolean isGameOver() {
@@ -122,18 +116,10 @@ public class Game {
             return;
         while(!validMoves.empty())
             makeMove(validMoves.pop());
-
-        switch(currState){
-            case WAITING_FOR_RED:
-                currState = State.WAITING_FOR_WHITE;
-                turn = new Turn(board, Piece.Color.WHITE);
-                break;
-            case WAITING_FOR_WHITE:
-                currState = State.WAITING_FOR_RED;
-                turn = new Turn(board, Piece.Color.RED);
-                break;
-            default:
-        }
+        // Switches the cuurent state.
+        currState = (currState == State.WAITING_FOR_RED ?
+                State.WAITING_FOR_WHITE : State.WAITING_FOR_RED);
+        turn = new Turn(board, getActiveColor());
     }
 
     /**
@@ -177,7 +163,7 @@ public class Game {
         board.setPiece(move.getEnd(), moving);
         if(move.getMoveType() == Move.Type.JUMP) {
             Position jumped = move.getJumped();
-            board.setPiece(jumped,null);
+            board.setPiece(jumped, null);
         }
         submittedMoves.add(move);
     }
