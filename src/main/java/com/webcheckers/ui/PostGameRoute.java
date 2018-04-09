@@ -3,6 +3,8 @@ package com.webcheckers.ui;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
+import com.webcheckers.appl.ReplayManager;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
@@ -19,11 +21,14 @@ import static spark.Spark.halt;
 public class PostGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostGameRoute.class.getName());
     private GameManager gameManager;
+    private ReplayManager replayManager;
 
     private static final String ALREADY_IN_GAME_ERROR = "Player is already in a game.";
 
-    public PostGameRoute(final GameManager gameManager) {
+    public PostGameRoute(final GameManager gameManager,
+                         final ReplayManager replayManager) {
         this.gameManager = gameManager;
+        this.replayManager = replayManager;
     }
 
     /**
@@ -45,6 +50,9 @@ public class PostGameRoute implements Route {
             redirect = WebServer.HOME_URL;
             session.attribute(Strings.Session.MESSAGE, new Message(ALREADY_IN_GAME_ERROR, Message.Type.error));
         }
+
+        replayManager.addReplay(gameManager.getGame(player1), player1);
+        replayManager.addReplay(gameManager.getGame(player2), player2);
 
         response.redirect(redirect);
         return null;

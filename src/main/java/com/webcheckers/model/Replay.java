@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Replay {
@@ -8,9 +9,10 @@ public class Replay {
 
     public Replay(Game game) {
         this.game = game;
+        this.moves = new ArrayList<Move>();
     }
 
-    public void storeMove(Move move) {
+    public void addMove(Move move) {
         moves.add(move);
     }
 }

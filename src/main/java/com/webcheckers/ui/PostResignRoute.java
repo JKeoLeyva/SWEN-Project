@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
@@ -19,17 +20,20 @@ public class PostResignRoute implements Route {
 
     private final GameManager gameManager;
     private final Gson gson;
+    private final ReplayManager replayManager;
 
 
-    public PostResignRoute(final GameManager gameManager) {
+    public PostResignRoute(final GameManager gameManager, final ReplayManager replayManager) {
         this.gameManager = gameManager;
         this.gson = new Gson();
+        this.replayManager = replayManager;
     }
 
     public Object handle(Request request, Response response) {
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
         gameManager.deleteGame(player);
+        //replayManager.deleteReplay(player);
 
         if(!gameManager.getGames().containsKey(player)) {
             message = new Message(SUCCESS_MSSG, Message.Type.info);

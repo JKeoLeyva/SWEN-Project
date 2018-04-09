@@ -189,4 +189,8 @@ public class Game {
     public Message tryMove(Move move){
         return turn.tryMove(move);
     }
+
+    public Queue<Move> getSubmittedMoves() {
+        return submittedMoves;
+    }
 }

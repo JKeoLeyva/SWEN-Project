@@ -2,9 +2,8 @@ package com.webcheckers.ui;
 
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.ViewMode;
+import com.webcheckers.appl.ReplayManager;
+import com.webcheckers.model.*;
 import spark.*;
 
 import java.util.HashMap;
@@ -22,6 +21,7 @@ public class GetGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;
+    private final ReplayManager replayManager;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -31,11 +31,13 @@ public class GetGameRoute implements Route {
      * @param gameManager    hold all current games
      */
     public GetGameRoute(final TemplateEngine templateEngine,
-                        final GameManager gameManager) {
+                        final GameManager gameManager,
+                        final ReplayManager replayManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
+        this.replayManager = replayManager;
     }
 
     /**
@@ -58,7 +60,13 @@ public class GetGameRoute implements Route {
         }
 
         if(game.isGameOver(currPlayer)) {
+            Replay replay = replayManager.getReplay(currPlayer);
+            for(Move move : game.getSubmittedMoves()) {
+                replay.addMove(move);
+            }
+
             gameManager.deleteGame(currPlayer);
+
             response.redirect(WebServer.HOME_URL);
             return null;
         }

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayManager;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -81,6 +82,7 @@ public class WebServer {
     private final Gson gson;
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
+    private final ReplayManager replayManager;
 
     //
     // Constructor
@@ -94,7 +96,8 @@ public class WebServer {
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
     public WebServer(final TemplateEngine templateEngine, final Gson gson,
-                     final PlayerLobby playerLobby, final GameManager gameManager) {
+                     final PlayerLobby playerLobby, final GameManager gameManager,
+                     final ReplayManager replayManager) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
@@ -103,6 +106,7 @@ public class WebServer {
         this.gson = gson;
         this.playerLobby = playerLobby;
         this.gameManager = gameManager;
+        this.replayManager = replayManager;
     }
 
     //
@@ -159,15 +163,15 @@ public class WebServer {
         // Shows the Checkers game Home page.
         get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameManager));
         get(SIGNIN_URL, new GetSigninRoute(templateEngine));
-        get(GAME_URL, new GetGameRoute(templateEngine, gameManager));
+        get(GAME_URL, new GetGameRoute(templateEngine, gameManager, replayManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
-        post(GAME_URL, new PostGameRoute(gameManager));
+        post(GAME_URL, new PostGameRoute(gameManager, replayManager));
         post(CHECK_TURN_URL, new PostCheckTurnRoute(gameManager, gson));
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameManager));
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson, gameManager));
-        get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager));
+        get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager, replayManager));
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
-        post(RESIGN_URL, new PostResignRoute(gameManager));
+        post(RESIGN_URL, new PostResignRoute(gameManager, replayManager));
         get(HELP_URL, new GetHelpRoute(templateEngine, gameManager));
 
         LOG.config("WebServer is initialized.");
