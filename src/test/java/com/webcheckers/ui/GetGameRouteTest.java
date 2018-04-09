@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ViewMode;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +30,7 @@ class GetGameRouteTest {
     private TemplateEngine templateEngine;
     private GetGameRoute route;
     private BoardView boardview;
+    private ReplayManager replayManager;
 
     @BeforeEach
     void setup() {
@@ -38,13 +40,14 @@ class GetGameRouteTest {
         this.gameManager = new GameManager();
         this.player1 = new Player("Dank");
         this.player2 = new Player("Memes");
+        this.replayManager = new ReplayManager();
 
         gameManager.createGame(player1, player2);
 
         this.boardview = mock(BoardView.class);
         this.templateEngine = mock(TemplateEngine.class);
 
-        route = new GetGameRoute(templateEngine, gameManager);
+        route = new GetGameRoute(templateEngine, gameManager, replayManager);
 
         when(request.session()).thenReturn(session);
         when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);

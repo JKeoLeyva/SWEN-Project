@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -26,6 +27,7 @@ class PostGameRouteTest {
     private Player player2;
     private TemplateEngine templateEngine;
     private PostGameRoute route;
+    private ReplayManager replayManager;
 
     @BeforeEach
     void setUp() {
@@ -35,8 +37,9 @@ class PostGameRouteTest {
         this.gameManager = new GameManager();
         this.player1 = new Player("Ayy");
         this.player2 = new Player(("Lmao"));
+        this.replayManager = new ReplayManager();
 
-        route = new PostGameRoute(gameManager);
+        route = new PostGameRoute(gameManager, replayManager);
 
         when(request.session()).thenReturn(session);
         when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);

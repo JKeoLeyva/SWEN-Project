@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class PostResignRouteTest {
 
         when(request.session()).thenReturn(session);
 
-        route = new PostResignRoute(gameManager);
+        route = new PostResignRoute(gameManager, new ReplayManager());
     }
 
     /*
