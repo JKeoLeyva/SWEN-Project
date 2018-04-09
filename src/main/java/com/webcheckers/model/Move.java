@@ -74,6 +74,9 @@ public class Move {
      * @return if the input move goes (dist) diagonally
      */
     private boolean isDiagonal(int dist){
+        // If the Piece doesn't exist, it can't move.
+        if(piece == null)
+            return false;
         int rowStart = start.getRow();
         int colStart = start.getCell();
         int rowEnd = end.getRow();

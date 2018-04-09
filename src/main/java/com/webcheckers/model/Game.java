@@ -59,36 +59,37 @@ public class Game {
         return new BoardView(board, player.equals(whitePlayer));
     }
 
-    public boolean isGameOver(Player player) {
-        return currState == State.GAME_OVER || aPlayerWon() || !hasMove(player);
+    public boolean isGameOver() {
+        return currState == State.GAME_OVER || noMove(redPlayer) || noMove(whitePlayer);
+    }
+
+
+    /**
+     * Checks if a given player can still play.
+     * @param player to be tested
+     * @return if player can make a move
+     */
+    private boolean noMove(Player player){
+        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
+        Piece piece;
+        Position start;
+        Turn testTurn = new Turn(board, color);
+
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                piece = board.getPiece(new Position(row, col));
+                if(piece == null || piece.getColor() != color) {continue;}
+
+                start = new Position(row, col);
+                if(moveExists(testTurn, start))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public void setGameOver(){
         currState = State.GAME_OVER;
-    }
-
-    /**
-     * Checks if a player has eliminated all of the opponent's pieces.
-     * @return if a player has won in this way
-     */
-    private boolean aPlayerWon() {
-        boolean redFound = false;
-        boolean whiteFound = false;
-        Piece piece;
-
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            for(int j = 0; j < BOARD_SIZE; j++) {
-                piece = board.getPiece(new Position(i, j));
-                if(piece != null) {
-                    if(piece.getColor() == Piece.Color.RED)
-                        redFound = true;
-                    if(piece.getColor() == Piece.Color.WHITE)
-                        whiteFound = true;
-                }
-            }
-        }
-
-        return !(redFound && whiteFound);
     }
 
     /**
@@ -100,9 +101,9 @@ public class Game {
         if(currState == State.GAME_OVER)
             // Forces a page reload.
             return true;
-        if(player.equals(redPlayer)) {
+        if(redPlayer.equals(player)) {
             return getActiveColor() == Piece.Color.RED;
-        } else if(player.equals(whitePlayer)) {
+        } else if(whitePlayer.equals(player)) {
             return getActiveColor() == Piece.Color.WHITE;
         } else {
             return false;
@@ -113,8 +114,8 @@ public class Game {
      * Makes the moves validated within Turn, then switches State,
      * and creates a turn for the next player.
      */
-    public void switchTurn() {
-        // Makes the validated moves stored in Turn.
+    public void submitTurn() {
+        // Gets the validated moves stored in Turn.
         Stack<Move> validMoves = turn.getValidatedMoves();
         // If no moves were made, the turn should not be switched.
         if(validMoves.size() == 0)
@@ -122,46 +123,35 @@ public class Game {
         while(!validMoves.empty())
             makeMove(validMoves.pop());
 
-        if(currState == State.WAITING_FOR_RED) {
-            currState = State.WAITING_FOR_WHITE;
-            turn = new Turn(board, Piece.Color.WHITE);
-        } else if (currState == State.WAITING_FOR_WHITE){
-            currState = State.WAITING_FOR_RED;
-            turn = new Turn(board, Piece.Color.RED);
+        switch(currState){
+            case WAITING_FOR_RED:
+                currState = State.WAITING_FOR_WHITE;
+                turn = new Turn(board, Piece.Color.WHITE);
+                break;
+            case WAITING_FOR_WHITE:
+                currState = State.WAITING_FOR_RED;
+                turn = new Turn(board, Piece.Color.RED);
+                break;
+            default:
         }
     }
 
     /**
-     * Checks if a given player can still play.
-     * @param player to be tested
-     * @return if player can make a move
+     * Tests if a move exists from the given position.
+     * @param start position to move from
+     * @return if a move can be made from that position
      */
-    private boolean hasMove(Player player){
-        Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
-        Piece piece;
-        Position start, end;
-        int rowAdjustment = color == Piece.Color.RED ? -1 : 1;
-        Turn testTurn = new Turn(board, color);
-
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for(int col = 0; col < BOARD_SIZE; col++) {
-                piece = board.getPiece(new Position(row, col));
-                if(piece != null && piece.getColor() == color) {
-                    start = new Position(row, col);
-
-                    end = new Position(row + rowAdjustment, col - 1);
-                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment, col + 1);
-                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment * 2, col - 2);
-                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
-                        return true;
-
-                    end = new Position(row + rowAdjustment * 2, col + 2);
+    private boolean moveExists(Turn testTurn, Position start){
+        int[] rowAdjustments = {-1, 1};
+        int[] colAdjustments = {-1, 1};
+        int[] moveDistances = {1, 2};
+        Position end;
+        // Tests moves in all directions from start.
+        for(int rowAdjustment : rowAdjustments){
+            for(int moveDistance : moveDistances){
+                for(int colAdjustment : colAdjustments) {
+                    end = new Position(start.getRow() + (rowAdjustment * moveDistance),
+                            start.getCell() + (colAdjustment * moveDistance));
                     if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
                         return true;
                 }
@@ -197,7 +187,7 @@ public class Game {
      * being able to make moves if you validate a move then reload the page.
      */
     public void clearTurn(){
-        turn.getValidatedMoves();
+        turn = new Turn(board, getActiveColor());
     }
 
     public void backupMove(){
@@ -207,4 +197,5 @@ public class Game {
     public Message tryMove(Move move){
         return turn.tryMove(move);
     }
+
 }

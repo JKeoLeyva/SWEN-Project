@@ -14,6 +14,7 @@ public class Turn {
     static final String BAD_JUMP = "You must jump over a piece of the opposite color.";
     static final String JUMP_CHANGE = "You cannot jump with two different pieces in the same turn.";
     static final String JUMPED_OVER = "Piece was already jumped over.";
+    static final String SPACE_OCCUPIED = "ERROR! Tried to move onto an occupied space.";
     static final String VALID_MOVE = "Move is valid!";
 
     // A Stack to store validated moves.
@@ -59,6 +60,9 @@ public class Turn {
 
         if(move.getMoveType() == Move.Type.JUMP && isInvalidJumpMove(move))
             return new Message(BAD_JUMP, Message.Type.error);
+
+        if(temp.getPiece(move.getEnd()) != null)
+            return new Message(SPACE_OCCUPIED, Message.Type.error);
 
         validatedMoves.push(move);
         makeMove(move, false);
@@ -107,7 +111,7 @@ public class Turn {
         Stack<Move> ret = new Stack<>();
         while(!validatedMoves.empty())
             ret.push(validatedMoves.pop());
-
+        jumpedSpaces.clear();
         return ret;
     }
 

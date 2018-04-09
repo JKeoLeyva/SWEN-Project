@@ -35,7 +35,7 @@ public class PostCheckTurnRoute implements Route {
         }
 
         Game game = gameManager.getGame(player);
-        if(game == null || game.isGameOver(player))
+        if(game == null || game.isGameOver())
             return gson.toJson(new Message("true", Message.Type.info));
 
         String outcome = String.valueOf(game.isMyTurn(player));

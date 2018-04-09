@@ -57,13 +57,15 @@ public class GetGameRoute implements Route {
             return null;
         }
 
-        if(game.isGameOver(currPlayer)) {
+        if(game.isGameOver()) {
             gameManager.deleteGame(currPlayer);
             response.redirect(WebServer.HOME_URL);
             return null;
         }
 
-        game.clearTurn();
+        if(game.isMyTurn(currPlayer))
+            game.clearTurn();
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(Strings.Template.Game.CURRENT_PLAYER, currPlayer);
         vm.put(Strings.Template.Game.VIEW_MODE, ViewMode.PLAY);

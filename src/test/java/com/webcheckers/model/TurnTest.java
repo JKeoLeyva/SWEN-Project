@@ -230,4 +230,18 @@ class TurnTest {
         assertEquals(Turn.JUMPED_OVER, ret.getText());
     }
 
+    /**
+     * Tests if the space you are moving onto is occupied.
+     */
+    @Test
+    void occupiedSpace(){
+        Position start = new Position(5, 0);
+        Position end = new Position(4,1);
+        board.setPiece(end, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+        turn = new Turn(board, Piece.Color.RED);
+        Message ret = turn.tryMove(new Move(start, end));
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.SPACE_OCCUPIED, ret.getText());
+    }
+
 }

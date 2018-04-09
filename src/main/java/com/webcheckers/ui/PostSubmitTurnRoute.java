@@ -30,9 +30,8 @@ public class PostSubmitTurnRoute implements Route {
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
-
-        Message result = new Message("true", Message.Type.info);
-        game.switchTurn();
+        Message result = new Message("Move(s) submitted.", Message.Type.info);
+        game.submitTurn();
 
         return gson.toJson(result);
     }
