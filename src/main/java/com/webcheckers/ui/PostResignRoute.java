@@ -33,7 +33,6 @@ public class PostResignRoute implements Route {
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
         gameManager.deleteGame(player);
-        //replayManager.deleteReplay(player);
 
         if(!gameManager.getGames().containsKey(player)) {
             message = new Message(SUCCESS_MSSG, Message.Type.info);
