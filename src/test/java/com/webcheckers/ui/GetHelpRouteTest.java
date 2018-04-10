@@ -35,10 +35,9 @@ public class GetHelpRouteTest {
 
         this.templateEngine = mock(TemplateEngine.class);
 
-        route = new GetHelpRoute(templateEngine, gameManager);
+        route = new GetHelpRoute(templateEngine);
 
         when(request.session()).thenReturn(session);
-        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player);
 
         engineTester = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
@@ -47,13 +46,15 @@ public class GetHelpRouteTest {
     @Test
     void noSession() {
         route.handle(request, response);
-        assertNull(session.attribute(Strings.Template.Game.CURRENT_PLAYER));
+        assertNull(session.attribute(Strings.Session.PLAYER));
         verify(response, never()).redirect(WebServer.HELP_URL);
     }
 
     @Test
     void withSession() {
         session.attribute(Strings.Session.PLAYER, player);
+
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player);
 
         route.handle(request, response);
 

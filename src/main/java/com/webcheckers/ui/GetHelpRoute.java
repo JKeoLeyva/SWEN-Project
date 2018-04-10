@@ -15,13 +15,11 @@ public class GetHelpRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHelpRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    private final GameManager gameManager;
 
-    public GetHelpRoute(final TemplateEngine templateEngine, final GameManager gameManager) {
+    public GetHelpRoute(final TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
-        this.gameManager = gameManager;
     }
 
     @Override
@@ -37,7 +35,7 @@ public class GetHelpRoute implements Route {
         }
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put(Strings.Template.Game.CURRENT_PLAYER, currPlayer);
+        vm.put(Strings.Template.Help.CURRENT_PLAYER, currPlayer);
 
         return templateEngine.render(new ModelAndView(vm, Strings.Template.Help.FILE_NAME));
 
