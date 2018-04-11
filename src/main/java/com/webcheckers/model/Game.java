@@ -46,7 +46,6 @@ public class Game {
     }
 
     public Piece.Color getActiveColor() {
-        // If it's an even turn, it's Red's turn, starting from Turn 0.
         return currState == State.WAITING_FOR_RED ? Piece.Color.RED : Piece.Color.WHITE;
     }
 
@@ -72,10 +71,11 @@ public class Game {
 
         for(int row = 0; row < BOARD_SIZE; row++) {
             for(int col = 0; col < BOARD_SIZE; col++) {
-                piece = board.getPiece(new Position(row, col));
-                if(piece == null || piece.getColor() != color) {continue;}
-
                 start = new Position(row, col);
+                piece = board.getPiece(start);
+                if(piece == null || piece.getColor() != color)
+                    continue;
+
                 if(moveExists(testTurn, start))
                     return false;
             }

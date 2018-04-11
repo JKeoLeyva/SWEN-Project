@@ -5,7 +5,6 @@ public final class Strings {
 
     public static final class Session {
         public static final String PLAYER = "player";
-        public static final String OPPONENT = "opponent";
         public static final String MESSAGE = "message";
     }
 
@@ -36,5 +35,10 @@ public final class Strings {
         public static final class Help {
             public static final String FILE_NAME = "help.ftl";
         }
+
+    }
+
+    public static final class Request{
+        public static final String OPPONENT = "opponent";
     }
 }
