@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 /**
  * Checks if an entered sign-in name is acceptable and signs in the player
  */
@@ -40,10 +38,8 @@ public class PostSigninRoute implements Route {
         final Session session = request.session();
         final String playerName = request.queryParams(Strings.Template.SignIn.PLAYER_NAME);
 
-        // If the given player name has non-alphaNumeric characters.
-        boolean hasNonAlpha = playerName.matches("^.*[^a-zA-Z0-9 ].*$");
-
-        if(hasNonAlpha) {
+        // If the given player name is null or has non-alphaNumeric characters.
+        if(playerName == null || playerName.matches("^.*[^a-zA-Z0-9 ].*$")) {
             // Name is not valid.
             return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
         }
