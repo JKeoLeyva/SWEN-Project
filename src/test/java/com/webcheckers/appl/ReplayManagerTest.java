@@ -1,6 +1,9 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.*;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,12 +27,11 @@ public class ReplayManagerTest {
 
     @Test
     void addReplay() {
-        Replay replay = new Replay(game);
-        game.tryMove(new Move(new Position(5,0), new Position(4,1)));
+        game.tryMove(new Move(new Position(5, 0), new Position(4, 1)));
         game.submitTurn();
 
         replayManager.addReplay(game, player1);
-        
+
         assertNotNull(replayManager.getReplay(player1));
     }
 
