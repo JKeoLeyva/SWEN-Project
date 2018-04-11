@@ -22,5 +22,6 @@ public class ReplayTest {
     void newReplay() {
         // Replay doesnt do anything besides store the move since
         // since all I have to do is store replays and their moves
+        this.replay.addMove(new Move(new Position(1,1), new Position(2,2)));
     }
 }
