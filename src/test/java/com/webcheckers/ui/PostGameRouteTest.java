@@ -39,7 +39,7 @@ class PostGameRouteTest {
         this.player2 = new Player(("Lmao"));
         this.replayManager = new ReplayManager();
 
-        route = new PostGameRoute(gameManager, replayManager);
+        route = new PostGameRoute(gameManager);
 
         when(request.session()).thenReturn(session);
         when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);

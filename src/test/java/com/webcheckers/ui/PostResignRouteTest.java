@@ -39,7 +39,7 @@ class PostResignRouteTest {
 
         when(request.session()).thenReturn(session);
 
-        route = new PostResignRoute(gameManager, new ReplayManager());
+        route = new PostResignRoute(gameManager);
     }
 
     /*

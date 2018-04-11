@@ -165,13 +165,13 @@ public class WebServer {
         get(SIGNIN_URL, new GetSigninRoute(templateEngine));
         get(GAME_URL, new GetGameRoute(templateEngine, gameManager, replayManager));
         post(SIGNIN_URL, new PostSigninRoute(templateEngine, playerLobby));
-        post(GAME_URL, new PostGameRoute(gameManager, replayManager));
+        post(GAME_URL, new PostGameRoute(gameManager));
         post(CHECK_TURN_URL, new PostCheckTurnRoute(gameManager, gson));
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameManager));
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson, gameManager));
         get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager, replayManager));
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
-        post(RESIGN_URL, new PostResignRoute(gameManager, replayManager));
+        post(RESIGN_URL, new PostResignRoute(gameManager));
         get(HELP_URL, new GetHelpRoute(templateEngine, gameManager));
 
         LOG.config("WebServer is initialized.");

@@ -22,7 +22,7 @@ public class PostResignRoute implements Route {
     private final Gson gson;
 
 
-    public PostResignRoute(final GameManager gameManager, final ReplayManager replayManager) {
+    public PostResignRoute(final GameManager gameManager) {
         this.gameManager = gameManager;
         this.gson = new Gson();
     }

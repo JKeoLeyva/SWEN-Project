@@ -60,13 +60,8 @@ public class GetGameRoute implements Route {
         }
 
         if(game.isGameOver(currPlayer)) {
-            Replay replay = replayManager.getReplay(currPlayer);
-            for(Move move : game.getSubmittedMoves()) {
-                replay.addMove(move);
-            }
-
+            replayManager.addReplay(game, currPlayer);
             gameManager.deleteGame(currPlayer);
-
             response.redirect(WebServer.HOME_URL);
             return null;
         }
