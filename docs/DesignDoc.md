@@ -52,6 +52,7 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - (User Story) Jumps
 - (User Story) Player Help
 - (Epic) Kings
+- (User Story) Storing Replays
 
 ### Roadmap of Enhancements
 - Make sure that the Player can Sign-out 
@@ -60,6 +61,7 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - Make sure that Game requests can be sent to other players
 - Make sure that the players are allowed to only make valid moves
 - Allow users to request help from the Game view
+- Allow users to see replays of their past games
 
 ## Application Domain
 

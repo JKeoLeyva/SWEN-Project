@@ -3,6 +3,7 @@ package com.webcheckers;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.ui.WebServer;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -63,8 +64,11 @@ public final class Application {
         // inject game manager
         final GameManager gameManager = new GameManager(new HashMap<>());
 
+        // inject replay manager
+        final ReplayManager replayManager = new ReplayManager();
+
         // inject the game center and freemarker engine into web server
-        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, gameManager);
+        final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, gameManager, replayManager);
 
         // inject web server into application
         final Application app = new Application(webServer);
