@@ -13,8 +13,8 @@ import java.util.Map;
 public class GameManager {
     private Map<Player, Game> games;
 
-    public GameManager() {
-        games = new HashMap<>();
+    public GameManager(Map<Player, Game> map) {
+        games = map;
     }
 
     /**
@@ -43,6 +43,8 @@ public class GameManager {
      * @return if a board can be created with these players
      */
     public synchronized boolean canCreateGame(Player p1, Player p2) {
+        if(p1 == null || p2 == null)
+            return false;
         return !games.containsKey(p1) && !games.containsKey(p2) && !p1.equals(p2);
     }
 
@@ -55,7 +57,6 @@ public class GameManager {
      * @return the game that player is in, if any
      */
     public synchronized Game getGame(Player player) {
-        if(player == null) return null;
         return games.get(player);
     }
 

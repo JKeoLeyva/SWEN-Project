@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ class GameManagerTest {
 
     @BeforeEach
     void setup() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new HashMap<>());
         player1 = new Player("player1");
         player2 = new Player("player2");
         player3 = new Player("player3");
@@ -49,6 +50,8 @@ class GameManagerTest {
 
         assertFalse(gameManager.canCreateGame(player1, player3));
         assertFalse(gameManager.createGame(player1, player3));
+        assertFalse(gameManager.canCreateGame(player1, player2));
+        assertFalse(gameManager.createGame(player1, player2));
 
         Map<Player, Game> games = gameManager.getGames();
 
@@ -61,6 +64,16 @@ class GameManagerTest {
     void noOnePlayerGame() {
         assertFalse(gameManager.canCreateGame(player1, player1));
         assertFalse(gameManager.createGame(player1, player1));
+        gameManager.createGame(player1, player2);
+        assertFalse(gameManager.canCreateGame(player1, player1));
+        assertFalse(gameManager.createGame(player1, player1));
+    }
+
+    @Test
+    void nullPlayers(){
+        assertFalse(gameManager.canCreateGame(null, player1));
+        assertFalse(gameManager.canCreateGame(player1, null));
+        assertFalse(gameManager.canCreateGame(null, null));
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
@@ -31,6 +30,7 @@ public class GetSignOutRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("GetSignOutRoute is invoked.");
         Session session = request.session();
         Player player = session.attribute(Strings.Session.PLAYER);
 

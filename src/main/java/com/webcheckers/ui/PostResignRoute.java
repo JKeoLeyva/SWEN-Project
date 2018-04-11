@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
@@ -27,6 +26,7 @@ public class PostResignRoute implements Route {
     }
 
     public Object handle(Request request, Response response) {
+        LOG.finer("PostResignRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
         gameManager.deleteGame(player);

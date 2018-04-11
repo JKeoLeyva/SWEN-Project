@@ -13,7 +13,7 @@ import static spark.Spark.halt;
  * A Spark Route to display a sign-in page.
  */
 public class GetSigninRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetSigninRoute.class.getName());
 
     private final TemplateEngine templateEngine;
 

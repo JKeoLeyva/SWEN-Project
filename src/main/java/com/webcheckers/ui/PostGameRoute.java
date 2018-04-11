@@ -11,8 +11,6 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 /**
  * A Spark Route for requesting a new checkers game.
  */
@@ -36,7 +34,7 @@ public class PostGameRoute implements Route {
         LOG.finer("PostGameRoute is invoked.");
         final Session session = request.session();
         final Player player1 = session.attribute(Strings.Session.PLAYER);
-        final Player player2 = new Player(request.queryParams("opponent"));
+        final Player player2 = new Player(request.queryParams(Strings.Request.OPPONENT));
 
         String redirect = WebServer.GAME_URL;
 

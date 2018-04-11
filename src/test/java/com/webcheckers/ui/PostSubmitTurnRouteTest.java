@@ -14,6 +14,8 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,7 +38,7 @@ class PostSubmitTurnRouteTest {
         this.gson = new Gson();
         this.response = mock(Response.class);
         this.session = mock(Session.class);
-        this.gameManager = new GameManager();
+        this.gameManager = new GameManager(new HashMap<>());
 
         this.player1 = new Player("Abc");
         this.player2 = new Player("Xyz");

@@ -11,6 +11,8 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
@@ -35,7 +37,7 @@ class GetSignOutRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
         when(request.session()).thenReturn(session);
-        route = new GetSignOutRoute(playerLobby, new GameManager());
+        route = new GetSignOutRoute(playerLobby, new GameManager(new HashMap<>()));
     }
 
     /**
