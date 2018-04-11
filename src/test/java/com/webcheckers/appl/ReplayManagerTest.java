@@ -4,7 +4,9 @@ import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Tag("Application-tier")
 public class ReplayManagerTest {
@@ -24,7 +26,7 @@ public class ReplayManagerTest {
     void addReplay() {
         Replay replay = new Replay(game);
         game.tryMove(new Move(new Position(5,0), new Position(4,1)));
-        game.switchTurn();
+        game.submitTurn();
 
         replayManager.addReplay(game, player1);
         
