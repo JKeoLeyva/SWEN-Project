@@ -1,15 +1,17 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Replay {
     private Game game;
-    private List<Move> moves;
+    private Queue<Move> moves;
 
     public Replay(Game game) {
         this.game = game;
-        this.moves = new ArrayList<Move>();
+        this.moves = new LinkedList<Move>();
     }
 
     public void addMove(Move move) {
