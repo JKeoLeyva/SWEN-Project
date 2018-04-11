@@ -51,6 +51,7 @@ Either  player of a game may choose to resign, at any point, which ends the game
 - (User Story) Player Turns
 - (User Story) Jumps
 - (User Story) Player Help
+- (Epic) Kings
 - (User Story) Storing Replays
 
 ### Roadmap of Enhancements

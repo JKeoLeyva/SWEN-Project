@@ -85,13 +85,15 @@ class TurnTest {
         Position start = new Position(5, 0);
         Position middle = new Position(4,1);
         Position end = new Position(3, 2);
-        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        Position nextEnd = new Position(2, 3);
+
+        board.setPiece(nextEnd, null);
+        board.setPiece(middle, new Piece(Piece.Type.KING, Piece.Color.WHITE));
         turn = new Turn(board, Piece.Color.RED);
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(Message.Type.info, ret.getType());
         assertEquals(Turn.VALID_MOVE, ret.getText());
         // Test a single move after a jump move.
-        Position nextEnd = new Position(2, 3);
         Move move = new Move(end, nextEnd);
         ret = turn.tryMove(move);
         assertEquals(Message.Type.error, ret.getType());
@@ -212,20 +214,34 @@ class TurnTest {
     /**
      * Tests if a King was trying to make jump moves back and forth.
      */
-//    @Test
-//    void jumpBackAndForth(){
-//        //First, perform a valid jump move.
-//        Position start = new Position(5, 0);
-//        Position middle = new Position(4,1);
-//        Position end = new Position(3, 2);
-//        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-//        board.setPiece(start, new Piece(Piece.Type.KING, Piece.Color.RED));
-//        turn = new Turn(board, Piece.Color.RED);
-//        turn.tryMove(new Move(start, end));
-//        // Trying to jump back.
-//        Message ret = turn.tryMove(new Move(end, start));
-//        assertEquals(Message.Type.error, ret.getType());
-//        assertEquals(Turn.JUMPED_OVER, ret.getText());
-//    }
+    @Test
+    void jumpBackAndForth(){
+        //First, perform a valid jump move.
+        Position start = new Position(5, 0);
+        Position middle = new Position(4,1);
+        Position end = new Position(3, 2);
+        board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.setPiece(start, new Piece(Piece.Type.KING, Piece.Color.RED));
+        turn = new Turn(board, Piece.Color.RED);
+        turn.tryMove(new Move(start, end));
+        // Trying to jump back.
+        Message ret = turn.tryMove(new Move(end, start));
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.JUMPED_OVER, ret.getText());
+    }
+
+    /**
+     * Tests if the space you are moving onto is occupied.
+     */
+    @Test
+    void occupiedSpace(){
+        Position start = new Position(5, 0);
+        Position end = new Position(4,1);
+        board.setPiece(end, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+        turn = new Turn(board, Piece.Color.RED);
+        Message ret = turn.tryMove(new Move(start, end));
+        assertEquals(Message.Type.error, ret.getType());
+        assertEquals(Turn.SPACE_OCCUPIED, ret.getText());
+    }
 
 }

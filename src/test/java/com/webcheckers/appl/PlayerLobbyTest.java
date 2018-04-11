@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +18,7 @@ class PlayerLobbyTest {
     * */
     @Test
     void testPlayerLobbyInstantiation() {
-        PlayerLobby playerLobby = new PlayerLobby();
+        PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // Test whether the PlayerLobby constructor returns something.
         assertNotNull(playerLobby);
@@ -37,7 +38,7 @@ class PlayerLobbyTest {
     @Test
     void testAddingPlayersToPlayerLobby() {
         String testUsername = "Testuser";
-        PlayerLobby playerLobby = new PlayerLobby();
+        PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // Add 1 player to PlayerLobby
         playerLobby.signInPlayer(testUsername);
@@ -49,7 +50,7 @@ class PlayerLobbyTest {
     @Test
     void testAddingInvalidPlayerToPlayerLobby() {
         String testUsername = "Testuser";
-        PlayerLobby playerLobby = new PlayerLobby();
+        PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // Add 1 player to PlayerLobby
         playerLobby.signInPlayer(testUsername);
@@ -63,7 +64,7 @@ class PlayerLobbyTest {
 
     @Test
     void signOutPlayer() {
-        PlayerLobby playerLobby = new PlayerLobby();
+        PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
         String playerName = "player";
 
         // Sign the player in
@@ -84,7 +85,7 @@ class PlayerLobbyTest {
 
     @Test
     void onlinePlayer() {
-        PlayerLobby playerLobby = new PlayerLobby();
+        PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
         String playerName = "player";
 
         assertEquals(new Player(playerName), playerLobby.signInPlayer(playerName));

@@ -30,6 +30,9 @@ class MoveTest {
         assertNotEquals(move, move2);
         move2 = new Move(rowIsOne, colIsOne);
         assertNotEquals(move, move2);
+        // Quick test of a move with no piece.
+        Move badMove = new Move(new Move(zero, zero), null);
+        assertSame(Move.Type.INVALID, badMove.getMoveType());
     }
 
 }

@@ -3,7 +3,7 @@ package com.webcheckers.model;
 public class Move {
     private Position start;
     private Position end;
-    private Piece.Color color;
+    private Piece piece;
     private Type type;
 
     // Note: this only shows what the jump distance is.
@@ -19,12 +19,12 @@ public class Move {
     /**
      * Initializes a Move with additional information.
      * @param move the move to copy start and end from
-     * @param color the color of the moving piece
+     * @param piece the moving Piece
      */
-    Move(Move move, Piece.Color color){
+    Move(Move move, Piece piece){
         this.start = move.getStart();
         this.end = move.getEnd();
-        this.color = color;
+        this.piece = piece;
         if(isDiagonal(1))
             type = Type.SINGLE;
         else if (isDiagonal(2))
@@ -40,7 +40,7 @@ public class Move {
     Move(Move toReverse){
         this.start = toReverse.end;
         this.end = toReverse.start;
-        this.color = toReverse.color;
+        this.piece = toReverse.piece;
         this.type = toReverse.type;
     }
 
@@ -74,18 +74,22 @@ public class Move {
      * @return if the input move goes (dist) diagonally
      */
     private boolean isDiagonal(int dist){
+        // If the Piece doesn't exist, it can't move.
+        if(piece == null)
+            return false;
         int rowStart = start.getRow();
         int colStart = start.getCell();
         int rowEnd = end.getRow();
         int colEnd = end.getCell();
         int verticalMove = rowEnd - rowStart;
+        // Red pieces move in the negative direction.
+        if(piece.getColor() == Piece.Color.RED)
+            verticalMove *= -1;
+        // Kings can move in either direction.
+        if(piece.getType() == Piece.Type.KING)
+            verticalMove = Math.abs(verticalMove);
         int horizontalMove = Math.abs(colStart - colEnd);
-
-        // Assumes a SINGLE Piece.
-        // From the perspective of a Board, red pieces can move down,
-        // and white pieces can move up.
-        return horizontalMove == dist && (color == Piece.Color.RED ?
-                verticalMove == -dist : verticalMove == dist);
+        return horizontalMove == dist && verticalMove == dist;
     }
 
 

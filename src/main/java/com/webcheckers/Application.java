@@ -9,6 +9,8 @@ import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -57,10 +59,10 @@ public final class Application {
         // response to Ajax requests.
         final Gson gson = new Gson();
 
-        final PlayerLobby playerLobby = new PlayerLobby();
+        final PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // inject game manager
-        final GameManager gameManager = new GameManager();
+        final GameManager gameManager = new GameManager(new HashMap<>());
 
         // inject replay manager
         final ReplayManager replayManager = new ReplayManager();

@@ -14,6 +14,7 @@ public class Turn {
     static final String BAD_JUMP = "You must jump over a piece of the opposite color.";
     static final String JUMP_CHANGE = "You cannot jump with two different pieces in the same turn.";
     static final String JUMPED_OVER = "Piece was already jumped over.";
+    static final String SPACE_OCCUPIED = "ERROR! Tried to move onto an occupied space.";
     static final String VALID_MOVE = "Move is valid!";
 
     // A Stack to store validated moves.
@@ -26,8 +27,8 @@ public class Turn {
     private Piece.Color playerColor;
 
     Turn(Board board, Piece.Color playerColor) {
-        this.playerColor = playerColor;
         this.temp = new Board(board);
+        this.playerColor = playerColor;
     }
 
     /**
@@ -37,9 +38,10 @@ public class Turn {
      * @return Message to be displayed
      */
     Message tryMove(Move move) {
-        move = new Move(move, playerColor);
         if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
             return new Message(BAD_MOVE, Message.Type.error);
+
+        move = new Move(move, temp.getPiece(move.getStart()));
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
@@ -58,6 +60,9 @@ public class Turn {
 
         if(move.getMoveType() == Move.Type.JUMP && isInvalidJumpMove(move))
             return new Message(BAD_JUMP, Message.Type.error);
+
+        if(temp.getPiece(move.getEnd()) != null)
+            return new Message(SPACE_OCCUPIED, Message.Type.error);
 
         validatedMoves.push(move);
         makeMove(move, false);
@@ -86,7 +91,7 @@ public class Turn {
     /**
      * Makes the given move on the temp board.
      * @param move to be made
-     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.In any case,
+     * @param reversed if true, it's a jump move that's being reversed, and jumpedSpaces changes accordingly.
      */
     private void makeMove(Move move, boolean reversed){
         Piece moving = temp.getPiece(move.getStart());
@@ -106,7 +111,7 @@ public class Turn {
         Stack<Move> ret = new Stack<>();
         while(!validatedMoves.empty())
             ret.push(validatedMoves.pop());
-
+        jumpedSpaces.clear();
         return ret;
     }
 

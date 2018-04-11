@@ -34,6 +34,12 @@ public final class Strings {
 
         public static final class Help {
             public static final String FILE_NAME = "help.ftl";
+            public static final String CURRENT_PLAYER = "currentPlayer";
         }
+
+    }
+
+    public static final class Request{
+        public static final String OPPONENT = "opponent";
     }
 }

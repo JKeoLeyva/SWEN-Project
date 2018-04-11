@@ -12,6 +12,8 @@ import spark.Response;
 import spark.Session;
 import spark.TemplateEngine;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -34,7 +36,7 @@ class PostGameRouteTest {
         this.request = mock(Request.class);
         this.response = mock(Response.class);
         this.session = mock(Session.class);
-        this.gameManager = new GameManager();
+        this.gameManager = new GameManager(new HashMap<>());
         this.player1 = new Player("Ayy");
         this.player2 = new Player(("Lmao"));
         this.replayManager = new ReplayManager();

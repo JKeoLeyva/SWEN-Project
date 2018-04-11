@@ -47,7 +47,7 @@ class GetSigninRouteTest{
      * Test the no session scenario
      */
     @Test
-    void noSession() throws Exception {
+    void noSession() {
         // Run code
         route.handle(request, response);
 

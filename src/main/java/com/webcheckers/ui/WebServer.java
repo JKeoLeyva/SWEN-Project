@@ -172,7 +172,7 @@ public class WebServer {
         get(SIGNOUT_URL, new GetSignOutRoute(playerLobby, gameManager, replayManager));
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
         post(RESIGN_URL, new PostResignRoute(gameManager));
-        get(HELP_URL, new GetHelpRoute(templateEngine, gameManager));
+        get(HELP_URL, new GetHelpRoute(templateEngine));
 
         LOG.config("WebServer is initialized.");
     }
