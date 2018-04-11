@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class Replay {
@@ -9,10 +8,10 @@ public class Replay {
 
     public Replay(Game game) {
         this.game = game;
-        this.moves = new LinkedList<Move>();
+        this.moves = game.getSubmittedMoves();
     }
 
-    public void addMove(Move move) {
-        moves.add(move);
+    public Queue<Move> getMoves() {
+        return moves;
     }
 }

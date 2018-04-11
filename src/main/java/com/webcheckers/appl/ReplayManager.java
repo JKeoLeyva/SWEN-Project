@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 
@@ -18,10 +17,6 @@ public class ReplayManager {
     public void addReplay(Game game, Player player) {
         Replay replay = new Replay(game);
         this.replays.put(player, replay);
-
-        for(Move move : game.getSubmittedMoves()) {
-            replay.addMove(move);
-        }
     }
 
     public Replay getReplay(Player player) {
