@@ -25,6 +25,7 @@ class PostResignRouteTest {
     private GameManager gameManager;
     private Player player;
     private Game game;
+    private ReplayManager replayManager;
 
     /*
      * Set up the mocked objects and some method calls
@@ -36,10 +37,11 @@ class PostResignRouteTest {
         session = mock(Session.class);
         player = mock(Player.class);
         gameManager = mock(GameManager.class);
+        replayManager = mock(ReplayManager.class);
 
         when(request.session()).thenReturn(session);
 
-        route = new PostResignRoute(gameManager);
+        route = new PostResignRoute(gameManager, replayManager);
     }
 
     /*

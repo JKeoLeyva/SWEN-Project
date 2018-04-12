@@ -15,7 +15,11 @@ public class Replay {
         return moves;
     }
 
-    public String getName() {
-        return game.getRedPlayer() + "vs " + game.getWhitePlayer();
+    public String getName(Player player) {
+        if(player.equals(game.getRedPlayer())) {
+            return "You vs. " + game.getWhitePlayer().getName();
+        } else {
+            return "You vs. " + game.getRedPlayer().getName();
+        }
     }
 }

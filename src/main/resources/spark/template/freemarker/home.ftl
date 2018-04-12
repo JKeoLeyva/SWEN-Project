@@ -47,13 +47,18 @@
             </#if>
         </#list>
         </ol>
-        <ol>
+        <#if replayManager.getReplays(currentPlayer)?? >
+            <#if (replayManager.getReplays(currentPlayer)?size > 0)>
+                <p>Replays you can watch: </p>
+            </#if>
+            <ol>
             <#list replayManager.getReplays(currentPlayer) as replay>
                 <li>
-                    <p><a href="/replay">${replay.getName()}</a></p>
+                    <p><a href="/replay">${replay.getName(currentPlayer)}</a></p>
                 </li>
             </#list>
-        </ol>
+            </ol>
+        </#if>
       <#else>
           <p>${playerLobby.getPlayerCount()} players currently signed in.</p>
       </#if>

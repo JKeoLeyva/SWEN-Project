@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,7 @@ class MatchmakingTemplateTest {
     private GameManager gameManager;
     private Player player1;
     private Player player2;
+    private ReplayManager replayManager;
 
     private Map<String, Object> vm;
 
@@ -43,10 +45,12 @@ class MatchmakingTemplateTest {
         player1 = mock(Player.class);
         player2 = mock(Player.class);
         gameManager = mock(GameManager.class);
+        replayManager = mock(ReplayManager.class);
 
         vm = new HashMap<>();
         vm.put(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
         vm.put(Strings.Template.Home.GAME_MANAGER, gameManager);
+        vm.put(Strings.Template.Home.REPLAY_MANAGER, replayManager);
     }
 
     @Test
@@ -63,6 +67,8 @@ class MatchmakingTemplateTest {
         when(playerLobby.getPlayerCount()).thenReturn(2);
         when(player1.getName()).thenReturn(PLAYER1);
         when(player2.getName()).thenReturn(PLAYER2);
+        when(replayManager.getReplays(player1)).thenReturn(null);
+        when(replayManager.getReplays(player2)).thenReturn(null);
 
         final ModelAndView modelAndView = new ModelAndView(vm, Strings.Template.Home.FILE_NAME);
         final String viewHTML = engine.render(modelAndView);

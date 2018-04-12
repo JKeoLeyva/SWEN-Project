@@ -19,8 +19,8 @@ public class ReplayManager {
     public void addReplay(Game game, Player player) {
         Replay replay = new Replay(game);
 
-        if(this.getReplays(player) != null) {
-            this.getReplays(player).add(replay);
+        if(this.replays.get(player) != null) {
+            this.replays.get(player).add(replay);
         } else {
             List<Replay> playerReplays = new ArrayList<Replay>();
             playerReplays.add(replay);

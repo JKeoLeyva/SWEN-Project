@@ -19,17 +19,20 @@ public class PostResignRoute implements Route {
 
     private final GameManager gameManager;
     private final Gson gson;
+    private final ReplayManager replayManager;
 
 
-    public PostResignRoute(final GameManager gameManager) {
+    public PostResignRoute(final GameManager gameManager, final ReplayManager replayManager) {
         this.gameManager = gameManager;
         this.gson = new Gson();
+        this.replayManager = replayManager;
     }
 
     public Object handle(Request request, Response response) {
         LOG.finer("PostResignRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
         Message message;
+        replayManager.addReplay(gameManager.getGame(player), player);
         gameManager.deleteGame(player);
 
         if(!gameManager.getGames().containsKey(player)) {
