@@ -14,4 +14,8 @@ public class Replay {
     public Queue<Move> getMoves() {
         return moves;
     }
+
+    public String getName() {
+        return game.getRedPlayer() + "vs " + game.getWhitePlayer();
+    }
 }
