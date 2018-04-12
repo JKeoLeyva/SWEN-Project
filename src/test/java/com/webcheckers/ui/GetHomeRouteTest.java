@@ -4,6 +4,7 @@ import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,7 @@ class GetHomeRouteTest {
     private Player player;
     private Message message;
     private GameManager gameManager;
+    private ReplayManager replayManager;
 
     /**
      * Set up the mocked objects and some method calls
@@ -47,6 +49,7 @@ class GetHomeRouteTest {
         player = mock(Player.class);
         gameManager = mock(GameManager.class);
         message = mock(Message.class);
+        replayManager = mock(ReplayManager.class);
 
         when(request.session()).thenReturn(session);
         when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
@@ -54,7 +57,7 @@ class GetHomeRouteTest {
         when(gameManager.getGame(player)).thenReturn(null);
         when(message.getText()).thenReturn(MESSAGE_TEXT);
 
-        route = new GetHomeRoute(templateEngine, playerLobby, gameManager);
+        route = new GetHomeRoute(templateEngine, playerLobby, gameManager, replayManager);
 
         // Setup template tester
         engineTester = new TemplateEngineTester();

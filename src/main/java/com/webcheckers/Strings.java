@@ -15,6 +15,7 @@ public final class Strings {
             public static final String PLAYER_LOBBY = "playerLobby";
             public static final String GAME_MANAGER = "gameManager";
             public static final String MESSAGE = "message";
+            public static final String REPLAY_MANAGER = "replayManager";
         }
 
         public static final class SignIn {
