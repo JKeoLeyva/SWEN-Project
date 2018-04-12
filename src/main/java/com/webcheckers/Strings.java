@@ -6,8 +6,8 @@ public interface Strings {
         String MESSAGE = "message";
     }
 
-    final class Template {
-        public interface Home {
+    interface Template {
+        interface Home {
             String FILE_NAME = "home.ftl";
             String CURRENT_PLAYER = "currentPlayer";
             String PLAYER_LOBBY = "playerLobby";
@@ -17,12 +17,12 @@ public interface Strings {
 
         }
 
-        public interface SignIn {
+        interface SignIn {
             String FILE_NAME = "signin.ftl";
             String PLAYER_NAME = "name";
         }
 
-        public interface Game {
+        interface Game {
             String FILE_NAME = "game.ftl";
             String CURRENT_PLAYER = "currentPlayer";
             String VIEW_MODE = "viewMode";
@@ -32,14 +32,14 @@ public interface Strings {
             String BOARD = "board";
         }
 
-        public interface Help {
+        interface Help {
             String FILE_NAME = "help.ftl";
             String CURRENT_PLAYER = "currentPlayer";
         }
 
     }
 
-    final class Request{
-        public static final String OPPONENT = "opponent";
+    interface Request{
+        String OPPONENT = "opponent";
     }
 }
