@@ -6,23 +6,23 @@ public interface Strings {
         String MESSAGE = "message";
     }
 
-    public static final class Template {
-        public static final class Home {
-            public static final String FILE_NAME = "home.ftl";
-            public static final String CURRENT_PLAYER = "currentPlayer";
-            public static final String PLAYER_LOBBY = "playerLobby";
-            public static final String GAME_MANAGER = "gameManager";
-            public static final String MESSAGE = "message";
-            public static final String REPLAY_MANAGER = "replayManager";
+    final class Template {
+        public interface Home {
+            String FILE_NAME = "home.ftl";
+            String CURRENT_PLAYER = "currentPlayer";
+            String PLAYER_LOBBY = "playerLobby";
+            String GAME_MANAGER = "gameManager";
+            String MESSAGE = "message";
+            String REPLAY_MANAGER = "replayManager";
 
         }
 
-        interface SignIn {
+        public interface SignIn {
             String FILE_NAME = "signin.ftl";
             String PLAYER_NAME = "name";
         }
 
-        interface Game {
+        public interface Game {
             String FILE_NAME = "game.ftl";
             String CURRENT_PLAYER = "currentPlayer";
             String VIEW_MODE = "viewMode";
@@ -32,14 +32,14 @@ public interface Strings {
             String BOARD = "board";
         }
 
-        interface Help {
+        public interface Help {
             String FILE_NAME = "help.ftl";
             String CURRENT_PLAYER = "currentPlayer";
         }
 
     }
 
-    public static final class Request{
+    final class Request{
         public static final String OPPONENT = "opponent";
     }
 }
