@@ -31,15 +31,16 @@ public class ReplayManagerTest {
         game.submitTurn();
 
         replayManager.addReplay(game, player1);
-
-        assertNotNull(replayManager.getReplay(player1));
+        assertNotNull(replayManager.getReplays(player1));
+        replayManager.addReplay(game, player2);
+        assertNotNull(replayManager.getReplays(player2));
     }
 
     @Test
     void deleteReplay() {
         addReplay();
 
-        replayManager.deleteReplay(player1);
-        assertNull(replayManager.getReplay(player1));
+        replayManager.deleteReplays(player1);
+        assertNull(replayManager.getReplays(player1));
     }
 }

@@ -40,7 +40,7 @@ public class GetSignOutRoute implements Route {
         if(player != null) {
             if(gameManager.getGame(player) != null) {
                 gameManager.deleteGame(player);
-                replayManager.deleteReplay(player);
+                replayManager.deleteReplays(player);
             }
             playerLobby.signOutPlayer(player.getName());
             session.invalidate();

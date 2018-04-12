@@ -4,26 +4,35 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReplayManager {
-    private Map<Player, Replay> replays;
+    private Map<Player, List<Replay>> replays;
 
     public ReplayManager() {
-        this.replays = new HashMap<Player, Replay>();
+        this.replays = new HashMap<Player, List<Replay>>();
     }
 
     public void addReplay(Game game, Player player) {
         Replay replay = new Replay(game);
-        this.replays.put(player, replay);
+
+        if(this.replays.get(player) != null) {
+            this.replays.get(player).add(replay);
+        } else {
+            List<Replay> playerReplays = new ArrayList<Replay>();
+            playerReplays.add(replay);
+            this.replays.put(player, playerReplays);
+        }
     }
 
-    public Replay getReplay(Player player) {
+    public List<Replay> getReplays(Player player) {
         return replays.get(player);
     }
 
-    public void deleteReplay(Player player) {
+    public void deleteReplays(Player player) {
         replays.remove(player);
     }
 }

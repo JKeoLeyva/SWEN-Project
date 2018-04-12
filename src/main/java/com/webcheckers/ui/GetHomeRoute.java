@@ -4,6 +4,7 @@ import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -25,6 +26,7 @@ public class GetHomeRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
+    private final ReplayManager replayManager;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -35,13 +37,14 @@ public class GetHomeRoute implements Route {
      * @param gameManager    a list of all current games
      */
     public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
-                        final GameManager gameManager) {
+                        final GameManager gameManager, final ReplayManager replayManager) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
         this.gameManager = gameManager;
+        this.replayManager = replayManager;
     }
 
     /**
@@ -73,6 +76,7 @@ public class GetHomeRoute implements Route {
         vm.put(Strings.Template.Home.CURRENT_PLAYER, currentPlayer);
         vm.put(Strings.Template.Home.PLAYER_LOBBY, playerLobby);
         vm.put(Strings.Template.Home.GAME_MANAGER, gameManager);
+        vm.put(Strings.Template.Home.REPLAY_MANAGER, replayManager);
 
         if(message != null) {
             // Some message exists, and should be displayed.
