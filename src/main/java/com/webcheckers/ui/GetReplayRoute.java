@@ -69,7 +69,7 @@ public class GetReplayRoute implements Route {
         Game game = new Game(replay.getRedPlayer(), replay.getWhitePlayer());
         Queue<Move> moves = replay.getMoves();
 
-        if(moveID >= moves.size()) {
+        if(moveID > moves.size()) {
             response.redirect(WebServer.HOME_URL);
             return null;
         }
