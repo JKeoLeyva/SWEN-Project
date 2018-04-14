@@ -17,8 +17,9 @@ define(function(require){
   /**
    * Constructor function.
    */
-  function ReplayController(boardController) {
+  function ReplayController(boardController, totalMoves) {
     this._boardController = boardController;
+    this._totalMoves = totalMoves;
 
     // Add the StatePattern mixin
     StatePatternMixin.call(this);
@@ -76,6 +77,15 @@ define(function(require){
       this.enableButton(id);
     else
       this.disableButton(id);
+  };
+
+  ReplayController.prototype.totalMoves = function() {
+    return this._totalMoves;
+  };
+
+  ReplayController.prototype.setNextToFinish = function() {
+    console.log(this);
+    this.setText(ReplayModeConstants.NEXT_BUTTON_ID, "Finish");
   };
 
   //

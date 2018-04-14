@@ -43,8 +43,12 @@ define(function(require){
   ReplayModeMainState.prototype.onEntry = function onEntry() {
     this._controller.disableAllPieces();
 
-    if(getParam('move') !== '0')
+    const currentMove = parseInt(getParam('move'), 10);
+    if(currentMove !== 0)
       this._controller.button(ReplayModeConstants.PREVIOUS_BUTTON_ID, true);
+
+    if(currentMove === this._controller.totalMoves())
+      this._controller.setNextToFinish();
   };
 
   /**

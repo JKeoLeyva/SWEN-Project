@@ -68,8 +68,9 @@ public class GetReplayRoute implements Route {
 
         Game game = new Game(replay.getRedPlayer(), replay.getWhitePlayer());
         Queue<Move> moves = replay.getMoves();
+        int totalMoves = moves.size();
 
-        if(moveID > moves.size()) {
+        if(moveID > totalMoves) {
             response.redirect(WebServer.HOME_URL);
             return null;
         }
@@ -89,6 +90,7 @@ public class GetReplayRoute implements Route {
                 game.getRedPlayer().equals(currentPlayer) ? Piece.Color.RED : Piece.Color.WHITE
         );
         vm.put(Strings.Template.Game.BOARD, game.makeBoardView(currentPlayer));
+        vm.put(Strings.Template.Game.REPLAY_TOTAL_MOVES, totalMoves);
 
         return templateEngine.render(new ModelAndView(vm, Strings.Template.Game.FILE_NAME));
     }

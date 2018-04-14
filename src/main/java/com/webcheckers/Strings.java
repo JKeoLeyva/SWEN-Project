@@ -30,6 +30,7 @@ public interface Strings {
             String WHITE_PLAYER = "whitePlayer";
             String ACTIVE_COLOR = "activeColor";
             String BOARD = "board";
+            String REPLAY_TOTAL_MOVES = "replayTotalMoves";
         }
 
         interface Help {
