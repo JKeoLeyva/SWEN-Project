@@ -63,7 +63,7 @@ define(function(require){
       break;
     case REPLAY_MODE:
       console.debug('Replay mode');
-      modeController = new ReplayController(this);
+      modeController = new ReplayController(this._boardController);
       break;
     default:
       alert('Unknown view module: ' + this._mode);

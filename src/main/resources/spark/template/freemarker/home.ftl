@@ -54,7 +54,7 @@
             <ol>
             <#list replayManager.getReplays(currentPlayer) as replay>
                 <li>
-                    <p><a href="/replay">${replay.getName(currentPlayer)}</a></p>
+                    <p><a href="/replay?id=${replay?index}&move=0">${replay.getName(currentPlayer)}</a></p>
                 </li>
             </#list>
             </ol>

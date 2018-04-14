@@ -41,5 +41,7 @@ public interface Strings {
 
     interface Request{
         String OPPONENT = "opponent";
+        String REPLAY_ID = "id";
+        String MOVE_ID = "move";
     }
 }

@@ -74,6 +74,8 @@ public class WebServer {
 
     public static final String HELP_URL = "/help";
 
+    public static final String REPLAY_URL = "/replay";
+
     //
     // Attributes
     //
@@ -173,6 +175,7 @@ public class WebServer {
         post(BACKUP_Move_URL, new PostBackupMoveRoute(gson, gameManager));
         post(RESIGN_URL, new PostResignRoute(gameManager, replayManager));
         get(HELP_URL, new GetHelpRoute(templateEngine));
+        get(REPLAY_URL, new GetReplayRoute(templateEngine, replayManager));
 
         LOG.config("WebServer is initialized.");
     }
