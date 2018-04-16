@@ -13,7 +13,7 @@ public class ReplayManager {
     private Map<Player, List<Replay>> replays;
 
     public ReplayManager() {
-        this.replays = new HashMap<Player, List<Replay>>();
+        this.replays = new HashMap<>();
     }
 
     public void addReplay(Game game, Player player) {
