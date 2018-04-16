@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
 public class ReplayManagerTest {
@@ -34,6 +33,10 @@ public class ReplayManagerTest {
         assertNotNull(replayManager.getReplays(player1));
         replayManager.addReplay(game, player2);
         assertNotNull(replayManager.getReplays(player2));
+
+        // Add second replay for player1
+        replayManager.addReplay(game, player1);
+        assertEquals(2, replayManager.getReplays(player1).size());
     }
 
     @Test

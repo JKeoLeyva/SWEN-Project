@@ -3,15 +3,15 @@ package com.webcheckers.ui;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.ReplayManager;
-import com.webcheckers.model.*;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.ViewMode;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 /**
  * Spark Route for a page displaying the current game.
@@ -76,6 +76,7 @@ public class GetGameRoute implements Route {
         vm.put(Strings.Template.Game.WHITE_PLAYER, game.getWhitePlayer());
         vm.put(Strings.Template.Game.ACTIVE_COLOR, game.getActiveColor());
         vm.put(Strings.Template.Game.BOARD, game.makeBoardView(currPlayer));
+        vm.put(Strings.Template.Game.REPLAY_TOTAL_MOVES, "0");
 
         return templateEngine.render(new ModelAndView(vm, Strings.Template.Game.FILE_NAME));
     }
