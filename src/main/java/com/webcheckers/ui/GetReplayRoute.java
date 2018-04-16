@@ -85,10 +85,7 @@ public class GetReplayRoute implements Route {
         vm.put(Strings.Template.Game.VIEW_MODE, ViewMode.REPLAY);
         vm.put(Strings.Template.Game.RED_PLAYER, game.getRedPlayer());
         vm.put(Strings.Template.Game.WHITE_PLAYER, game.getWhitePlayer());
-        vm.put(
-                Strings.Template.Game.ACTIVE_COLOR,
-                game.getRedPlayer().equals(currentPlayer) ? Piece.Color.RED : Piece.Color.WHITE
-        );
+        vm.put(Strings.Template.Game.ACTIVE_COLOR, game.getActiveColor());
         vm.put(Strings.Template.Game.BOARD, game.makeBoardView(currentPlayer));
         vm.put(Strings.Template.Game.REPLAY_TOTAL_MOVES, totalMoves);
 
