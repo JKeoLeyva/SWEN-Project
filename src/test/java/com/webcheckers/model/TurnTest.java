@@ -34,23 +34,23 @@ class TurnTest {
         ArrayList<Move> moves = new ArrayList<>();
         // Alternates between advancing red and white pieces.
         for(int i = 0; i < Board.BOARD_SIZE; i+=2){
-            turn.setPlayerColor(Piece.Color.RED);
+            turn = new Turn(board, Piece.Color.RED);
             Position start = new Position(5, i);
             Position end = new Position(4, i+1);
             Move move = new Move(start, end);
             Message result = turn.tryMove(move);
             assertEquals(result.getType(), Message.Type.info);
             queue.add(move);
-            moves.add(turn.getValidatedMoves().get(0));
+            moves.add(turn.getValidatedMoves().peek());
 
-            turn.setPlayerColor(Piece.Color.WHITE);
+            turn = new Turn(board, Piece.Color.WHITE);
             start = new Position(2, i+1);
             end = new Position(3, i);
             move = new Move(start, end);
             result = turn.tryMove(move);
             assertEquals(result.getType(), Message.Type.info);
             queue.add(move);
-            moves.add(turn.getValidatedMoves().get(0));
+            moves.add(turn.getValidatedMoves().peek());
         }
 
         // Checks that all moves input to isValid and all moves stored are the same.

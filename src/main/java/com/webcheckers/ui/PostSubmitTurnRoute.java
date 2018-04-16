@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.Strings;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.Message;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.Request;
@@ -30,9 +29,7 @@ public class PostSubmitTurnRoute implements Route {
         Session session = request.session();
         Player currPlayer = session.attribute(Strings.Session.PLAYER);
         Game game = gameManager.getGame(currPlayer);
-        Message result = new Message("Move(s) submitted.", Message.Type.info);
-        game.submitTurn();
 
-        return gson.toJson(result);
+        return gson.toJson(game.submitTurn());
     }
 }

@@ -16,7 +16,7 @@ public class Turn {
     static final String JUMPED_OVER = "Piece was already jumped over.";
     static final String SPACE_OCCUPIED = "ERROR! Tried to move onto an occupied space.";
     static final String VALID_MOVE = "Move is valid!";
-    static final String HAS_JUMP = "Must make a jump move when one is possible.";
+    static final String FORCED_MOVE = "Jump moves are available, so no single move can be taken.";
 
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves = new Stack<>();
@@ -24,25 +24,26 @@ public class Turn {
     private Set<Position> jumpedSpaces = new HashSet<>();
     // A temporary Board to store moves.
     private Board temp;
-    // If the turn has jumps (and therefore can't have any more single moves)
+    // The color of the player whose turn it is.
     private Piece.Color playerColor;
+    // An always-updating Set of possible valid moves.
+    private Set<Move> possibleMoves;
+    // If possibleMoves contains a Jump move.
+    private boolean jumpMoveExists = false;
 
     Turn(Board board, Piece.Color playerColor) {
         this.temp = new Board(board);
         this.playerColor = playerColor;
+        this.possibleMoves = generateValidMoves();
     }
 
     /**
      * Determines if a move is valid, and returns the proper message.
-     * Makes the move on the temporary board if move is valid.
      * @param move to be validated
      * @return Message to be displayed
      */
-    Message tryMove(Move move) {
-        if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
-            return new Message(BAD_MOVE, Message.Type.error);
+    private Message testMove(Move move) {
 
-        move = new Move(move, temp.getPiece(move.getStart()));
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
@@ -59,19 +60,38 @@ public class Turn {
                 return new Message(JUMP_CHANGE, Message.Type.error);}
         }
 
-        if(move.getMoveType() == Move.Type.SINGLE && temp.hasJumpMove(playerColor)){
-            return new Message(HAS_JUMP, Message.Type.error);
-        }
-
         if(move.getMoveType() == Move.Type.JUMP && isInvalidJumpMove(move))
             return new Message(BAD_JUMP, Message.Type.error);
 
         if(temp.getPiece(move.getEnd()) != null)
             return new Message(SPACE_OCCUPIED, Message.Type.error);
 
-        validatedMoves.push(move);
-        makeMove(move, false);
         return new Message(VALID_MOVE, Message.Type.info);
+    }
+
+    /**
+     * Tests if a move is valid, and makes the move on the temp board if it is.
+     * @param move to try
+     * @return proper message
+     */
+    Message tryMove(Move move){
+        // If Move is out of bounds, it is not even tested.
+        if(temp.outOfBounds(move.getStart()) || temp.outOfBounds(move.getEnd()))
+            return new Message(BAD_MOVE, Message.Type.error);
+
+        move = new Move(move, temp.getPiece(move.getStart()));
+        Message ret = testMove(move);
+        if(ret.getType() == Message.Type.error)
+            return ret;
+
+        // If a jump move exists, the player is forced to make it.
+        if(move.getMoveType() == Move.Type.SINGLE && jumpMoveExists)
+            return new Message(FORCED_MOVE, Message.Type.error);
+
+        validatedMoves.add(move);
+        makeMove(move, false);
+        possibleMoves = generateValidMoves();
+        return ret;
     }
 
     /**
@@ -113,6 +133,8 @@ public class Turn {
      * @return A Stack of moves with the first move on top, and so on.
      */
     Stack<Move> getValidatedMoves(){
+        if(jumpMoveExists)
+            return null;
         Stack<Move> ret = new Stack<>();
         while(!validatedMoves.empty())
             ret.push(validatedMoves.pop());
@@ -120,7 +142,53 @@ public class Turn {
         return ret;
     }
 
-    void setPlayerColor(Piece.Color playerColor) {
-        this.playerColor = playerColor;
+    /**
+     * Generates a set of valid Moves.
+     * @return all possible valid Moves
+     */
+    Set<Move> generateValidMoves(){
+        Set<Move> validMoves = new HashSet<>(8);
+        int[] adjustments = {-2, -1, 1, 2};
+        jumpMoveExists = false;
+        for(int row = 0; row < Board.BOARD_SIZE; row++){
+            for(int col = 0; col < Board.BOARD_SIZE; col++){
+                // Find all Pieces that the current player owns.
+                Position currPos = new Position(row, col);
+                Piece currPiece = temp.getPiece(currPos);
+                if( currPiece == null || currPiece.getColor() != playerColor)
+                    continue;
+                // Test all possible Moves that player can make.
+                for(int rowAdjust : adjustments){
+                    for(int colAdjust : adjustments){
+                        int currRow = currPos.getRow();
+                        int currCol = currPos.getCell();
+                        Position nextPos = new Position(currRow + rowAdjust, currCol + colAdjust);
+
+                        if(temp.outOfBounds(nextPos))
+                            continue;
+
+                        Move testMove = new Move(new Move(currPos, nextPos), currPiece);
+                        if(testMove(testMove).getType() == Message.Type.info) {
+                            validMoves.add(testMove);
+                            if(testMove.getMoveType() == Move.Type.JUMP)
+                                jumpMoveExists = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // SINGLE Moves must be excluded if a Jump move is possible.
+        if(jumpMoveExists){
+            Set<Move> ret = new HashSet<>(8);
+            for(Move move : validMoves){
+                if(move.getMoveType() == Move.Type.JUMP)
+                    validMoves.add(move);
+            }
+            validMoves = ret;
+        }
+
+        return validMoves;
     }
+
 }
