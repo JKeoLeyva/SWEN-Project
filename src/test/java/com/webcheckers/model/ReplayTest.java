@@ -14,12 +14,14 @@ public class ReplayTest {
     @Test
     void newReplay() {
         // Create replay
+        Player redPlayer = new Player("Dank");
+        Player whitePlayer = new Player("Memes");
         Queue<Move> moves = new LinkedList<>();
         moves.add(new Move(new Position(1,1), new Position(2,2)));
         Game game = mock(Game.class);
         when(game.getSubmittedMoves()).thenReturn(moves);
-        when(game.getRedPlayer()).thenReturn(new Player("Dank"));
-        when(game.getWhitePlayer()).thenReturn(new Player("Memes"));
+        when(game.getRedPlayer()).thenReturn(redPlayer);
+        when(game.getWhitePlayer()).thenReturn(whitePlayer);
 
         Replay replay = new Replay(game);
 
@@ -27,6 +29,8 @@ public class ReplayTest {
         assertEquals(moves, replay.getMoves());
         assertEquals(replay.getName(game.getRedPlayer()), "You vs. Memes");
         assertEquals(replay.getName(game.getWhitePlayer()), "You vs. Dank");
+        assertEquals(replay.getRedPlayer(), redPlayer);
+        assertEquals(replay.getWhitePlayer(), whitePlayer);
 
         //noinspection ResultOfMethodCallIgnored
         verify(game).getSubmittedMoves();
