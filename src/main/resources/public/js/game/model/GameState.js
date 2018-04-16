@@ -44,6 +44,9 @@ define(function(require){
       return gameData.whitePlayer === gameData.currentPlayer;
     };
 
+    this.replayTotalMoves = function() {
+      return parseInt(gameData.replayTotalMoves, 10);
+    }
   };
 
   //

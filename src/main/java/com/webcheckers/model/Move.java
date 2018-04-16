@@ -21,7 +21,7 @@ public class Move {
      * @param move the move to copy start and end from
      * @param piece the moving Piece
      */
-    Move(Move move, Piece piece){
+    public Move(Move move, Piece piece){
         this.start = move.getStart();
         this.end = move.getEnd();
         this.piece = piece;

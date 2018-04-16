@@ -70,6 +70,10 @@ define(function(require){
       getButton(id).removeAttr(DISABLED);
     };
 
+    this.setText = function setText(id, text) {
+      getButton(id).text(text);
+    };
+
     // internal private methods
 
     function makeViewEventHandler(actionMethod) {

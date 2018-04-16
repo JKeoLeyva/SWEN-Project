@@ -9,9 +9,13 @@ define(function(){
      * Used in methods to change GameView Replay mode states.
      */
     return {
-      
-      REPLAY_MODE_STARTING: 'REPLAY_MODE_STARTING',
-      // TODO more State constants
+      // States
+      REPLAY_MODE_MAIN_STATE: 'REPLAY_MODE_MAIN_STATE',
 
+      // Buttons
+      PREVIOUS_BUTTON_ID: 'previousButton',
+      PREVIOUS_BUTTON_TOOLTIP: 'Go back one move',
+      NEXT_BUTTON_ID: 'nextButton',
+      NEXT_BUTTON_TOOLTIP: 'Go forward one move'
     };
 });

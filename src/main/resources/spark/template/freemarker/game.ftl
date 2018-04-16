@@ -11,7 +11,8 @@
             "viewMode": "${viewMode}",
             "redPlayer": "${redPlayer.name}",
             "whitePlayer": "${whitePlayer.name}",
-            "activeColor": "${activeColor}"
+            "activeColor": "${activeColor}",
+            "replayTotalMoves": "${replayTotalMoves}"
         };
     </script>
 </head>
