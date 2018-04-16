@@ -80,4 +80,71 @@ public class Board {
                 pos.getRow() >= 0 && pos.getCell() >= 0);
     }
 
+    /**
+     * Returns true if the player of the specified color has a possible jump move
+     * @param color of player that might have jump move
+     * @return if color has a valid jump move
+     */
+    public boolean hasJumpMove(Piece.Color color){
+        Piece.Color otherColor = color == Piece.Color.RED ? Piece.Color.WHITE : Piece.Color.WHITE;
+        Position start;
+        for(int row = 0; row < BOARD_SIZE; row++) {
+            for(int col = 0; col < BOARD_SIZE; col++) {
+                start = new Position(row, col);
+                if(board[row][col] != null && board[row][col].getColor() == color){
+                    if(isValidDirection(new Move(start, new Position(row - 2, col - 2)), board[row][col]) &&
+                            board[row - 2][col - 2] == null && board[row - 1][col - 1] != null &&
+                            board[row - 1][col - 1].getColor() == otherColor){
+                        return true;
+                    }
+                    if(isValidDirection(new Move(start, new Position(row - 2, col + 2)), board[row][col]) &&
+                            board[row - 2][col + 2] == null && board[row - 1][col + 1] != null &&
+                            board[row - 1][col + 1].getColor() == otherColor){
+                        return true;
+                    }
+                    if(isValidDirection(new Move(start, new Position(row + 2, col + 2)), board[row][col]) &&
+                            board[row + 2][col + 2] == null && board[row + 1][col + 1] != null &&
+                            board[row + 1][col + 1].getColor() == otherColor){
+                        return true;
+                    }
+                    if(isValidDirection(new Move(start, new Position(row + 2, col - 2)), board[row][col]) &&
+                            board[row + 2][col - 2] == null && board[row + 1][col - 1] != null &&
+                            board[row + 1][col - 1].getColor() == otherColor){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the move is in a valid direction
+     * @param move
+     * @return
+     */
+    public boolean isValidDirection(Move move, Piece piece){
+
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCol = move.getEnd().getCell();
+        int diff = endCol - startCol;
+
+        Piece.Color color = piece.getColor();
+        Piece.Type type = piece.getType();
+
+        if(endRow < 0 || endRow >= BOARD_SIZE || endCol < 0 || endCol >= BOARD_SIZE)
+            return false;
+        if(type == Piece.Type.KING)
+            return true;
+
+        if(diff < 0)
+            return color == Piece.Color.RED;
+        else
+            return color == Piece.Color.WHITE;
+
+    }
+
 }

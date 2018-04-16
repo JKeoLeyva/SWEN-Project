@@ -16,6 +16,7 @@ public class Turn {
     static final String JUMPED_OVER = "Piece was already jumped over.";
     static final String SPACE_OCCUPIED = "ERROR! Tried to move onto an occupied space.";
     static final String VALID_MOVE = "Move is valid!";
+    static final String HAS_JUMP = "Must make a jump move when one is possible.";
 
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves = new Stack<>();
@@ -56,6 +57,10 @@ public class Turn {
                 return new Message(JUMPED_OVER, Message.Type.error);
             if(!validatedMoves.peek().getEnd().equals(move.getStart())){
                 return new Message(JUMP_CHANGE, Message.Type.error);}
+        }
+
+        if(move.getMoveType() == Move.Type.SINGLE && temp.hasJumpMove(playerColor)){
+            return new Message(HAS_JUMP, Message.Type.error);
         }
 
         if(move.getMoveType() == Move.Type.JUMP && isInvalidJumpMove(move))
