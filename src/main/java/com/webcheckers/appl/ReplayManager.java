@@ -22,7 +22,7 @@ public class ReplayManager {
         if(this.replays.get(player) != null) {
             this.replays.get(player).add(replay);
         } else {
-            List<Replay> playerReplays = new ArrayList<Replay>();
+            List<Replay> playerReplays = new ArrayList<>();
             playerReplays.add(replay);
             this.replays.put(player, playerReplays);
         }

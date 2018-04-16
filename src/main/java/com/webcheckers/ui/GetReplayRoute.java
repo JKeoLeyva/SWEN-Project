@@ -48,6 +48,12 @@ public class GetReplayRoute implements Route {
         }
 
         List<Replay> replays = replayManager.getReplays(currentPlayer);
+
+        if(replays == null) {
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
         int replayID;
         int moveID;
 
@@ -59,12 +65,17 @@ public class GetReplayRoute implements Route {
             return null;
         }
 
-        Replay replay = replays.get(replayID);
-
-        if(replay == null) {
+        if(moveID < 0) {
             response.redirect(WebServer.HOME_URL);
             return null;
         }
+
+        if(replayID < 0 || replayID >= replays.size()) {
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
+        Replay replay = replays.get(replayID);
 
         Game game = new Game(replay.getRedPlayer(), replay.getWhitePlayer());
         Queue<Move> moves = replay.getMoves();
