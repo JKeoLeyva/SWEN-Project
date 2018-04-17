@@ -13,16 +13,28 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
+/**
+ * Spark Route used to validate a move that is being made by a Player
+ */
 public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
     private final Gson gson;
     private final GameManager gameManager;
 
+    /**
+     * @param gson used to return the result of the move being made
+     * @param gameManager Used to find the current game being played
+     */
     public PostValidateMoveRoute(Gson gson, GameManager gameManager) {
         this.gson = gson;
         this.gameManager = gameManager;
     }
 
+    /**
+     * @param request contains the name of the current Player
+     * @param response used to redirect to the generate game board
+     * @return Json object
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostValidateMoveRoute is invoked.");
