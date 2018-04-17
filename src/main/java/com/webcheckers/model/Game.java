@@ -10,6 +10,9 @@ import java.util.Stack;
 
 import static com.webcheckers.model.Board.BOARD_SIZE;
 
+/**
+ * This is used to represent a Game of Checkers between two players.
+ */
 public class Game {
     private Board board;
     private Player redPlayer;
@@ -29,6 +32,7 @@ public class Game {
         GAME_OVER
     }
 
+
     public Game(Player redPlayer, Player whitePlayer) {
         this(redPlayer, whitePlayer, new Board());
     }
@@ -42,22 +46,43 @@ public class Game {
         clearTurn();
     }
 
+    /**
+     * retrieves the red player from the game
+     * @return the red player
+     */
     public Player getRedPlayer() {
         return redPlayer;
     }
 
+    /**
+     * retrieves the white player from the game
+     * @return the white player
+     */
     public Player getWhitePlayer() {
         return whitePlayer;
     }
 
+    /**
+     * Used to see what the current state of the game is
+     * @return the color of the current active piece, red or white
+     */
     public Piece.Color getActiveColor() {
         return currState == State.WAITING_FOR_RED ? Piece.Color.RED : Piece.Color.WHITE;
     }
 
+    /**
+     * Used to set the BoardView for the white player
+     * @param player used to get the BoardView for the white player
+     * @return The BoardView for the white player
+     */
     public BoardView makeBoardView(Player player) {
         return new BoardView(board, whitePlayer.equals(player));
     }
 
+    /**
+     * Checks to see if the game is over
+     * @return a boolean, true if one of the players is unable to make a move
+     */
     public boolean isGameOver() {
         return currState == State.GAME_OVER || noMove(redPlayer) || noMove(whitePlayer);
     }

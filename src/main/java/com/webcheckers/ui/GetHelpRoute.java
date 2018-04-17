@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to GET the Player Help Page
+ */
 public class GetHelpRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHelpRoute.class.getName());
 

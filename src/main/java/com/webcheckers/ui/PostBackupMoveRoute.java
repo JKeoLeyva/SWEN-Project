@@ -12,16 +12,29 @@ import spark.Session;
 
 import java.util.logging.Logger;
 
+/**
+ * Spark Route to revert the state of the Checkers board so that a move was undone
+ */
 public class PostBackupMoveRoute implements Route{
     private final static Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
     private final Gson gson;
     private final GameManager gameManager;
 
+    /**
+     *
+     * @param gson Used to return a message to the User indicating a move was undone
+     * @param gameManager Used to get the game associated with the current player
+     */
     public PostBackupMoveRoute(Gson gson, GameManager gameManager){
         this.gson = gson;
         this.gameManager = gameManager;
     }
 
+    /**
+     * @param request contains the name of the Player who wants to undo a move
+     * @param response used to redirect to a generated checkers board.
+     * @return Null
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostBackupMoveRoute is invoked.");

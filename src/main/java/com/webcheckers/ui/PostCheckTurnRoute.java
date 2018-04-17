@@ -14,16 +14,28 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * Spark Route used to check a turn submitted by a Player
+ */
 public class PostCheckTurnRoute implements Route {
     private final static Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
     private GameManager gameManager;
     private Gson gson;
 
+    /**
+     * @param gameManager used to get the game in which the move was submitted to
+     * @param gson used to deliver a message to the User after this route is done
+     */
     public PostCheckTurnRoute(GameManager gameManager, Gson gson) {
         this.gameManager = gameManager;
         this.gson = gson;
     }
 
+    /**
+     * @param request contains the name of the current Player
+     * @param response used to redirect to the generated board
+     * @return
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostCheckTurnRoute is invoked.");

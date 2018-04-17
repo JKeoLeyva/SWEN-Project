@@ -12,6 +12,9 @@ import spark.Route;
 
 import java.util.logging.Logger;
 
+/**
+ * Spark Route used to handle when a Player Resigns from a game
+ */
 public class PostResignRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostResignRoute.class.getName());
     private static final String FAILURE_MSSG = "Resign Failed";
@@ -21,13 +24,21 @@ public class PostResignRoute implements Route {
     private final Gson gson;
     private final ReplayManager replayManager;
 
-
+    /**
+     * @param gameManager used to get the game session to quit
+     * @param replayManager used to add a Replay to the current User
+     */
     public PostResignRoute(final GameManager gameManager, final ReplayManager replayManager) {
         this.gameManager = gameManager;
         this.gson = new Gson();
         this.replayManager = replayManager;
     }
 
+    /**
+     * @param request contains the name of the current user
+     * @param response used to redirect to the Home page
+     * @return Json Object
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostResignRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
