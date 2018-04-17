@@ -79,7 +79,10 @@
               <#list row.iterator() as space>
                   <td data-cell="${space.cellIdx}"
                     <#if space.isValid() >
-                    class="Space"
+                      class="Space"
+                    </#if>
+                    <#if helpSpaces?? && helpSpaces?seq_contains(space)>
+                      style="background: blue"
                     </#if>
                   >
                 <#if space.piece??>
