@@ -244,4 +244,20 @@ class TurnTest {
         assertEquals(Turn.SPACE_OCCUPIED, ret.getText());
     }
 
+    /**
+     * Test requiring a forced move
+     */
+    @Test
+    void forcedMove() {
+        // Setup test
+        board.setPiece(new Position(4, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        turn = new Turn(board, Piece.Color.RED);
+        Move move = new Move(new Position(5, 2), new Position(4, 3));
+
+        // Run test
+        Message message = turn.tryMove(move);
+
+        // Verify results
+        assertEquals(new Message(Turn.FORCED_MOVE, Message.Type.error), message);
+    }
 }

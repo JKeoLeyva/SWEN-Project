@@ -2,7 +2,9 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 
 public class Turn {
 
@@ -131,6 +133,7 @@ public class Turn {
     /**
      * Empties out and returns the validated moves.
      * @return A Stack of moves with the first move on top, and so on.
+     *         If there is still a forced move to be played, null will be returned.
      */
     Stack<Move> getValidatedMoves(){
         if(jumpMoveExists)
@@ -146,7 +149,7 @@ public class Turn {
      * Generates a set of valid Moves.
      * @return all possible valid Moves
      */
-    Set<Move> generateValidMoves(){
+    private Set<Move> generateValidMoves(){
         Set<Move> validMoves = new HashSet<>(8);
         int[] adjustments = {-2, -1, 1, 2};
         jumpMoveExists = false;

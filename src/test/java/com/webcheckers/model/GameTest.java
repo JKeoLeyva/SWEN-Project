@@ -1,12 +1,12 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -271,5 +271,26 @@ class GameTest {
         for(int i = 0; i < pos.getCell(); i++)
             spaces.next();
         return spaces.next().getPiece();
+    }
+
+    /**
+     * Make sure to check if there are still forced moves to be made
+     */
+    @Test
+    void oneMoreForcedMove() {
+        // Setup test
+        emptyBoard.setPiece(new Position(5, 0), new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+        emptyBoard.setPiece(new Position(4, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        emptyBoard.setPiece(new Position(2, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        Move move = new Move(new Position(5, 0), new Position(3, 2));
+        game = new Game(player1, player2, emptyBoard);
+
+        // Run test
+        Message turnMessage = game.tryMove(move);
+        Message submitMessage = game.submitTurn();
+
+        // Verify results
+        assertEquals(new Message(Turn.VALID_MOVE, Message.Type.info), turnMessage);
+        assertEquals(new Message(Game.MOVE_FORCED, Message.Type.error), submitMessage);
     }
 }
