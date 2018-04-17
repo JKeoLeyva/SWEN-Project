@@ -113,6 +113,7 @@ public class Turn {
         Move toReverse = validatedMoves.pop();
         Move reversed = new Move(toReverse);
         makeMove(reversed, true);
+        possibleMoves = generateValidMoves();
     }
 
     /**
