@@ -18,6 +18,10 @@ public class Game {
     // Stores all moves made during the game.
     private Queue<Move> submittedMoves = new LinkedList<>();
 
+    static final String NO_MOVES = "No moves were made.";
+    static final String MOVE_FORCED = "There is still a forced jump move to make.";
+    static final String TURN_SUBMITTED = "Turn submitted successfully!";
+
     private enum State {
         WAITING_FOR_RED,
         WAITING_FOR_WHITE,
@@ -108,19 +112,23 @@ public class Game {
     /**
      * Makes the moves validated within Turn, then switches State,
      * and creates a turn for the next player.
+     * If there are jump moves still to be made, returns an error message.
      */
-    public void submitTurn() {
+    public Message submitTurn() {
         // Gets the validated moves stored in Turn.
         Stack<Move> validMoves = turn.getValidatedMoves();
+        if(validMoves == null)
+            return new Message(MOVE_FORCED, Message.Type.error);
         // If no moves were made, the turn should not be switched.
         if(validMoves.size() == 0)
-            return;
+            return new Message(NO_MOVES, Message.Type.error);
         while(!validMoves.empty())
             makeMove(validMoves.pop());
         // Switches the cuurent state.
         currState = (getActiveColor() == Piece.Color.RED ?
                 State.WAITING_FOR_WHITE : State.WAITING_FOR_RED);
         clearTurn();
+        return new Message(TURN_SUBMITTED, Message.Type.info);
     }
 
     /**
