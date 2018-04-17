@@ -293,4 +293,9 @@ class GameTest {
         assertEquals(new Message(Turn.VALID_MOVE, Message.Type.info), turnMessage);
         assertEquals(new Message(Game.MOVE_FORCED, Message.Type.error), submitMessage);
     }
+
+    @Test
+    void possibleMoves() {
+        assertEquals(7, game.getPossibleMoves().size());
+    }
 }

@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,6 +26,7 @@ class SpaceTest {
         assertEquals(row, space.getRow());
         assertEquals(toString, space.toString());
         assertEquals(isValid, space.isValid());
+        assertEquals(new Position(row, cellIdx), space.asPosition());
     }
 
     /**
@@ -35,8 +35,8 @@ class SpaceTest {
     @Test
     void testValidSpacePiece() {
         Piece p = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
-        testSpace(p, 1, 1, "[" + p.toString() + "]", false);
-        testSpace(p, 1, 2, "[" + p.toString() + "]", false);
+        testSpace(p, 1, 1, "[" + p.toString() + "]" + " (1, 1)", false);
+        testSpace(p, 1, 2, "[" + p.toString() + "]" + " (1, 2)", false);
     }
 
     /**
@@ -44,7 +44,7 @@ class SpaceTest {
      */
     @Test
     void testValidSpaceNoPiece() {
-        testSpace(null, 1, 2, "[ ]", true);
+        testSpace(null, 1, 2, "[ ]" + " (1, 2)", true);
     }
 
     /**
