@@ -31,6 +31,7 @@ public interface Strings {
             String ACTIVE_COLOR = "activeColor";
             String BOARD = "board";
             String REPLAY_TOTAL_MOVES = "replayTotalMoves";
+            String HELP_SPACES = "helpSpaces";
         }
 
         interface Help {
@@ -44,5 +45,6 @@ public interface Strings {
         String OPPONENT = "opponent";
         String REPLAY_ID = "id";
         String MOVE_ID = "move";
+        String HELP = "help";
     }
 }

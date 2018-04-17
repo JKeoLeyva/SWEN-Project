@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Message;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -195,4 +196,10 @@ public class Turn {
         return validMoves;
     }
 
+    /**
+     * @return An unmodifiable set of possible moves
+     */
+    Set<Move> getPossibleMoves() {
+        return Collections.unmodifiableSet(possibleMoves);
+    }
 }

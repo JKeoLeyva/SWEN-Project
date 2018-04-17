@@ -5,6 +5,7 @@ import com.webcheckers.ui.BoardView;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 import static com.webcheckers.model.Board.BOARD_SIZE;
@@ -193,7 +194,14 @@ public class Game {
         return turn.tryMove(move);
     }
 
-    public Queue<Move> getSubmittedMoves() {
+    Queue<Move> getSubmittedMoves() {
         return submittedMoves;
+    }
+
+    /**
+     * @return An unmodifiable set of possible moves
+     */
+    public Set<Move> getPossibleMoves() {
+        return turn.getPossibleMoves();
     }
 }

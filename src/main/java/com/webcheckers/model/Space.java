@@ -45,9 +45,16 @@ public class Space {
         return row;
     }
 
+    /**
+     * @return this Space as a Position
+     */
+    public Position asPosition() {
+        return new Position(row, cellIdx);
+    }
+
     // For potential testing purposes.
     @Override
     public String toString() {
-        return "[" + (this.piece == null ? " " : this.piece) + "]";
+        return "[" + (this.piece == null ? " " : this.piece) + "] (" + row + ", " + cellIdx + ")";
     }
 }
