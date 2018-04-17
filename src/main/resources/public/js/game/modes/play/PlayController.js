@@ -72,6 +72,8 @@ define(function(require){
             PlayModeConstants.SUBMIT_BUTTON_TOOLTIP, this.submitTurn);
     this.addButton(PlayModeConstants.RESIGN_BUTTON_ID, 'Resign', true,
             PlayModeConstants.RESIGN_BUTTON_TOOLTIP, this.resignGame);
+    this.addButton(PlayModeConstants.HELP_BUTTON_ID, 'Help', true,
+            PlayModeConstants.HELP_BUTTON_TOOLTIP, this.helpButton);
 
     // Public (internal) methods
 
@@ -107,6 +109,10 @@ define(function(require){
   //
   // Public (external) methods
   //
+
+  PlayController.prototype.helpButton = function helpButton() {
+    window.location = '/game?help'
+  };
 
   /**
    * Request a move; could be a single move or a jump.

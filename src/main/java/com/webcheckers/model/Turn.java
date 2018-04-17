@@ -46,7 +46,6 @@ public class Turn {
      * @return Message to be displayed
      */
     private Message testMove(Move move) {
-
         if(move.getMoveType() == Move.Type.INVALID)
             return new Message(INVALID_DISTANCE, Message.Type.error);
 
@@ -188,7 +187,7 @@ public class Turn {
             Set<Move> ret = new HashSet<>(8);
             for(Move move : validMoves){
                 if(move.getMoveType() == Move.Type.JUMP)
-                    validMoves.add(move);
+                    ret.add(move);
             }
             validMoves = ret;
         }

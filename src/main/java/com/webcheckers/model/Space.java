@@ -52,7 +52,6 @@ public class Space {
         return new Position(row, cellIdx);
     }
 
-    // For potential testing purposes.
     @Override
     public String toString() {
         return "[" + (this.piece == null ? " " : this.piece) + "] (" + row + ", " + cellIdx + ")";
