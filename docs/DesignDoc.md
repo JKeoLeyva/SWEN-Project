@@ -96,15 +96,15 @@ Details of the components within these tiers are supplied below
 
 ### Overview of User Interface
 
-This section describes the web interface flow; this is how the user views and interacts
-with the WebCheckers application.
+This section describes the web interface flow; this is how the user views and 
+interacts with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface.png)
+![The WebCheckers Web Interface Statechart](Application Interface Statechart.png)
 
-A user will first see a Home page with a button indicating a sign in link, which moves the user to the Sign-in page, which will allow the user to type in their name, and sign-in to the game.  Depending on the name used, the sign-in request will be rejected, bringing them back to the Sign-in page, or if it is accepted, then it will take them to the Game-wait page, where they will wait for a game. If the user clicks on an invalid game, they will be sent back to the Game-wait page, else, they will be sent to the Game page, where a game will commence.
+This state diagram describes the high level flow of the web interface. The "In Game"
+state contains the following subsystem.
 
 ![The Game statechart](GameView state model.png)
-First, the board will be generated for each player. Then, the first player will make their moves(s) while the second player can do nothing. If a move is validated, the piece is changed to be in that place. The Backup button can be used at any time to reverse a validated move. One the first player has made a validated move or moves, they click submit turn, the changes appear to the second player, and they take their turn.
 
 ### UI Tier
 The Server-side UI tier of the architecture is responsible for responding to the input of the user, so when they click on specific buttons and links, the UI tier has to make sure the corresponding button press will take the user to the corresponding page.
