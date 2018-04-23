@@ -142,3 +142,20 @@ The different components of the Model tier such as the Board, Piece and Player a
 ![The Model model](Model.PNG)
 #### Dynamic model
 ![Game State Diagram](game-state-diagram.jpg)
+
+### Code Metric Analysis
+
+#### Chidamber-Kemerer 
+![c-k metric](chidamber-kemerer.png)
+
+#### Cyclomatic Complexity
+![cc metric](cyclomatic%20complexity.png)
+
+#### Javadoc Coverage
+![javadoc metric](javadoc%20coverage.png)
+
+#### Lines of Code
+![LoC metric](lines%20of%20code%20coverage.png)
+
+#### Martin Package Metric
+![mp metric](martin%20package%20metrics.png)
