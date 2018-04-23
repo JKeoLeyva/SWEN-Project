@@ -139,7 +139,7 @@ Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecti
 ![The UI UML](UI.png)
 
 #### Dynamic model
-![PostGameRoute Sequence Diagram](game-route-seq-diagram.jpg)
+![PostGameRoute Sequence Diagram](UI Tier Sequence Diagram.png)
 
 
 ### Application Tier
