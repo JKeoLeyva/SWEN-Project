@@ -75,16 +75,16 @@ point, which ends the game.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model.png)
+![The WebCheckers Domain Model](Domain%20Model.png)
 
 There are several important entities for this web app, including the Player
-entities, the Piece entities, the Board entities, which all interact with each
-other. The Player entity is used to represent a Player in the game, who has 
-control over the Piece entities, which are placed on the Board entity. Other 
+entities, the Piece entities, and the Board entities which all interact with 
+each other. The Player entity is used to represent a Player in the game, who
+has control over the Piece entities, which are placed on the Board entity. Other
 important entities are the Game entity, which holds all of the other entities, 
 and the Board entity, which holds the board information. Players are able to 
-make Game Requests to other players, and the player is able to manipulate the 
-Piece entities using Moves.
+make Turns to apply to the board, which the are created when the player moves
+Piece entities on the displayed Board.
 
 ## Architecture
 
