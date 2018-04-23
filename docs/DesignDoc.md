@@ -114,12 +114,12 @@ Details of the components within these tiers are supplied below
 This section describes the web interface flow; this is how the user views and 
 interacts with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](Application Interface Statechart.png)
+![The WebCheckers Web Interface Statechart](Application%20Interface%20Statechart.png)
 
 This state diagram describes the high level flow of the web interface. The 
 "In Game" state contains the following subsystem.
 
-![The Game statechart](GameView state model.png)
+![The Game statechart](GameView%20state%20model.png)
 
 ### UI Tier
 The Server-side UI tier of the architecture is responsible for responding to the
@@ -139,7 +139,7 @@ Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecti
 ![The UI UML](UI.png)
 
 #### Dynamic model
-![PostGameRoute Sequence Diagram](UI Tier Sequence Diagram.png)
+![PostGameRoute Sequence Diagram](UI%20Tier%20Sequence%20Diagram.png)
 
 
 ### Application Tier
@@ -156,7 +156,7 @@ game and also makes sure that all of the names in the lobby are unique.
 ![Appl model](Appl.PNG)
 
 #### Dynamic model
-![GameManager.deleteGame](Application Tier Sequence Diagram.png)
+![GameManager.deleteGame](Application%20Tier%20Sequence%20Diagram.png)
 
 
 ### Model Tier
