@@ -170,7 +170,7 @@ components of the game, which are manipulated by the Player.
 #### Static model
 ![The Model model](Model.PNG)
 #### Dynamic model
-![Game State Diagram](game-state-diagram.jpg)
+![Game State Diagram](Model%20Tier%20Game%20State%20Chart.png)
 
 ### Code Metric Analysis
 
