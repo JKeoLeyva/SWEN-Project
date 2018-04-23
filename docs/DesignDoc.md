@@ -155,9 +155,8 @@ game and also makes sure that all of the names in the lobby are unique.
 #### Static model
 ![Appl model](Appl.PNG)
 
-
 #### Dynamic model
-![GameManager.deleteGame](game-manager-delete-game.jpg)
+![GameManager.deleteGame](Application Tier Sequence Diagram.png)
 
 
 ### Model Tier
