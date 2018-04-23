@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class Turn {
+class Turn {
 
     // Some Strings for displaying the results of trying to validate moves.
     static final String BAD_MOVE = "ERROR! Move is out of board range.";
