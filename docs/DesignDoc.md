@@ -146,22 +146,22 @@ The different components of the Model tier such as the Board, Piece and Player a
 ### Code Metric Analysis
 
 #### Chidamber-Kemerer 
-![c-k metric](chidamber-kemerer.png)
+![c-k metric](chidamber-kemerer.png)<br></br>
 With an average DIT (depth of inheritance tree) of 1 and an average LCOM (lack of cohesion of methods) of 1.06, our project does not lack cohesion of methods nor does it have needlessly complex inheritance. In fact our average NOC (number of children) of 0.00 tells us that we did not make use of any inheritance in our project. We see this as a benefit as the vision statement seemed to have no need for inheritance. Our WMC (weighted methods per class) and CBO (coupling between object classes) averages are good but when individually looking at classes highlight room for improvement in many classes. With a CBO average of 12.69, and a recommended maximum CBO of 14, we could benefit from coupling improvement. With some of the highest coupling classes including Game (38), Player (36), GameManager(24) and  Move (18) we did not see a way to reduce coupling without having other major setbacks in other complexity areas. Our WMC average is 6.57, which is great overall. However two classes in particular stand out as having WMC of far too high. Most of our classes fall between 0-10 weighted methods while Game has 38 and Turn has 35. These are classes that could benefit from splitting work into multiple sub-classes.
 [source](http://www.aivosto.com/project/help/pm-oo-ck.html)
 
 #### Cyclomatic Complexity
-![cc metric](cyclomatic%20complexity.png)
+![cc metric](cyclomatic%20complexity.png)<br></br>
 The cyclomatic complexity of our project is good. The analysis may suggest that our GetGameRoute, GetReplayRoute and Turn classes are overly complex. We argue that due to the nature of checkers turns it is unavoidable to have classes that deal with the outcome of move turns that do not have a higher level of cyclomatic complexity. The poor WMC metrics of Turn and Game are highlighted in Chidamber-Kemerer analysis.
 
 #### Javadoc Coverage
-![javadoc metric](javadoc%20coverage.png)
+![javadoc metric](javadoc%20coverage.png)<br></br>
 The javadoc coverage metric highlights an area in need of drastic improvement. The field coverage has an average of 0.78% across all classes in the project. The method coverage has an average of only 61.1% across all methods. The average number of lines of javadoc comments per class is 13.94. This shows an extreme lapse in documentation across our whole project. We recommend making  a story to javadoc all methods and fields within every production class, and ideally all test classes. It is an easy task that greatly improves readability and maintainability.
 
 #### Lines of Code
-![LoC metric](lines%20of%20code%20coverage.png)
+![LoC metric](lines%20of%20code%20coverage.png)<br></br>
 This metric does not tell us too much except that our model and ui tiers much more code than our application tier. This generally tells us that these tiers are more complex. Fewer lines is often better but we do not see a need to greatly reduce our line count anywhere in our project. 
 
 #### Martin Package Metric
-![mp metric](martin%20package%20metrics.png)
+![mp metric](martin%20package%20metrics.png)<br></br>
 Our average abstractness is 0.11 with none of the tiers (ui, model and application) having any layers of abstraction. This signifies that our project is completely concrete. Our average instability of classes has an average of 0.70. This shows a weakness in our project that signifies that our project is nearer to completely unstable and that it has no resilience to change. Our afferent coupling and efferent coupling averages are 19.00 and 34.25 respectively. We feel that these are respectable numbers as our project has lots of intermingling between the different tiers, but in order to improve upon the instability, the coupling needs to be decreased. Finally the average distance from the main sequence is 0.36. This is also a good number indicating that our project is fairly close to the main sequence.
