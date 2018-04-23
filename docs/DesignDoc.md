@@ -133,8 +133,6 @@ routes are used to bring the user to the various pages, such as the Sign-in
 page, while the Post routes are used to get the page information from the user 
 and update the pages accordingly.
 
-Many Routes rely on PostSignInRoute for its static PLAYER_ATTR, or for redirecting.
-
 #### Static model
 ![The UI UML](UI.png)
 
