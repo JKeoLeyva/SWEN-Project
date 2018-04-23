@@ -220,10 +220,10 @@ maintainability.
 
 #### Lines of Code
 ![LoC metric](lines%20of%20code%20coverage.png)<br></br>
-This metric does not tell us too much except that our model and ui tiers much 
-more code than our application tier. This generally tells us that these tiers 
-are more complex. Fewer lines is often better but we do not see a need to greatly 
-reduce our line count anywhere in our project. 
+This metric does not tell us too much except that our model and ui tiers have
+much more code than our application tier. This generally tells us that these 
+tiers are more complex. Fewer lines is often better but we do not see a need to 
+greatly reduce our line count anywhere in our project. 
 
 #### Martin Package Metric
 ![mp metric](martin%20package%20metrics.png)<br></br>
