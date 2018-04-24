@@ -279,3 +279,6 @@ Pure Fabrication:
     piece to signify the end of your turn. Obviously, this cannot work in an online format,
     so Pure Fabrication was needed.
     
+## Sprint 3 Changes
+    The only significant changes made during Sprint 3 was the addition of dependency injection
+    nearly everywhere, and the simplification of logic in both the Game and Turn classes.
