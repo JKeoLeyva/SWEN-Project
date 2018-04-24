@@ -65,7 +65,7 @@ public final class Application {
         final GameManager gameManager = new GameManager(new HashMap<>());
 
         // inject replay manager
-        final ReplayManager replayManager = new ReplayManager();
+        final ReplayManager replayManager = new ReplayManager(new HashMap<>());
 
         // inject the game center and freemarker engine into web server
         final WebServer webServer = new WebServer(templateEngine, gson, playerLobby, gameManager, replayManager);

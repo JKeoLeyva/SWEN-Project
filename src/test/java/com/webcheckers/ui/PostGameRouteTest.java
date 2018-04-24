@@ -29,7 +29,6 @@ class PostGameRouteTest {
     private Player player2;
     private TemplateEngine templateEngine;
     private PostGameRoute route;
-    private ReplayManager replayManager;
 
     @BeforeEach
     void setUp() {
@@ -39,7 +38,6 @@ class PostGameRouteTest {
         this.gameManager = new GameManager(new HashMap<>());
         this.player1 = new Player("Ayy");
         this.player2 = new Player(("Lmao"));
-        this.replayManager = new ReplayManager();
 
         route = new PostGameRoute(gameManager);
 

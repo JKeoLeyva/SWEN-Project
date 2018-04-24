@@ -5,9 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +18,7 @@ class TurnTest {
     @BeforeEach
     void setup(){
         board = new Board();
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
     }
 
     /**
@@ -34,7 +32,7 @@ class TurnTest {
         ArrayList<Move> moves = new ArrayList<>();
         // Alternates between advancing red and white pieces.
         for(int i = 0; i < Board.BOARD_SIZE; i+=2){
-            turn = new Turn(board, Piece.Color.RED);
+            turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
             Position start = new Position(5, i);
             Position end = new Position(4, i+1);
             Move move = new Move(start, end);
@@ -43,7 +41,7 @@ class TurnTest {
             queue.add(move);
             moves.add(turn.getValidatedMoves().peek());
 
-            turn = new Turn(board, Piece.Color.WHITE);
+            turn = new Turn(board, Piece.Color.WHITE, new Stack<>(), new HashSet<>());
             start = new Position(2, i+1);
             end = new Position(3, i);
             move = new Move(start, end);
@@ -89,7 +87,7 @@ class TurnTest {
 
         board.setPiece(nextEnd, null);
         board.setPiece(middle, new Piece(Piece.Type.KING, Piece.Color.WHITE));
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(Message.Type.info, ret.getType());
         assertEquals(Turn.VALID_MOVE, ret.getText());
@@ -106,7 +104,7 @@ class TurnTest {
         // Test a jump move over an empty spot.
         board = new Board();
         board.setPiece(middle, null);
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         move = new Move(start, end);
         ret = turn.tryMove(move);
         assertEquals(Message.Type.error, ret.getType());
@@ -114,7 +112,7 @@ class TurnTest {
         // Test q jump move over a piece of the wrong color.
         board = new Board();
         board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         move = new Move(start, end);
         ret = turn.tryMove(move);
         assertEquals(Message.Type.error, ret.getType());
@@ -143,7 +141,7 @@ class TurnTest {
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(new Message(Turn.INVALID_DISTANCE, Message.Type.error), ret);
 
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         start = new Position(2, 1);
         end = new Position(3, 1);
         ret = turn.tryMove(new Move(start, end));
@@ -162,7 +160,7 @@ class TurnTest {
                 new Position(2, 3)
         );
 
-        Turn turn = new Turn(board, Piece.Color.RED);
+        Turn turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         Message singleMessage = turn.tryMove(singleMove);
         assertEquals(Message.Type.info, singleMessage.getType());
 
@@ -185,7 +183,7 @@ class TurnTest {
         board.setPiece(new Position(4, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
         board.setPiece(new Position(1, 4), null);
 
-        Turn turn = new Turn(board, Piece.Color.RED);
+        Turn turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         Message message1 = turn.tryMove(jump1);
         assertEquals(Message.Type.info, message1.getType());
 
@@ -222,7 +220,7 @@ class TurnTest {
         Position end = new Position(3, 2);
         board.setPiece(middle, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
         board.setPiece(start, new Piece(Piece.Type.KING, Piece.Color.RED));
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         turn.tryMove(new Move(start, end));
         // Trying to jump back.
         Message ret = turn.tryMove(new Move(end, start));
@@ -238,7 +236,7 @@ class TurnTest {
         Position start = new Position(5, 0);
         Position end = new Position(4,1);
         board.setPiece(end, new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         Message ret = turn.tryMove(new Move(start, end));
         assertEquals(Message.Type.error, ret.getType());
         assertEquals(Turn.SPACE_OCCUPIED, ret.getText());
@@ -251,7 +249,7 @@ class TurnTest {
     void forcedMove() {
         // Setup test
         board.setPiece(new Position(4, 1), new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-        turn = new Turn(board, Piece.Color.RED);
+        turn = new Turn(board, Piece.Color.RED, new Stack<>(), new HashSet<>());
         Move move = new Move(new Position(5, 2), new Position(4, 3));
 
         // Run test

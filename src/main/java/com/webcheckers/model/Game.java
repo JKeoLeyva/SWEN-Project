@@ -3,10 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Message;
 import com.webcheckers.ui.BoardView;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 import static com.webcheckers.model.Board.BOARD_SIZE;
 
@@ -95,7 +92,7 @@ public class Game {
      */
     private boolean noMove(Player player){
         Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
-        Turn testTurn = new Turn(board, color);
+        Turn testTurn = new Turn(board, color, new Stack<>(), new HashSet<>());
         return testTurn.getPossibleMoves().size() == 0;
     }
 
@@ -170,7 +167,7 @@ public class Game {
      * being able to make moves if you validate a move then reload the page.
      */
     public void clearTurn(){
-        turn = new Turn(board, getActiveColor());
+        turn = new Turn(board, getActiveColor(), new Stack<>(), new HashSet<>());
     }
 
     public void backupMove(){

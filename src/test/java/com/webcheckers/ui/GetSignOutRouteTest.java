@@ -38,7 +38,9 @@ class GetSignOutRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
         when(request.session()).thenReturn(session);
-        route = new GetSignOutRoute(playerLobby, new GameManager(new HashMap<>()), new ReplayManager());
+        route = new GetSignOutRoute(playerLobby,
+                new GameManager(new HashMap<>()),
+                new ReplayManager(new HashMap<>()));
     }
 
     /**

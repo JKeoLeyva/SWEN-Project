@@ -42,7 +42,7 @@ class GetGameRouteTest {
         this.gameManager = new GameManager(new HashMap<>());
         this.player1 = new Player("Dank");
         this.player2 = new Player("Memes");
-        this.replayManager = new ReplayManager();
+        this.replayManager = new ReplayManager(new HashMap<>());
 
         gameManager.createGame(player1, player2);
 
