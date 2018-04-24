@@ -95,22 +95,8 @@ public class Game {
      */
     private boolean noMove(Player player){
         Piece.Color color = player.equals(redPlayer) ? Piece.Color.RED : Piece.Color.WHITE;
-        Piece piece;
-        Position start;
         Turn testTurn = new Turn(board, color);
-
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for(int col = 0; col < BOARD_SIZE; col++) {
-                start = new Position(row, col);
-                piece = board.getPiece(start);
-                if(piece == null || piece.getColor() != color)
-                    continue;
-
-                if(moveExists(testTurn, start))
-                    return false;
-            }
-        }
-        return true;
+        return testTurn.getPossibleMoves().size() == 0;
     }
 
     public void setGameOver(){
@@ -155,30 +141,6 @@ public class Game {
                 State.WAITING_FOR_WHITE : State.WAITING_FOR_RED);
         clearTurn();
         return new Message(TURN_SUBMITTED, Message.Type.info);
-    }
-
-    /**
-     * Tests if a move exists from the given position.
-     * @param start position to move from
-     * @return if a move can be made from that position
-     */
-    private boolean moveExists(Turn testTurn, Position start){
-        int[] rowAdjustments = {-1, 1};
-        int[] colAdjustments = {-1, 1};
-        int[] moveDistances = {1, 2};
-        Position end;
-        // Tests moves in all directions from start.
-        for(int rowAdjustment : rowAdjustments){
-            for(int moveDistance : moveDistances){
-                for(int colAdjustment : colAdjustments) {
-                    end = new Position(start.getRow() + (rowAdjustment * moveDistance),
-                            start.getCell() + (colAdjustment * moveDistance));
-                    if(testTurn.tryMove(new Move(start, end)).getType() == Message.Type.info)
-                        return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
