@@ -1,17 +1,16 @@
 package com.webcheckers.ui;
 
-
+import com.webcheckers.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.never;
 
 @Tag("UI-tier")
-class GetSigninRouteTest{
+class GetSigninRouteTest {
 
     // Class under test
     private GetSigninRoute route;
@@ -48,6 +47,7 @@ class GetSigninRouteTest{
      */
     @Test
     void noSession() {
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(null);
         // Run code
         route.handle(request, response);
 
@@ -58,5 +58,15 @@ class GetSigninRouteTest{
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
     }
+
+    /**
+     * Test the scenario when the Player is already signed in.
+     */
+    @Test
+    void signedIn(){
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn("");
+        assertNull(route.handle(request, response));
+    }
+
 
 }

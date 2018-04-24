@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,9 @@ class BoardTest {
     private static Piece redKing = new Piece(Piece.Type.KING, Piece.Color.RED);
 
     @BeforeEach
-    void remakeBoard(){CuT = new Board();}
+    void remakeBoard(){
+        CuT = new Board();
+    }
 
     @Test
     void getPiece() {

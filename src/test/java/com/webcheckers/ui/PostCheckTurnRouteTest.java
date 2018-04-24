@@ -49,12 +49,12 @@ class PostCheckTurnRouteTest {
         when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
 
         route = new PostCheckTurnRoute(gameManager, gson);
+
+        gameManager.createGame(player1, player2);
     }
 
     @Test
     void isMyTurn() {
-        gameManager.createGame(player1, player2);
-
         String jsonMessage = (String) route.handle(request, response);
         Message message = gson.fromJson(jsonMessage, Message.class);
 
@@ -71,30 +71,25 @@ class PostCheckTurnRouteTest {
     }
 
     @Test
-    void opponentResigns() {
-        Player player1 = new Player("Karl");
-        Player player2 = new Player("Mark");
-
-        gameManager.createGame(player1, player2);
-        gameManager.deleteGame(player2);
-
-        String jsonMessage = (String) route.handle(request, response);
-        Message message = gson.fromJson(jsonMessage, Message.class);
-
-        assertEquals(message.getText(), String.valueOf(true));
+    void whitePlayerResigns() {
+        playerResigns(player1);
     }
 
     @Test
     void redPlayerResigns() {
-        Player player1 = new Player("Karl");
-        Player player2 = new Player("Mark");
+        playerResigns(player2);
+    }
 
-        gameManager.createGame(player2, player1);
-        gameManager.deleteGame(player2);
-
+    private void playerResigns(Player player){
+        gameManager.deleteGame(player);
         String jsonMessage = (String) route.handle(request, response);
         Message message = gson.fromJson(jsonMessage, Message.class);
+        assertEquals(message.getText(), String.valueOf(true));
 
+        when(request.session().attribute(Strings.Session.PLAYER)).
+                thenReturn(player.equals(player1) ? player2 : player1);
+        jsonMessage = (String) route.handle(request, response);
+        message = gson.fromJson(jsonMessage, Message.class);
         assertEquals(message.getText(), String.valueOf(true));
     }
 }

@@ -48,10 +48,6 @@ public class GameManager {
         return !games.containsKey(p1) && !games.containsKey(p2) && !p1.equals(p2);
     }
 
-    public Map<Player, Game> getGames() {
-        return Collections.unmodifiableMap(games);
-    }
-
     /**
      * @param player that may be in a game
      * @return the game that player is in, if any
