@@ -134,7 +134,7 @@ page, while the Post routes are used to get the page information from the user
 and update the pages accordingly.
 
 #### Static model
-![The UI UML](UI UML.png)
+![The UI UML](UI%20UML.png)
 
 #### Dynamic model
 ![PostGameRoute Sequence Diagram](UI%20Tier%20Sequence%20Diagram.png)
@@ -151,7 +151,7 @@ tasked with monitoring the amount of players that are currently signed into the
 game and also makes sure that all of the names in the lobby are unique.
 
 #### Static model
-![Appl model](Application UML.png)
+![Appl model](Application%20UML.png)
 
 #### Dynamic model
 ![GameManager.deleteGame](Application%20Tier%20Sequence%20Diagram.png)
@@ -168,7 +168,7 @@ which holds the different Player’s pieces, the Pieces are the moveable
 components of the game, which are manipulated by the Player.
 
 #### Static model
-![The Model model](Model UML.png)
+![The Model model](Model%20UML.png)
 #### Dynamic model
 ![Game State Diagram](Model%20Tier%20Game%20State%20Chart.png)
 
@@ -270,15 +270,10 @@ GRASP Controller:
     
 Pure Fabrication:
     Several classes were purely fabricated for this project. Beyond the required (and
-    therefore not noteworthy) classes, we made ReplayManager, GameManager, and Turn.
+    therefore not noteworthy) classes, we made ReplayManager and GameManager.
     The former 2 are simply encapsulations of a Map, from Player to Replays or a Game.
-    This is far more cohesive than just putting those maps everywhere. Meanwhile, Turn
-    encapsulates logic that WebCheckers requires, but would not be thought about when
-    playing checkers. For example, your opponent may tell you that a move is invalid in
-    real life, and you may remove jumped pieces and/or take your finger off of your moved
-    piece to signify the end of your turn. Obviously, this cannot work in an online format,
-    so Pure Fabrication was needed.
+    This is far more cohesive than just putting those maps everywhere.
     
 ## Sprint 3 Changes
-    The only significant changes made during Sprint 3 was the addition of dependency injection
-    nearly everywhere, and the simplification of logic in both the Game and Turn classes.
+The only significant changes made during Sprint 3 was the addition of dependency injection
+nearly everywhere, and the simplification of logic in both the Game and Turn classes.
