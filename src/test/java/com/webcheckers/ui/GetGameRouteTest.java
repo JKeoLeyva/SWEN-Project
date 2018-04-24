@@ -13,8 +13,8 @@ import spark.*;
 import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by kac9868 on 3/28/2018.
@@ -31,7 +31,6 @@ class GetGameRouteTest {
     private Player player2;
     private TemplateEngine templateEngine;
     private GetGameRoute route;
-    private BoardView boardview;
     private ReplayManager replayManager;
 
     @BeforeEach
@@ -43,27 +42,23 @@ class GetGameRouteTest {
         this.player1 = new Player("Dank");
         this.player2 = new Player("Memes");
         this.replayManager = new ReplayManager(new HashMap<>());
-
+        this.templateEngine = mock(TemplateEngine.class);
         gameManager.createGame(player1, player2);
 
-        this.boardview = mock(BoardView.class);
-        this.templateEngine = mock(TemplateEngine.class);
-
         route = new GetGameRoute(templateEngine, gameManager, replayManager);
-
         when(request.session()).thenReturn(session);
-        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
 
         engineTester = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(engineTester.makeAnswer());
     }
 
+    /**
+     * Basically, tests reloading of /game when it's your turn.
+     */
     @Test
     void openGame() {
-        session.attribute(Strings.Session.PLAYER, player1);
-
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
         route.handle(request, response);
-        //verify(response, times(1)).redirect(WebServer.GAME_URL);
 
         engineTester.assertViewModelExists();
         engineTester.assertViewModelIsaMap();
@@ -72,6 +67,55 @@ class GetGameRouteTest {
         engineTester.assertViewModelAttribute(Strings.Template.Game.RED_PLAYER, gameManager.getGame(player1).getRedPlayer());
         engineTester.assertViewModelAttribute(Strings.Template.Game.WHITE_PLAYER, gameManager.getGame(player1).getWhitePlayer());
         engineTester.assertViewModelAttribute(Strings.Template.Game.ACTIVE_COLOR, gameManager.getGame(player1).getActiveColor());
-        //engineTester.assertViewModelAttribute(Strings.Template.Game.BOARD, gameManager.getGame(player1).makeBoardView(player1));
+    }
+
+    /**
+     * Tests when a player is not in a game.
+     */
+    @Test
+    void noGame(){
+        Player noGamePlayer = new Player("JJ");
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(noGamePlayer);
+        route.handle(request, response);
+
+        verify(response, times(1)).redirect(WebServer.HOME_URL);
+    }
+
+    /**
+     * Tests when a game has ended.
+     */
+    @Test
+    void gameOver(){
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player2);
+        gameManager.deleteGame(player1);
+        route.handle(request, response);
+
+        verify(response, times(1)).redirect(WebServer.HOME_URL);
+        // Checks if both Players have been removed from their games.
+        assertTrue(gameManager.canCreateGame(player1, player2));
+    }
+
+    /**
+     * Tests when a player asks for help.
+     */
+    @Test
+    void askHelp(){
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player1);
+        when(request.queryParams(Strings.Request.HELP)).thenReturn("");
+
+        route.handle(request, response);
+        engineTester.assertViewModelAttributeIsPresent(Strings.Template.Game.HELP_SPACES);
+    }
+
+    /**
+     * Tests when it is not your turn.
+     */
+    @Test
+    void notYourTurn(){
+        when(request.session().attribute(Strings.Session.PLAYER)).thenReturn(player2);
+        route.handle(request, response);
+        // Model-View should be generated, but no help was requested.
+        engineTester.assertViewModelExists();
+        engineTester.assertViewModelAttributeIsAbsent(Strings.Template.Game.HELP_SPACES);
     }
 }

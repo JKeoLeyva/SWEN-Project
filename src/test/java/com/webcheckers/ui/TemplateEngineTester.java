@@ -73,6 +73,15 @@ class TemplateEngineTester {
   }
 
   /**
+   * Assert that the View-Model attribute exists.
+   */
+  void assertViewModelAttributeIsPresent(final String attrName) {
+    @SuppressWarnings("unchecked")
+    final Map<String, Object> vm = (Map<String, Object>) model;
+    assertTrue(vm.containsKey(attrName));
+  }
+
+  /**
    * Assert that the View name exists and matches the expected value.
    */
   void assertViewName(final String expectedName) {
