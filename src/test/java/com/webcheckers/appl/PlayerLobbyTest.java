@@ -37,7 +37,7 @@ class PlayerLobbyTest {
     * */
     @Test
     void testAddingPlayersToPlayerLobby() {
-        String testUsername = "Testuser";
+        Player testUsername = new Player("Testuser");
         PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // Add 1 player to PlayerLobby
@@ -49,14 +49,14 @@ class PlayerLobbyTest {
 
     @Test
     void testAddingInvalidPlayerToPlayerLobby() {
-        String testUsername = "Testuser";
+        Player testUsername = new Player("Testuser");
         PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
 
         // Add 1 player to PlayerLobby
         playerLobby.signInPlayer(testUsername);
 
         // Test whether isNameAvailable returns false on occupied player name
-        assertFalse(playerLobby.isNameAvailable(testUsername));
+        assertFalse(playerLobby.isNameAvailable(testUsername.getName()));
 
         // Test whether signInPlayer returns null on attempting to add occupied player name
         assertNull(playerLobby.signInPlayer(testUsername));
@@ -65,19 +65,19 @@ class PlayerLobbyTest {
     @Test
     void signOutPlayer() {
         PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
-        String playerName = "player";
+        Player player = new Player("player");
 
         // Sign the player in
-        assertEquals(new Player(playerName), playerLobby.signInPlayer(playerName));
+        assertEquals(player, playerLobby.signInPlayer(player));
 
         // Verify it was signed in
         List<Player> players = playerLobby.getPlayers();
         List<Player> expectedPlayers = new ArrayList<>();
-        expectedPlayers.add(new Player(playerName));
+        expectedPlayers.add(player);
         assertEquals(expectedPlayers, players);
 
         // Sign the player out
-        assertTrue(playerLobby.signOutPlayer(playerName));
+        assertTrue(playerLobby.signOutPlayer(player));
 
         // Verify it was signed out
         assertEquals(new ArrayList<>(), playerLobby.getPlayers());
@@ -86,11 +86,11 @@ class PlayerLobbyTest {
     @Test
     void onlinePlayer() {
         PlayerLobby playerLobby = new PlayerLobby(new HashSet<>());
-        String playerName = "player";
+        Player player = new Player("player");
 
-        assertEquals(new Player(playerName), playerLobby.signInPlayer(playerName));
-        assertFalse(playerLobby.isNameAvailable(playerName));
-        assertTrue(playerLobby.signOutPlayer(playerName));
-        assertTrue(playerLobby.isNameAvailable(playerName));
+        assertEquals(player, playerLobby.signInPlayer(player));
+        assertFalse(playerLobby.isNameAvailable(player.getName()));
+        assertTrue(playerLobby.signOutPlayer(player));
+        assertTrue(playerLobby.isNameAvailable(player.getName()));
     }
 }

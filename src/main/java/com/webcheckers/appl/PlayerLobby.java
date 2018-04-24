@@ -24,27 +24,24 @@ public class PlayerLobby {
 
     /**
      * Attempt to sign in a new player
-     *
-     * @param name the player's name
+     * @param player the player
      * @return the new Player, if the name is available
      */
-    public synchronized Player signInPlayer(String name) {
-        if(!isNameAvailable(name))
+    public synchronized Player signInPlayer(Player player) {
+        if(!isNameAvailable(player.getName()))
             return null;
 
-        Player player = new Player(name);
         players.add(player);
         return player;
     }
 
     /**
      * Attempt to sign out a player
-     *
-     * @param name the player's name
+     * @param player the player
      * @return if the player could be signed out
      */
-    public boolean signOutPlayer(String name) {
-        return players.remove(new Player(name));
+    public boolean signOutPlayer(Player player) {
+        return players.remove(player);
     }
 
     /**

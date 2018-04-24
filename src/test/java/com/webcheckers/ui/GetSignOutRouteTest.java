@@ -15,15 +15,17 @@ import spark.Session;
 import java.util.HashMap;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("UI-tier")
 class GetSignOutRouteTest {
     private Request request;
     private Response response;
     private Session session;
-    private Player player;
     private PlayerLobby playerLobby;
-    private String playerName = "player";
+    private GameManager gameManager;
+    private Player player1 = new Player("Bob");
+    private Player player2 = new Player("by");
     private GetSignOutRoute route;
 
     /**
@@ -34,12 +36,12 @@ class GetSignOutRouteTest {
         request = mock(Request.class);
         response = mock(Response.class);
         session = mock(Session.class);
-        player = new Player(playerName);
         playerLobby = mock(PlayerLobby.class);
+        gameManager = new GameManager(new HashMap<>());
+        gameManager.createGame(player1, player2);
 
         when(request.session()).thenReturn(session);
-        route = new GetSignOutRoute(playerLobby,
-                new GameManager(new HashMap<>()),
+        route = new GetSignOutRoute(playerLobby, gameManager,
                 new ReplayManager(new HashMap<>()));
     }
 
@@ -48,14 +50,17 @@ class GetSignOutRouteTest {
      */
     @Test
     void signOutSelf() {
-        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player);
-
+        when(session.attribute(Strings.Session.PLAYER)).thenReturn(player1);
         route.handle(request, response);
+        assertTrue(gameManager.canCreateGame(player1, new Player("")));
 
         verify(session, times(1)).attribute(Strings.Session.PLAYER);
         verify(session, times(1)).invalidate();
-        verify(playerLobby, times(1)).signOutPlayer(playerName);
+        verify(playerLobby, times(1)).signOutPlayer(player1);
         verify(response, times(1)).redirect(WebServer.HOME_URL);
+
+        // Game is removed now.
+        assertNull(route.handle(request, response));
     }
 
     /**
@@ -69,7 +74,7 @@ class GetSignOutRouteTest {
 
         verify(session, times(1)).attribute(Strings.Session.PLAYER);
         verify(session, never()).invalidate();
-        verify(playerLobby, never()).signOutPlayer(playerName);
+        verify(playerLobby, never()).signOutPlayer(player1);
         verify(response, times(1)).redirect(WebServer.HOME_URL);
     }
 }
