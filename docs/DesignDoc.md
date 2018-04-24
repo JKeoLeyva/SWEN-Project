@@ -134,7 +134,7 @@ page, while the Post routes are used to get the page information from the user
 and update the pages accordingly.
 
 #### Static model
-![The UI UML](UI.png)
+![The UI UML](UI UML.png)
 
 #### Dynamic model
 ![PostGameRoute Sequence Diagram](UI%20Tier%20Sequence%20Diagram.png)
@@ -151,7 +151,7 @@ tasked with monitoring the amount of players that are currently signed into the
 game and also makes sure that all of the names in the lobby are unique.
 
 #### Static model
-![Appl model](Appl.PNG)
+![Appl model](Application UML.png)
 
 #### Dynamic model
 ![GameManager.deleteGame](Application%20Tier%20Sequence%20Diagram.png)
@@ -168,7 +168,7 @@ which holds the different Player’s pieces, the Pieces are the moveable
 components of the game, which are manipulated by the Player.
 
 #### Static model
-![The Model model](Model.PNG)
+![The Model model](Model UML.png)
 #### Dynamic model
 ![Game State Diagram](Model%20Tier%20Game%20State%20Chart.png)
 
