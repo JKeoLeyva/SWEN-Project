@@ -4,6 +4,7 @@ import com.webcheckers.Strings;
 import com.webcheckers.appl.ReplayManager;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
@@ -13,6 +14,7 @@ import java.util.Queue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@Tag("UI-tier")
 public class GetReplayRouteTest {
     private GetReplayRoute route;
     private TemplateEngine templateEngine;

@@ -134,7 +134,7 @@ page, while the Post routes are used to get the page information from the user
 and update the pages accordingly.
 
 #### Static model
-![The UI UML](UI.png)
+![The UI UML](UI%20UML.png)
 
 #### Dynamic model
 ![PostGameRoute Sequence Diagram](UI%20Tier%20Sequence%20Diagram.png)
@@ -151,7 +151,7 @@ tasked with monitoring the amount of players that are currently signed into the
 game and also makes sure that all of the names in the lobby are unique.
 
 #### Static model
-![Appl model](Appl.PNG)
+![Appl model](Application%20UML.png)
 
 #### Dynamic model
 ![GameManager.deleteGame](Application%20Tier%20Sequence%20Diagram.png)
@@ -168,7 +168,7 @@ which holds the different Player’s pieces, the Pieces are the moveable
 components of the game, which are manipulated by the Player.
 
 #### Static model
-![The Model model](Model.PNG)
+![The Model model](Model%20UML.png)
 #### Dynamic model
 ![Game State Diagram](Model%20Tier%20Game%20State%20Chart.png)
 
@@ -210,7 +210,7 @@ The javadoc coverage metric highlights an area in need of drastic improvement.
 The field coverage has an average of 0.78% across all classes in the project. 
 The method coverage has an average of only 61.1% across all methods. The average 
 number of lines of javadoc comments per class is 13.94. This shows an extreme 
-lapse in documentation across our whole project. We recommend making  a story 
+lapse in documentation across our whole project. We recommend making a story 
 to javadoc all methods and fields within every production class, and ideally 
 all test classes. It is an easy task that greatly improves readability and 
 maintainability.
@@ -235,7 +235,7 @@ order to improve upon the instability, the coupling needs to be decreased. Final
 the average distance from the main sequence is 0.36. This is also a good number 
 indicating that our project is fairly close to the main sequence.
 
-### Application Tier Class Structures/Subsystems 
+#### Application Tier Class Structures/Subsystems 
 With our application, all functionality related to the interaction of instances of Game
 classes with other tiers are coordinated by our GameMananger class. Whether it is the 
 creation of Game instances for to place BoardViews or duplicating for creating Replays, 
@@ -244,15 +244,58 @@ handled the logic related to Replay instances with other tiers. That included th
 from Game instances, displaying when needed and destruction of Replay instances after player session
 log outs.
 
-### Model Tier Class Structures/Subsystems
+#### Model Tier Class Structures/Subsystems
 Instances of Game classes encapsulated our Board classes, which gave us a level of abstraction
 which made it simple to associate Boards being Games even though they were different data structures.
 Our Move instances encapsulate Position class instances, holding a start Position and a
 ending Position. The Board class itself handles all instantiation and movement of Row, Piece and Space 
 classes. 
 
-### UI Tier Class Structures/Subsystems
+#### UI Tier Class Structures/Subsystems
 There are no direct subsystems within the UI tier since it mostly consists of
 Route classes for application to work, so they mostly interact with classes outside 
 the UI tier. BoardView is the one class that encapsulates our Board class from the Model
 tier for frontend game board rendering.  
+
+#### Object Oriented Design Principles
+
+Single Responsibility Principle:
+    Our design holds very closely to this principle. The only possible exceptions,
+    as mentioned above, are Turn and Game. Turn's responsibility could be described as:
+    manage data related to a Turn, including validating moves. So, validating moves
+    could be factored out to create a tighter responsibility. While metrics showed Game
+    to be complex, this is probably unavoidable due to the nature of WebCheckers.
+    It simply must have a Turn, a State, two players, and a Board (and all the
+    methods this entails).
+    
+Dependency Inversion/Polymorphism:
+    As mentioned above, we made no abstractions/use of polymorphism. While we
+    certainly could have, it seems unnecessary for a project as specific as this.
+    But the topic of dependency injection specifically is different.
+    Most classes feature dependency injection. Notable exceptions are Replay and Turn.
+    Move cannot have the type of Move injected, as this is determined by methods in Move.
+    Game cannot have several things injected, as the rules of checkers need to be followed.
+    For example, if you could inject submittedMoves, you could add moves that aren't valid.
+    
+Low Cohesion/Law of Demeter:
+    An analysis of UML dependencies show that our system has quite low coupling. For example,
+    UI interaction is only used when completely necessary. GetReplayRoute and GetHomeRoute
+    have to access ReplayManager no matter what, for example. Removing the omnipresent
+    classes and Player class, most UI classes become decoupled from the Model tier altogether.
+    Notable exceptions to this are GetGameRoute and GetReplayRoute. However, this is mainly
+    due to the restrictions of what was given to us. Within the Model tier, once constant
+    references to the board size are ignored, coupling is again very low.
+    
+GRASP Controller:
+    As stated above, nearly everything in the UI-tier "outsources" any system operations that
+    need to be performed.
+    
+Pure Fabrication:
+    Several classes were purely fabricated for this project. Beyond the required (and
+    therefore not noteworthy) classes, we made ReplayManager and GameManager.
+    The former 2 are simply encapsulations of a Map, from Player to Replays or a Game.
+    This is far more cohesive than just putting those maps everywhere.
+    
+## Sprint 3 Changes
+The only significant changes made during Sprint 3 was the addition of dependency injection
+nearly everywhere, and the simplification of logic in both the Game and Turn classes.

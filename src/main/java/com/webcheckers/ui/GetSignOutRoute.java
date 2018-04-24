@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 public class GetSignOutRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());
 
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
