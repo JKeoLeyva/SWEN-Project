@@ -234,3 +234,25 @@ numbers as our project has lots of intermingling between the different tiers, bu
 order to improve upon the instability, the coupling needs to be decreased. Finally 
 the average distance from the main sequence is 0.36. This is also a good number 
 indicating that our project is fairly close to the main sequence.
+
+### Application Tier Class Structures/Subsystems 
+With our application, all functionality related to the interaction of instances of Game
+classes with other tiers are coordinated by our GameMananger class. Whether it is the 
+creation of Game instances for to place BoardViews or duplicating for creating Replays, 
+GameManager held all the game instances. This is similar with our ReplayManager, which 
+handled the logic related to Replay instances with other tiers. That included the creation of Replays
+from Game instances, displaying when needed and destruction of Replay instances after player session
+log outs.
+
+### Model Tier Class Structures/Subsystems
+Instances of Game classes encapsulated our Board classes, which gave us a level of abstraction
+which made it simple to associate Boards being Games even though they were different data structures.
+Our Move instances encapsulate Position class instances, holding a start Position and a
+ending Position. The Board class itself handles all instantiation and movement of Row, Piece and Space 
+classes. 
+
+### UI Tier Class Structures/Subsystems
+There are no direct subsystems within the UI tier since it mostly consists of
+Route classes for application to work, so they mostly interact with classes outside 
+the UI tier. BoardView is the one class that encapsulates our Board class from the Model
+tier for frontend game board rendering.  
