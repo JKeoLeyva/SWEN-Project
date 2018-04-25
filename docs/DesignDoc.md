@@ -134,7 +134,7 @@ page, while the Post routes are used to get the page information from the user
 and update the pages accordingly.
 
 #### Static model
-![The UI UML](UI.png)
+![The UI UML](UI%20UML.png)
 
 #### Dynamic model
 ![PostGameRoute Sequence Diagram](UI%20Tier%20Sequence%20Diagram.png)
@@ -151,7 +151,7 @@ tasked with monitoring the amount of players that are currently signed into the
 game and also makes sure that all of the names in the lobby are unique.
 
 #### Static model
-![Appl model](Appl.PNG)
+![Appl model](Application%20UML.png)
 
 #### Dynamic model
 ![GameManager.deleteGame](Application%20Tier%20Sequence%20Diagram.png)
@@ -168,7 +168,7 @@ which holds the different Player’s pieces, the Pieces are the moveable
 components of the game, which are manipulated by the Player.
 
 #### Static model
-![The Model model](Model.PNG)
+![The Model model](Model%20UML.png)
 #### Dynamic model
 ![Game State Diagram](Model%20Tier%20Game%20State%20Chart.png)
 
@@ -235,6 +235,28 @@ order to improve upon the instability, the coupling needs to be decreased. Final
 the average distance from the main sequence is 0.36. This is also a good number 
 indicating that our project is fairly close to the main sequence.
 
+#### Application Tier Class Structures/Subsystems 
+With our application, all functionality related to the interaction of instances of Game
+classes with other tiers are coordinated by our GameMananger class. Whether it is the 
+creation of Game instances for to place BoardViews or duplicating for creating Replays, 
+GameManager held all the game instances. This is similar with our ReplayManager, which 
+handled the logic related to Replay instances with other tiers. That included the creation of Replays
+from Game instances, displaying when needed and destruction of Replay instances after player session
+log outs.
+
+#### Model Tier Class Structures/Subsystems
+Instances of Game classes encapsulated our Board classes, which gave us a level of abstraction
+which made it simple to associate Boards being Games even though they were different data structures.
+Our Move instances encapsulate Position class instances, holding a start Position and a
+ending Position. The Board class itself handles all instantiation and movement of Row, Piece and Space 
+classes. 
+
+#### UI Tier Class Structures/Subsystems
+There are no direct subsystems within the UI tier since it mostly consists of
+Route classes for application to work, so they mostly interact with classes outside 
+the UI tier. BoardView is the one class that encapsulates our Board class from the Model
+tier for frontend game board rendering.  
+
 #### Object Oriented Design Principles
 
 Single Responsibility Principle:
@@ -270,12 +292,10 @@ GRASP Controller:
     
 Pure Fabrication:
     Several classes were purely fabricated for this project. Beyond the required (and
-    therefore not noteworthy) classes, we made ReplayManager, GameManager, and Turn.
+    therefore not noteworthy) classes, we made ReplayManager and GameManager.
     The former 2 are simply encapsulations of a Map, from Player to Replays or a Game.
-    This is far more cohesive than just putting those maps everywhere. Meanwhile, Turn
-    encapsulates logic that WebCheckers requires, but would not be thought about when
-    playing checkers. For example, your opponent may tell you that a move is invalid in
-    real life, and you may remove jumped pieces and/or take your finger off of your moved
-    piece to signify the end of your turn. Obviously, this cannot work in an online format,
-    so Pure Fabrication was needed.
+    This is far more cohesive than just putting those maps everywhere.
     
+## Sprint 3 Changes
+The only significant changes made during Sprint 3 was the addition of dependency injection
+nearly everywhere, and the simplification of logic in both the Game and Turn classes.
