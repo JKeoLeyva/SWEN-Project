@@ -24,7 +24,7 @@ class Turn {
     // A Stack to store validated moves.
     private Stack<Move> validatedMoves = new Stack<>();
     // A set to store spaces jumped over.
-    private Set<Position> jumpedSpaces = new HashSet<>();
+    private Set<Position> jumpedSpaces;
     // A temporary Board to store moves.
     private Board temp;
     // The color of the player whose turn it is.
@@ -34,10 +34,13 @@ class Turn {
     // If possibleMoves contains a Jump move.
     private boolean jumpMoveExists = false;
 
-    Turn(Board board, Piece.Color playerColor) {
+    Turn(Board board, Piece.Color playerColor, Stack<Move> validatedMoves,
+         HashSet<Position> jumpedSpaces) {
         this.temp = new Board(board);
         this.playerColor = playerColor;
         this.possibleMoves = generateValidMoves();
+        this.validatedMoves = validatedMoves;
+        this.jumpedSpaces = jumpedSpaces;
     }
 
     /**

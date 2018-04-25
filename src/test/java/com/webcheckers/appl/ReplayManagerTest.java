@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
@@ -21,7 +23,7 @@ public class ReplayManagerTest {
     @BeforeEach
     void setUp() {
         this.game = new Game(player1, player2);
-        this.replayManager = new ReplayManager();
+        this.replayManager = new ReplayManager(new HashMap<>());
     }
 
     @Test

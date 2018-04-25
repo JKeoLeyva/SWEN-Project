@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -31,7 +32,7 @@ public class GetReplayRouteTest {
     void setup() {
         // Initialize objects
         templateEngine = mock(TemplateEngine.class);
-        replayManager = new ReplayManager();
+        replayManager = new ReplayManager(new HashMap<>());
         route = new GetReplayRoute(templateEngine, replayManager);
         request = mock(Request.class);
         response = mock(Response.class);

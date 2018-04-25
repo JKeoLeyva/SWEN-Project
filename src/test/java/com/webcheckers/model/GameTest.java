@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
+import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -169,7 +170,7 @@ class GameTest {
         assertSame(Piece.Type.KING, piece.getType());
         assertSame(Piece.Color.WHITE, piece.getColor());
 
-        // Move Kings into the starting row for their color, and check that they sstay the right color and type.
+        // Move Kings into the starting row for their color, and check that they stay the right color and type.
         curr.setPiece(whiteStart, RED_KING);
         curr.setPiece(redStart, WHITE_KING);
         game = new Game(player1, player2, curr);
@@ -199,11 +200,13 @@ class GameTest {
         Position middle = new Position(4,1);
         Position end = new Position(3, 2);
         Position whiteStart = new Position(2, 3);
+        Move one = new Move(start, end);
+        Move two = new Move(whiteStart, middle);
 
         Board board = new Board();
         board.setPiece(middle, new Piece(Piece.Type.KING, Piece.Color.WHITE));
         game = new Game(player1, player2, board);
-        game.tryMove(new Move(start, end));
+        game.tryMove(one);
         game.submitTurn();
 
         Piece piece = getPieceFromGame(end, game);
@@ -211,8 +214,12 @@ class GameTest {
         assertSame(Piece.Type.SINGLE, piece.getType());
         assertSame(Piece.Color.RED, piece.getColor());
 
-        game.tryMove(new Move(whiteStart, middle));
+        game.tryMove(two);
         game.submitTurn();
+
+        Queue<Move> submittedMoves = game.getSubmittedMoves();
+        assertEquals(one, submittedMoves.remove());
+        assertEquals(two, submittedMoves.remove());
 
         piece = getPieceFromGame(middle, game);
         assertNotNull(piece);

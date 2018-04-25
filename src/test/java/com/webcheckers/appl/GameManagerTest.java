@@ -31,17 +31,14 @@ class GameManagerTest {
         assertTrue(gameManager.canCreateGame(player1, player2));
         assertTrue(gameManager.createGame(player1, player2));
 
-        Map<Player, Game> games = gameManager.getGames();
-
-        assertEquals(2, games.size());
-        assertTrue(games.containsKey(player1));
-        assertTrue(games.containsKey(player2));
+        assertFalse(gameManager.canCreateGame(player1, player3));
+        assertFalse(gameManager.canCreateGame(player2, player3));
 
         Game game = gameManager.getGame(player1);
 
         assertEquals(game, gameManager.getGame(player2));
-        assertEquals(game, games.get(player1));
-        assertEquals(game, games.get(player2));
+        assertEquals(game, gameManager.getGame(player1));
+        assertEquals(game, gameManager.getGame(player1));
     }
 
     @Test
@@ -53,11 +50,8 @@ class GameManagerTest {
         assertFalse(gameManager.canCreateGame(player1, player2));
         assertFalse(gameManager.createGame(player1, player2));
 
-        Map<Player, Game> games = gameManager.getGames();
-
-        assertEquals(2, games.size());
-        assertTrue(games.containsKey(player2));
-        assertTrue(games.containsKey(player3));
+        assertNotNull(gameManager.getGame(player2));
+        assertNotNull(gameManager.getGame(player3));
     }
 
     @Test

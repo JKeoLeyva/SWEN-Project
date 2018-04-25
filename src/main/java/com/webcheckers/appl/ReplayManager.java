@@ -21,8 +21,8 @@ public class ReplayManager {
     /**
      * Constructor for ReplayManager, uses a Map to hold Player, Replay List pairs
      */
-    public ReplayManager() {
-        this.replays = new HashMap<>();
+    public ReplayManager(Map<Player, List<Replay>> replays) {
+        this.replays = replays;
     }
 
     /**

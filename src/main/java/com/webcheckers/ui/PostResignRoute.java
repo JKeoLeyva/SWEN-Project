@@ -42,16 +42,9 @@ public class PostResignRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostResignRoute is invoked.");
         Player player = request.session().attribute(Strings.Session.PLAYER);
-        Message message;
         replayManager.addReplay(gameManager.getGame(player), player);
         gameManager.deleteGame(player);
-
-        if(!gameManager.getGames().containsKey(player)) {
-            message = new Message(SUCCESS_MSSG, Message.Type.info);
-        }
-        else {
-            message = new Message(FAILURE_MSSG, Message.Type.error);
-        }
+        Message message = new Message(SUCCESS_MSSG, Message.Type.info);
 
         return gson.toJson(message);
     }

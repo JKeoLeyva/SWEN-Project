@@ -55,13 +55,13 @@ class PostSigninRouteTest {
         Player player = new Player("testUser");
         when(request.queryParams(Strings.Template.SignIn.PLAYER_NAME)).thenReturn(player.getName());
         when(playerLobby.isNameAvailable(anyString())).thenReturn(true);
-        when(playerLobby.signInPlayer(player.getName())).thenReturn(player);
+        when(playerLobby.signInPlayer(player)).thenReturn(player);
 
         route.handle(request, response);
 
         verify(session, times(1)).attribute(Strings.Session.PLAYER, player);
         verify(playerLobby, times(1)).isNameAvailable(player.getName());
-        verify(playerLobby, times(1)).signInPlayer(player.getName());
+        verify(playerLobby, times(1)).signInPlayer(player);
     }
 
     /**
@@ -76,7 +76,7 @@ class PostSigninRouteTest {
 
         verify(session, never()).attribute(Strings.Session.PLAYER, player);
         verify(playerLobby, never()).isNameAvailable(player.getName());
-        verify(playerLobby, never()).signInPlayer(player.getName());
+        verify(playerLobby, never()).signInPlayer(player);
     }
 
     /**
@@ -92,6 +92,6 @@ class PostSigninRouteTest {
 
         verify(session, never()).attribute(Strings.Session.PLAYER, player);
         verify(playerLobby, times(1)).isNameAvailable(player.getName());
-        verify(playerLobby, never()).signInPlayer(player.getName());
+        verify(playerLobby, never()).signInPlayer(player);
     }
 }

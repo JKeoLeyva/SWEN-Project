@@ -39,21 +39,20 @@ public class PostSigninRoute implements Route {
         final String playerName = request.queryParams(Strings.Template.SignIn.PLAYER_NAME);
 
         // If the given player name is null or has non-alphaNumeric characters.
-        if(playerName == null || playerName.matches("^.*[^a-zA-Z0-9 ].*$")) {
+        if(playerName == null || playerName.matches("^.*[^a-zA-Z0-9 ].*$"))
             // Name is not valid.
             return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
-        }
 
         if(playerLobby.isNameAvailable(playerName)) {
             // Redirect to the homepage, now signed-in.
-            Player newPlayer = playerLobby.signInPlayer(playerName);
+            Player newPlayer = new Player(playerName);
+            playerLobby.signInPlayer(newPlayer);
             session.attribute(Strings.Session.PLAYER, newPlayer);
             response.redirect(WebServer.HOME_URL);
             return null;
         }
-        else {
+        else
             // Name already taken, reload this page.
             return templateEngine.render(new ModelAndView(new HashMap<>(), Strings.Template.SignIn.FILE_NAME));
-        }
     }
 }
